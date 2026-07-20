@@ -7,7 +7,7 @@ Obiettivo: consegnare i requisiti minimi ed essere facilmente estendibile dopo l
 ## Stack
 
 - Vite (template react-ts)
-- Redux Toolkit (`@reduxjs/toolkit` + `react-redux`) — NON Redux vanilla
+- Redux Toolkit (`@reduxjs/toolkit` + `react-redux`) — NON Redux vanilla SI C
 - react-router-dom
 - Persistenza: localStorage (niente backend)
 
