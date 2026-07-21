@@ -6,7 +6,6 @@ export const store = configureStore({
     // auth: authReducer,
     // posts: postsReducer,
     // profile: profileReducer,
-    // home: homeReducer,
   },
 });
 

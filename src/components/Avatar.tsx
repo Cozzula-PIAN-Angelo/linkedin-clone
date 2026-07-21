@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export type AvatarProps = {
   src?: string;
   name: string;
@@ -6,7 +8,9 @@ export type AvatarProps = {
 };
 
 function Avatar({ src, name, surname, size = 32 }: AvatarProps) {
-  if (!src) {
+  const [imgFailed, setImgFailed] = useState(false);
+
+  if (!src || imgFailed) {
     const initials = `${name[0]}${surname[0]}`.toUpperCase();
     return (
       <div
@@ -23,6 +27,7 @@ function Avatar({ src, name, surname, size = 32 }: AvatarProps) {
       alt={`${name} ${surname}`}
       className="rounded-circle flex-shrink-0"
       style={{ width: size, height: size, objectFit: "cover" }}
+      onError={() => setImgFailed(true)}
     />
   );
 }
