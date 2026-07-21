@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileCard from "../components/ProfileCard";
-import NewsPlaceholder from "../components/NewsPlaceholder";
+import { NewsSection } from "../features/news";
 
 function HomePage() {
   return (
@@ -18,7 +18,7 @@ function HomePage() {
         </Col>
 
         <Col lg={3} className="d-none d-lg-block">
-          <NewsPlaceholder />
+          <NewsSection />
         </Col>
       </Row>
     </Container>
