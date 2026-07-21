@@ -36,9 +36,21 @@ function NewsSection() {
               target="_blank"
               rel="noreferrer"
               action
+              className="d-flex align-items-start gap-2"
             >
-              <p className="mb-0">{item.title}</p>
-              <small className="text-muted">{item.meta}</small>
+              {item.imageURL && (
+                <img
+                  src={item.imageURL}
+                  alt=""
+                  width={56}
+                  height={56}
+                  className="rounded object-fit-cover flex-shrink-0"
+                />
+              )}
+              <div>
+                <p className="mb-0">{item.title}</p>
+                <small className="text-muted">{item.meta}</small>
+              </div>
             </ListGroup.Item>
           ))}
         </ListGroup>

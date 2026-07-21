@@ -3,4 +3,5 @@ export interface NewsItem {
   title: string;
   link: string;
   meta: string;
+  imageURL?: string;
 }

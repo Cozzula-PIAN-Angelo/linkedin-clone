@@ -7,6 +7,7 @@ interface NewsDataArticle {
   link: string;
   pubDate: string;
   source_name: string;
+  image_url: string | null;
 }
 
 interface NewsDataResponse {
@@ -26,6 +27,7 @@ function mapArticleToNewsItem(article: NewsDataArticle): NewsItem {
     title: article.title,
     link: article.link,
     meta: `${article.source_name} · ${formattedDate}`,
+    imageURL: article.image_url ?? undefined,
   };
 }
 
