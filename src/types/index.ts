@@ -11,6 +11,13 @@ export interface User {
 export interface JobTitle {
   id: string;
   title: string;
+  /* l'interfaccia deve essere così come vedi questa Cri
+    id: string;
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  */
 }
 
 export interface Post {
