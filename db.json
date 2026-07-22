@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "mario.rossi@example.com",
+      "password": "password123",
+      "name": "Mario",
+      "surname": "Rossi",
+      "title": "Frontend Developer"
+    },
+    {
+      "email": "ciao@gmail.com",
+      "password": "$2a$10$A4oUU.WJGwKFoMBiVko10uUSQ01lM7WhTk2y0S3q/cvS68z.Mxcrq",
+      "name": "alberto",
+      "surname": "razzolini",
+      "title": "sviluppatore",
+      "id": "5qqYKx_"
+    }
+  ]
+}
