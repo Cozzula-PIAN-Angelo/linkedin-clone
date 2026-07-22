@@ -5,7 +5,7 @@ function ProfileCard() {
   const user = mockUsers[0];
 
   return (
-    <div className="bg-white rounded-2 border overflow-hidden">
+    <div className="bg-body rounded-2 border overflow-hidden">
       <div className="bg-primary-subtle" style={{ height: 56 }} />
 
       <div className="px-3 pb-3">
