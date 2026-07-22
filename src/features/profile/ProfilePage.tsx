@@ -9,6 +9,13 @@ import Posts from "./Posts";
 
 function ProfilePage() {
   const user: User = mockUsers[0];
+  const displayUser: User = {
+    ...user,
+    name: localStorage.getItem("name") ?? user.name,
+    surname: localStorage.getItem("surname") ?? user.surname,
+  };
+  const professionalTitle =
+    localStorage.getItem("professionalTitle") ?? "Frontend Developer";
   const userPosts = mockPosts.filter((post) => post.authorId === user.id);
   const [experiences, setExperencies] = useState<
     (ExperienceFormData & { id: string })[]
@@ -22,14 +29,14 @@ function ProfilePage() {
               <Card.Body className="d-flex flex-column align-items-center">
                 <img
                   src={user.avatar}
-                  alt={`${user.name} ${user.surname}`}
+                  alt={`${displayUser.name} ${displayUser.surname}`}
                   className="avatar-profile rounded-circle mb-3"
                 />
                 <Card.Title>
-                  {user.name} {user.surname}
+                  {displayUser.name} {displayUser.surname}
                 </Card.Title>
                 <Card.Subtitle className="text-secondary mb-2">
-                  {user.job.map((job) => job.title).join("| ")}
+                  {professionalTitle}
                 </Card.Subtitle>
                 <Button className="bg-white text-primary ">
                   Modifica profilo
@@ -66,7 +73,7 @@ function ProfilePage() {
       <Container className="mt-3">
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-            <Posts posts={userPosts} user={user} />
+            <Posts posts={userPosts} user={displayUser} />
           </Col>
         </Row>
       </Container>
