@@ -12,7 +12,7 @@ function HomePage() {
 
         <Col xs={12} md={8} lg={7}>
           {/* Feed post: task di un altro membro del team, qui solo placeholder */}
-          <div className="bg-white rounded-2 border p-3 text-secondary text-center">
+          <div className="bg-body rounded-2 border p-3 text-secondary text-center">
             Feed post (in arrivo)
           </div>
         </Col>

@@ -14,13 +14,13 @@ function SearchBar() {
       </button>
       <Form className="d-none d-lg-block" style={{ maxWidth: 280 }}>
         <div className="input-group">
-          <span className="input-group-text bg-light border-0">
+          <span className="input-group-text bg-body-secondary border-0">
             <Search />
           </span>
           <Form.Control
             type="search"
             placeholder="Cerca"
-            className="bg-light border-0"
+            className="bg-body-secondary border-0"
           />
         </div>
       </Form>

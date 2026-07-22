@@ -21,6 +21,17 @@
       "job": [],
       "location": "",
       "id": 2
+    },
+    {
+      "email": "johnsmithkyon1996@gmail.com",
+      "password": "$2a$10$LXXuVMTgkN4smzcyXlIXk.60gOoxV.VqBQAQsmMnFf3hp365B.6Fi",
+      "name": "Angelo",
+      "surname": "Cozzula",
+      "headline": "Suca minchia",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 3
     }
   ]
 }
