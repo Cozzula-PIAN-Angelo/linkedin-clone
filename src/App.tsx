@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
+import RedirectIfAuth from "./features/auth/RedirectIfAuth";
 import type { RootState } from "./app/store";
 
 function App() {
@@ -13,14 +16,17 @@ function App() {
   }, [theme]);
 
   return (
-    <>
-      <Navbar />
-      <Routes>
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+    <Routes>
+      <Route element={<RedirectIfAuth />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
+
+      <Route element={<ProtectedRoute />}>
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/profile" element={<ProfilePage />} /> */}
-      </Routes>
-    </>
+      </Route>
+    </Routes>
   );
 }
 

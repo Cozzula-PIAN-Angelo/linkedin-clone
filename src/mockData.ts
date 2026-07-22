@@ -1,18 +1,4 @@
-import type { User, Post } from "./types";
-
-export const mockUsers: User[] = [
-  {
-    id: "u1",
-    email: "mario.rossi@example.com",
-    password: "password123",
-    name: "Mario",
-    surname: "Rossi",
-    avatar: "/avatars/mario.png",
-    job: [{ id: "j1", title: "Frontend Developer" }],
-    headline: "Frontend Developer presso Epicode",
-    location: "Milano, Lombardia",
-  },
-];
+import type { Post } from "./types";
 
 export const mockPosts: Post[] = [
   {

@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "email": "cristian@error.it",
+      "password": "$2a$10$1qZmI7GgYK6fOb8X2BcM8u7Wo7irOkCJOsMRcOq79bu7jqUBqRFmO",
+      "name": "cristian",
+      "surname": "nunez jorge",
+      "headline": "BABBO",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 1
+    },
+    {
+      "email": "ANGELO@LOKI.IT",
+      "password": "$2a$10$KbyKvyq0MxvHEpPDHeTkyut7NB1pVwbIqS8I8.l1cYKgSLwYflHFi",
+      "name": "ANGELO",
+      "surname": "LOKI",
+      "headline": "BABBO",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 2
+    }
+  ]
+}
