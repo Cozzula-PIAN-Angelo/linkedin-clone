@@ -4,16 +4,20 @@ import {
   BoxArrowRight,
   Grid3x3GapFill,
   List,
+  MoonStarsFill,
+  SunFill,
   ThreeDots,
   TrashFill,
 } from "react-bootstrap-icons";
 import Avatar from "../Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logout, deleteAccount } from "../../features/auth/authSlice";
+import { toggleTheme } from "../../features/theme/themeSlice";
 
 function NavbarActions() {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.auth.currentUser);
+  const theme = useAppSelector((state) => state.theme.mode);
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -41,6 +45,19 @@ function NavbarActions() {
         aria-label="Altro"
       >
         <List size={20} />
+      </button>
+
+      <button
+        type="button"
+        className="btn p-2 border-0 bg-transparent text-body"
+        aria-label="Cambia tema"
+        onClick={() => dispatch(toggleTheme())}
+      >
+        {theme === "light" ? (
+          <MoonStarsFill size={18} />
+        ) : (
+          <SunFill size={18} />
+        )}
       </button>
 
       <Grid3x3GapFill size={20} className="d-none d-md-block text-secondary" />

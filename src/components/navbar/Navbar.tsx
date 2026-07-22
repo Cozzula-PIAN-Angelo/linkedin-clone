@@ -6,7 +6,7 @@ import NavbarActions from "./NavbarActions";
 
 function Navbar() {
   return (
-    <BsNavbar bg="white" fixed="top" className="border-bottom py-1">
+    <BsNavbar bg="body" fixed="top" className="border-bottom py-2">
       <Container className="align-items-center px-2 px-md-3">
         <BsNavbar.Brand as={Link} to="/" className="p-0 me-2">
           <div

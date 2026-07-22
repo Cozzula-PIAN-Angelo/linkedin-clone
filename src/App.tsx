@@ -1,11 +1,20 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 import RedirectIfAuth from "./features/auth/RedirectIfAuth";
+import type { RootState } from "./app/store";
 
 function App() {
+  const theme = useSelector((state: RootState) => state.theme.mode);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bs-theme", theme);
+  }, [theme]);
+
   return (
     <Routes>
       <Route element={<RedirectIfAuth />}>
