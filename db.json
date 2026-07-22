@@ -1,20 +1,26 @@
 {
   "users": [
     {
-      "id": "1",
-      "email": "mario.rossi@example.com",
-      "password": "password123",
-      "name": "Mario",
-      "surname": "Rossi",
-      "title": "Frontend Developer"
+      "email": "cristian@error.it",
+      "password": "$2a$10$1qZmI7GgYK6fOb8X2BcM8u7Wo7irOkCJOsMRcOq79bu7jqUBqRFmO",
+      "name": "cristian",
+      "surname": "nunez jorge",
+      "headline": "BABBO",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 1
     },
     {
-      "email": "ciao@gmail.com",
-      "password": "$2a$10$A4oUU.WJGwKFoMBiVko10uUSQ01lM7WhTk2y0S3q/cvS68z.Mxcrq",
-      "name": "alberto",
-      "surname": "razzolini",
-      "title": "sviluppatore",
-      "id": "5qqYKx_"
+      "email": "ANGELO@LOKI.IT",
+      "password": "$2a$10$KbyKvyq0MxvHEpPDHeTkyut7NB1pVwbIqS8I8.l1cYKgSLwYflHFi",
+      "name": "ANGELO",
+      "surname": "LOKI",
+      "headline": "BABBO",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 2
     }
   ]
 }
