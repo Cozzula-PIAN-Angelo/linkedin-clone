@@ -1,21 +1,21 @@
 {
   "users": [
     {
-      "email": "cristian@error.it",
-      "password": "$2a$10$1qZmI7GgYK6fOb8X2BcM8u7Wo7irOkCJOsMRcOq79bu7jqUBqRFmO",
-      "name": "cristian",
-      "surname": "nunez jorge",
-      "headline": "BABBO",
+      "email": "angelo@babbo.it",
+      "password": "$2a$10$085f3csitC41ySAw42Xc7eEWsJvbfrGW3Tm4Gdgiw5I53Jsd/K4x2",
+      "name": "ANGELO",
+      "surname": "Cristian",
+      "headline": "",
       "avatar": "",
       "job": [],
       "location": "",
       "id": 1
     },
     {
-      "email": "ANGELO@LOKI.IT",
-      "password": "$2a$10$KbyKvyq0MxvHEpPDHeTkyut7NB1pVwbIqS8I8.l1cYKgSLwYflHFi",
-      "name": "ANGELO",
-      "surname": "LOKI",
+      "email": "cristian@babbo.it",
+      "password": "$2a$10$j6U4BbQI4dtlA49CyznDm.myJN5XqGVWB1qTiO70zopIYI6McWrwG",
+      "name": "cristian",
+      "surname": "Cristian",
       "headline": "BABBO",
       "avatar": "",
       "job": [],
