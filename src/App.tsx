@@ -1,11 +1,18 @@
-import { Auth } from "./features/auth/auth"; //tolto momentaneamente il route perche dava errore e tolti i routes dentro l afunctionapp
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar/Navbar";
+import HomePage from "./pages/HomePage";
+//import { Auth } from "./features/auth/auth"; //tolto momentaneamente il route perche dava errore e tolti i routes dentro l afunctionapp
 
 function App() {
   return (
-    <div className="container mt-5">
-      <h1 className="text-center text-primary fw-bold mb-4">LinkedIn Clone</h1>
-      <Auth />
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        {/*<Route path="/auth" element={<Auth />} /> */}
+        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/profile" element={<ProfilePage />} /> */}
+      </Routes>
+    </>
   );
 }
 

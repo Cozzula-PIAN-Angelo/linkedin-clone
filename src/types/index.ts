@@ -6,6 +6,8 @@ export interface User {
   surname: string;
   avatar: string;
   job: JobTitle[];
+  headline: string; // Aggiunta per ProfileCard <- Alb
+  location: string; // 8======D
 }
 
 export interface JobTitle {
