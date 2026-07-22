@@ -1,12 +1,15 @@
 import { useState } from "react";
 import type { User } from "../../types";
-import { mockUsers } from "../../mockData";
+import { mockUsers, mockPosts } from "../../mockData";
 import { Container, Card, Row, Col, Button } from "react-bootstrap";
 import RoleForm from "./RoleForm";
 import type { ExperienceFormData } from "./RoleForm";
+import Experencies from "./Experiences";
+import Posts from "./Posts";
 
 function ProfilePage() {
   const user: User = mockUsers[0];
+  const userPosts = mockPosts.filter((post) => post.authorId === user.id);
   const [experiences, setExperencies] = useState<
     (ExperienceFormData & { id: string })[]
   >([]);
@@ -48,6 +51,22 @@ function ProfilePage() {
                 ])
               }
             />
+          </Col>
+        </Row>
+      </Container>
+
+      <Container className="mt-3">
+        <Row className="justify-content-center">
+          <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
+            <Experencies experiences={experiences} />
+          </Col>
+        </Row>
+      </Container>
+
+      <Container className="mt-3">
+        <Row className="justify-content-center">
+          <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
+            <Posts posts={userPosts} user={user} />
           </Col>
         </Row>
       </Container>

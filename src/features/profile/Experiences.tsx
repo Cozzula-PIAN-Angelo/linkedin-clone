@@ -8,24 +8,30 @@ interface ExperenciesProps {
 function Experencies({ experiences }: ExperenciesProps) {
   if (experiences.length === 0) {
     return (
-      <Card>
-        <Card.Title>Esperienza</Card.Title>
-        <Card.Body className="border-1 text-secondary">
-          Nessuna epserienza inserita.
+      <Card className="border-0">
+        <Card.Title className="mt-3 ps-3">Esperienza</Card.Title>
+        <Card.Body className="border border-muted rounded mb-3 mx-3">
+          <Card.Subtitle className="text-center text-secondary">
+            Nessuna esperienza inserita.
+          </Card.Subtitle>
         </Card.Body>
       </Card>
     );
   }
 
   return (
-    <Card>
-      <Card.Title>Esperienza</Card.Title>
+    <Card className="border-0">
+      <Card.Title className="mt-3 ps-3">Esperienza</Card.Title>
       {experiences.map((exp) => (
-        <Card.Body key={exp.id}>
-          <Card.Title>{exp.role}</Card.Title>
-          <Card.Subtitle>{exp.company}</Card.Subtitle>
-          <Card.Subtitle>{exp.period}</Card.Subtitle>
-          <Card.Text>{exp.description}</Card.Text>
+        <Card.Body
+          key={exp.id}
+          className="border border-muted rounded mb-3 mx-3"
+        >
+          <Card.Title className="fw-semibold">{exp.role}</Card.Title>
+          <Card.Subtitle className="text-secondary mb-2">
+            {exp.company} · {exp.period}
+          </Card.Subtitle>
+          <Card.Text className="mb-0">{exp.description}</Card.Text>
         </Card.Body>
       ))}
     </Card>

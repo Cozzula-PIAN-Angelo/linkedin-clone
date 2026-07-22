@@ -9,7 +9,15 @@ body {
     background-color: black;
     aspect-ratio: 1/1;
   }
-  .btn {
-    border-radius: 4px;
-  }
+}
+
+/* ***** POST ***** */
+.post-avatar {
+  height: 40px;
+  aspect-ratio: 1/1;
+  background-color: black;
+}
+
+.post-sub {
+  font-size: 0.9rem;
 }

@@ -63,7 +63,7 @@ function RoleForm({ onAdd }: RoleFormProps) {
               <Col xs={12} md={12}>
                 <Form.Control
                   as="textarea"
-                  placeholder="Descrizione (facoltstiva)"
+                  placeholder="Descrizione (facoltativa)"
                   value={form.description}
                   onChange={(e) =>
                     setForm({ ...form, description: e.target.value })
