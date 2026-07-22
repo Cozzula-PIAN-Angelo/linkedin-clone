@@ -1,18 +1,23 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
 import HomePage from "./pages/HomePage";
-//import { Auth } from "./features/auth/auth"; //tolto momentaneamente il route perche dava errore e tolti i routes dentro l afunctionapp
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
+import RedirectIfAuth from "./features/auth/RedirectIfAuth";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        {/*<Route path="/auth" element={<Auth />} /> */}
+    <Routes>
+      <Route element={<RedirectIfAuth />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
+
+      <Route element={<ProtectedRoute />}>
         <Route path="/" element={<HomePage />} />
         {/* <Route path="/profile" element={<ProfilePage />} /> */}
-      </Routes>
-    </>
+      </Route>
+    </Routes>
   );
 }
 

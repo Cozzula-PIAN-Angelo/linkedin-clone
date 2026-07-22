@@ -1,8 +1,10 @@
 import Avatar from "./Avatar";
-import { mockUsers } from "../mockData";
+import { useAppSelector } from "../app/hooks";
 
 function ProfileCard() {
-  const user = mockUsers[0];
+  const user = useAppSelector((state) => state.auth.currentUser);
+
+  if (!user) return null;
 
   return (
     <div className="bg-white rounded-2 border overflow-hidden">

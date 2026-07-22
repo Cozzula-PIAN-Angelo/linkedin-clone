@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-//import authReducer from "../features/auth/authSlice";
+import authReducer from "../features/auth/authSlice";
 import { newsApi } from "../features/news/newsApi";
 
 export const store = configureStore({
   reducer: {
     [newsApi.reducerPath]: newsApi.reducer,
+    auth: authReducer,
     // ogni feature aggiunge la propria riga qui, es:
-    //auth: authReducer,
     // posts: postsReducer,
     // profile: profileReducer,
   },
