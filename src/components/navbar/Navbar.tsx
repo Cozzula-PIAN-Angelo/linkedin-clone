@@ -7,7 +7,7 @@ import NavbarActions from "./NavbarActions";
 function Navbar() {
   return (
     <BsNavbar bg="white" fixed="top" className="border-bottom py-1">
-      <Container fluid className="align-items-center px-2 px-md-3">
+      <Container className="align-items-center px-2 px-md-3">
         <BsNavbar.Brand as={Link} to="/" className="p-0 me-2">
           <div
             className="bg-primary rounded-1 d-flex align-items-center justify-content-center text-white fw-bold"

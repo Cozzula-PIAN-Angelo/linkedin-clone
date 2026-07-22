@@ -47,8 +47,10 @@ function NewsSection() {
                   className="rounded object-fit-cover flex-shrink-0"
                 />
               )}
-              <div>
-                <p className="mb-0">{item.title}</p>
+              <div className="flex-grow-1" style={{ minWidth: 0 }}>
+                <p className="mb-0 text-truncate" title={item.title}>
+                  {item.title}
+                </p>
                 <small className="text-muted">{item.meta}</small>
               </div>
             </ListGroup.Item>
