@@ -23,6 +23,10 @@ function EditProfile() {
     navigate("/profile");
   };
 
+  const exit = () => {
+    navigate("/profile");
+  };
+
   return (
     <Container className="mt-3">
       <Row className="justify-content-center">
@@ -79,6 +83,7 @@ function EditProfile() {
                 <div className="d-flex">
                   <Button
                     type="button"
+                    onClick={exit}
                     className="bg-white text-muted border border-secondary d-block ms-auto mt-3 me-2"
                   >
                     Annulla

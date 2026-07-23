@@ -6,8 +6,10 @@ import RoleForm from "./RoleForm";
 import type { ExperienceFormData } from "./RoleForm";
 import Experencies from "./Experiences";
 import Posts from "./Posts";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const user: User = mockUsers[0];
   const displayUser: User = {
     ...user,
@@ -20,6 +22,11 @@ function ProfilePage() {
   const [experiences, setExperencies] = useState<
     (ExperienceFormData & { id: string })[]
   >([]);
+
+  const editProfile = () => {
+    navigate("/profile/edit");
+  };
+
   return (
     <>
       <Container className="mt-3">
@@ -38,7 +45,10 @@ function ProfilePage() {
                 <Card.Subtitle className="text-secondary mb-2">
                   {professionalTitle}
                 </Card.Subtitle>
-                <Button className="bg-white text-primary ">
+                <Button
+                  onClick={editProfile}
+                  className="bg-white text-primary "
+                >
                   Modifica profilo
                 </Button>
               </Card.Body>
