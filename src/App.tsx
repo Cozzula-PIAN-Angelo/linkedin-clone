@@ -21,11 +21,15 @@ import { authStateResolved } from "./features/auth/authSlice";
 import { useAppDispatch } from "./app/hooks";
 import type { RootState } from "./app/store";
 import type { User } from "./types";
+import MessagingDrawer from "../src/features/messaging/components/MessagingDrawer";
 
 function App() {
   const dispatch = useAppDispatch();
   const theme = useSelector((state: RootState) => state.theme.mode);
   const brandTheme = useSelector((state: RootState) => state.theme.brandTheme);
+
+  // rendering dei messaggi
+  const user = useSelector((state: RootState) => state.auth.currentUser);
   const copy = useCopy();
   const Effects = themeConfigs[brandTheme].effects;
 
@@ -92,6 +96,8 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
+      {/* aggiunto la chat di messaggi a destra */}
+      {user && <MessagingDrawer />}
     </>
   );
 }
