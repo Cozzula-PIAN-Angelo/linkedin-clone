@@ -32,6 +32,17 @@
       "job": [],
       "location": "",
       "id": 3
+    },
+    {
+      "email": "claudio@pelato.it",
+      "password": "$2a$10$KFZFFLP3W5pUeFfAWfdJbeq2sXo2UQ4iiVJWUZE/Er9X2CQPSlAYW",
+      "name": "Claudio",
+      "surname": "Nocapelli",
+      "headline": "Sicuramente non parrucchiere",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 4
     }
   ]
 }
