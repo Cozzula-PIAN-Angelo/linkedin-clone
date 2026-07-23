@@ -1,14 +1,16 @@
 import { Alert, Card, ListGroup, Spinner } from "react-bootstrap";
 import { useGetLatestNewsQuery } from "./newsApi";
+import { useCopy } from "../theme/copy";
 
 function NewsSection() {
   const { data: news, isLoading, isError } = useGetLatestNewsQuery();
+  const copy = useCopy();
 
   return (
-    <Card as="aside" aria-label="Novità di lavoro">
+    <Card as="aside" aria-label={copy.news.title}>
       <Card.Body>
         <Card.Title as="h2" className="h6 mb-0">
-          Novità di lavoro
+          {copy.news.title}
         </Card.Title>
       </Card.Body>
 
@@ -21,7 +23,7 @@ function NewsSection() {
       {isError && (
         <Card.Body>
           <Alert variant="warning" className="mb-0">
-            Impossibile caricare le notizie al momento.
+            {copy.news.error}
           </Alert>
         </Card.Body>
       )}

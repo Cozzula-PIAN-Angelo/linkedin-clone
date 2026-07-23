@@ -6,7 +6,7 @@ import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "src/components/effects"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
@@ -17,6 +17,14 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+    },
+    rules: {
+      // le variabili con _ davanti sono scartate di proposito (es. destructuring
+      // per togliere la password dalla risposta del server)
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
     },
   },
 ]);
