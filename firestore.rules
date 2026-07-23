@@ -40,5 +40,27 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if isOwner(resource.data.authorId);
     }
+
+    // Esperienze del profilo: leggibili da chi è loggato, creabili/cancellabili
+    // solo dal proprietario del profilo a cui appartengono.
+    match /experiences/{experienceId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(request.resource.data.userId);
+      allow update: if false;
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // Collegamenti (rete): leggibili da chi è loggato. Solo chi invia la
+    // richiesta può crearla; solo il destinatario può accettarla (e solo
+    // aggiornando lo status); mittente o destinatario possono rimuoverla
+    // (ritirare una richiesta, ignorare un invito, rimuovere un collegamento).
+    match /connections/{connectionId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(request.resource.data.requesterId);
+      allow update: if isOwner(resource.data.addresseeId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if isOwner(resource.data.requesterId)
+        || isOwner(resource.data.addresseeId);
+    }
   }
 }

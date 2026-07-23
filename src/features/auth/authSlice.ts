@@ -8,6 +8,7 @@ import {
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import type { User } from "../../types/index";
+import { updateProfile } from "../profile/profileSlice";
 
 // Tipi per i dati di Input
 export interface LoginPayload {
@@ -188,6 +189,11 @@ export const authSlice = createSlice({
       .addCase(deleteAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      // UPDATE PROFILE (thunk in features/profile): currentUser resta qui
+      // l'unica fonte di verità, va risincronizzato dopo ogni modifica
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
       });
   },
 });
