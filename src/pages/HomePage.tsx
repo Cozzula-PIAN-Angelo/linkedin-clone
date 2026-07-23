@@ -1,13 +1,10 @@
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileCard from "../components/ProfileCard";
 import { NewsSection } from "../features/news";
-import { useCopy } from "../features/theme/copy";
 import Footer from "../components/Footer";
 import { Feed } from "../features/posts";
 
 function HomePage() {
-  const copy = useCopy();
-
   return (
     <Container style={{ paddingTop: 68 }}>
       <Row className="g-3">
