@@ -9,13 +9,26 @@ import RedirectIfAuth from "./features/auth/RedirectIfAuth";
 import ProfilePage from "./features/profile/ProfilePage";
 import EditProfile from "./features/profile/EditProfile";
 import type { RootState } from "./app/store";
+import { useCopy } from "./features/theme/copy";
 
 function App() {
   const theme = useSelector((state: RootState) => state.theme.mode);
+  const brandTheme = useSelector(
+    (state: RootState) => state.theme.brandTheme,
+  );
+  const copy = useCopy();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-brand-theme", brandTheme);
+  }, [brandTheme]);
+
+  useEffect(() => {
+    document.title = copy.pageTitle;
+  }, [copy.pageTitle]);
 
   return (
     <Routes>

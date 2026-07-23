@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearError, registerUser } from "./authSlice";
+import { useCopy } from "../theme/copy";
 
 function RegisterForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loading, error } = useAppSelector((state) => state.auth);
+  const copy = useCopy();
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -67,7 +69,7 @@ function RegisterForm() {
         </Form.Label>
         <Form.Control
           type="text"
-          placeholder="es. Full Stack Developer"
+          placeholder={copy.register.headlinePlaceholder}
           value={headline}
           onChange={(e) => setHeadline(e.target.value)}
         />
@@ -100,7 +102,7 @@ function RegisterForm() {
         className="w-100 rounded-pill fw-bold"
         disabled={loading}
       >
-        {loading ? <Spinner animation="border" size="sm" /> : "Registrati"}
+        {loading ? <Spinner animation="border" size="sm" /> : copy.register.submit}
       </Button>
     </Form>
   );

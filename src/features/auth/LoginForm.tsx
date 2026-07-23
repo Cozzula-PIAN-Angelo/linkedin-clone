@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { clearError, loginUser } from "./authSlice";
+import { useCopy } from "../theme/copy";
 
 function LoginForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loading, error } = useAppSelector((state) => state.auth);
+  const copy = useCopy();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +64,7 @@ function LoginForm() {
         className="w-100 rounded-pill fw-bold"
         disabled={loading}
       >
-        {loading ? <Spinner animation="border" size="sm" /> : "Accedi"}
+        {loading ? <Spinner animation="border" size="sm" /> : copy.login.submit}
       </Button>
     </Form>
   );
