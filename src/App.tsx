@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -12,13 +14,22 @@ import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDummyNetwork } from "./features/network/useDummyNetwork";
-import type { RootState } from "./app/store";
 import { useCopy } from "./features/theme/copy";
 import { themeConfigs } from "./features/theme/themeConfig";
+import { auth, db } from "./firebase";
+import { authStateResolved } from "./features/auth/authSlice";
+import { useAppDispatch } from "./app/hooks";
+import type { RootState } from "./app/store";
+import type { User } from "./types";
+import MessagingDrawer from "../src/features/messaging/components/MessagingDrawer";
 
 function App() {
+  const dispatch = useAppDispatch();
   const theme = useSelector((state: RootState) => state.theme.mode);
   const brandTheme = useSelector((state: RootState) => state.theme.brandTheme);
+
+  // rendering dei messaggi
+  const user = useSelector((state: RootState) => state.auth.currentUser);
   const copy = useCopy();
   const Effects = themeConfigs[brandTheme].effects;
 
@@ -37,6 +48,30 @@ function App() {
   useEffect(() => {
     document.title = copy.pageTitle;
   }, [copy.pageTitle]);
+
+  // Firebase legge la sessione salvata (IndexedDB) in modo asincrono: questo
+  // listener scatta al primo avvio e ad ogni login/logout, e sincronizza
+  // Redux con l'utente (Auth + profilo Firestore) effettivamente loggato.
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!firebaseUser) {
+        dispatch(authStateResolved(null));
+        return;
+      }
+
+      try {
+        const snap = await getDoc(doc(db, "users", firebaseUser.uid));
+        const profile = snap.exists()
+          ? ({ id: firebaseUser.uid, ...snap.data() } as User)
+          : null;
+        dispatch(authStateResolved(profile));
+      } catch {
+        dispatch(authStateResolved(null));
+      }
+    });
+
+    return unsubscribe;
+  }, [dispatch]);
 
   return (
     <>
@@ -61,6 +96,8 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
+      {/* aggiunto la chat di messaggi a destra */}
+      {user && <MessagingDrawer />}
     </>
   );
 }

@@ -1,18 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../../firebase";
 import { DUMMY_PREFIX, isDummyId } from "../posts/dummyFeed";
 import type { Connection, User } from "../../types";
 
-const API_URL = "http://localhost:3000";
-
 // Stato minimo che le thunk leggono dallo store (evita di importare RootState creando un ciclo)
 interface StateWithAuth {
-  auth: { currentUser: User | null; token: string | null };
+  auth: { currentUser: User | null };
 }
 
 interface NetworkState {
   connections: Connection[];
-  // Utenti reali da db.json: servono per nomi e avatar di inviti e collegamenti
+  // Utenti reali da Firestore: servono per nomi e avatar di inviti e collegamenti
   users: User[];
   loading: boolean;
   error: string | null;
@@ -25,27 +32,26 @@ const initialState: NetworkState = {
   error: null,
 };
 
-// Carica collegamenti e utenti reali. json-server non sa filtrare "richieste
-// dove sono mittente O destinatario", quindi scarichiamo tutto e filtriamo noi.
+// Carica collegamenti e utenti reali. Firestore non sa filtrare "richieste
+// dove sono mittente O destinatario" in una query sola, quindi scarichiamo
+// tutte le connessioni e filtriamo noi (come già faceva json-server prima).
 export const fetchNetwork = createAsyncThunk(
   "network/fetchNetwork",
   async (_: void, { rejectWithValue }) => {
     try {
-      const [connectionsRes, usersRes] = await Promise.all([
-        fetch(`${API_URL}/connections`),
-        fetch(`${API_URL}/users`),
+      const [connectionsSnap, usersSnap] = await Promise.all([
+        getDocs(collection(db, "connections")),
+        getDocs(collection(db, "users")),
       ]);
 
-      if (!connectionsRes.ok || !usersRes.ok) {
-        return rejectWithValue("Errore durante il caricamento della rete");
-      }
-
-      const connections: Connection[] = await connectionsRes.json();
-      const users: User[] = await usersRes.json();
+      const connections = connectionsSnap.docs.map(
+        (d) => ({ id: d.id, ...d.data() }) as Connection,
+      );
+      const users = usersSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as User);
       return { connections, users };
     } catch {
       return rejectWithValue(
-        "Impossibile raggiungere il server. Avvialo con: npm run server"
+        "Impossibile raggiungere Firestore. Controlla la connessione.",
       );
     }
   }
@@ -73,23 +79,10 @@ export const sendRequest = createAsyncThunk(
         return { ...body, id: `${DUMMY_PREFIX}conn${Date.now()}` } as Connection;
       }
 
-      const response = await fetch(`${API_URL}/connections`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante l'invio della richiesta");
-      }
-
-      const connection: Connection = await response.json();
-      return connection;
+      const docRef = await addDoc(collection(db, "connections"), body);
+      return { id: docRef.id, ...body } as Connection;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante l'invio della richiesta");
     }
   }
 );
@@ -97,32 +90,19 @@ export const sendRequest = createAsyncThunk(
 // Accetta un invito ricevuto
 export const acceptRequest = createAsyncThunk(
   "network/acceptRequest",
-  async (connection: Connection, { getState, rejectWithValue }) => {
+  async (connection: Connection, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as StateWithAuth;
-
       // Invito finto: si accetta solo in memoria
       if (isDummyId(connection.id)) {
         return { ...connection, status: "accepted" as const };
       }
 
-      const response = await fetch(`${API_URL}/connections/${connection.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify({ status: "accepted" }),
+      await updateDoc(doc(db, "connections", connection.id), {
+        status: "accepted",
       });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante l'accettazione dell'invito");
-      }
-
-      const updated: Connection = await response.json();
-      return updated;
+      return { ...connection, status: "accepted" as const };
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante l'accettazione dell'invito");
     }
   }
 );
@@ -130,27 +110,17 @@ export const acceptRequest = createAsyncThunk(
 // Ignora un invito, ritira una richiesta inviata o rimuove un collegamento
 export const removeConnection = createAsyncThunk(
   "network/removeConnection",
-  async (connectionId: string, { getState, rejectWithValue }) => {
+  async (connectionId: string, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as StateWithAuth;
-
       // Connessione finta: esiste solo in memoria
       if (isDummyId(connectionId)) {
         return connectionId;
       }
 
-      const response = await fetch(`${API_URL}/connections/${connectionId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante la rimozione");
-      }
-
+      await deleteDoc(doc(db, "connections", connectionId));
       return connectionId;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante la rimozione");
     }
   }
 );
@@ -182,7 +152,7 @@ export const networkSlice = createSlice({
       })
       .addCase(fetchNetwork.fulfilled, (state, action) => {
         state.loading = false;
-        // Il server conosce solo le connessioni vere: quelle finte vanno preservate
+        // Firestore conosce solo le connessioni vere: quelle finte vanno preservate
         const dummyConnections = state.connections.filter((c) => isDummyId(c.id));
         state.connections = [...action.payload.connections, ...dummyConnections];
         state.users = action.payload.users;

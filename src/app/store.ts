@@ -6,6 +6,7 @@ import networkReducer from "../features/network/networkSlice";
 import { newsApi } from "../features/news/newsApi";
 import notificationReducer from "../features/notification/notificationSlice";
 import themeReducer from "../features/theme/themeSlice";
+import messagingReducer from "../../src/features/messaging/data/messagingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     posts: postsReducer,
     profile: profileReducer,
     network: networkReducer,
+    messaging: messagingReducer,
     // ogni feature aggiunge la propria riga qui
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,9 +1,19 @@
 import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { db } from "../../firebase";
 import { isDummyId, isLocalId, LOCAL_PREFIX } from "./dummyFeed";
 import type { Comment, Post, User } from "../../types";
-
-const API_URL = "http://localhost:3000";
 
 // Ordina i post dal più recente al più vecchio
 function byDateDesc(a: Post, b: Post): number {
@@ -31,7 +41,7 @@ const initialState: PostsState = {
 
 // Stato minimo che le thunk leggono dallo store (evita di importare RootState creando un ciclo)
 interface StateWithAuth {
-  auth: { currentUser: User | null; token: string | null };
+  auth: { currentUser: User | null };
 }
 
 // Carica il feed: i post (dal più recente), gli utenti per gli autori e i commenti
@@ -39,26 +49,29 @@ export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
   async (_: void, { rejectWithValue }) => {
     try {
-      const [postsRes, usersRes, commentsRes] = await Promise.all([
-        fetch(`${API_URL}/posts?_sort=createdAt&_order=desc`),
-        fetch(`${API_URL}/users`),
-        fetch(`${API_URL}/comments?_sort=createdAt&_order=asc`),
+      const [postsSnap, usersSnap, commentsSnap] = await Promise.all([
+        getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"))),
+        getDocs(collection(db, "users")),
+        getDocs(query(collection(db, "comments"), orderBy("createdAt", "asc"))),
       ]);
 
-      if (!postsRes.ok || !usersRes.ok || !commentsRes.ok) {
-        return rejectWithValue("Errore durante il caricamento del feed");
-      }
+      const posts = postsSnap.docs.map(
+        (d) => ({ id: d.id, ...d.data() }) as Post,
+      );
+      const authors = usersSnap.docs.map(
+        (d) => ({ id: d.id, ...d.data() }) as User,
+      );
+      const comments = commentsSnap.docs.map(
+        (d) => ({ id: d.id, ...d.data() }) as Comment,
+      );
 
-      const posts: Post[] = await postsRes.json();
-      const authors: User[] = await usersRes.json();
-      const comments: Comment[] = await commentsRes.json();
       return { posts, authors, comments };
     } catch {
       return rejectWithValue(
-        "Impossibile raggiungere il server. Avvialo con: npm run server"
+        "Impossibile raggiungere Firestore. Controlla la connessione.",
       );
     }
-  }
+  },
 );
 
 export interface NewPostPayload {
@@ -81,29 +94,16 @@ export const createPost = createAsyncThunk(
         authorId: String(auth.currentUser.id),
         content: content.trim(),
         createdAt: new Date().toISOString(),
-        likes: [],
+        likes: [] as string[],
         ...(image ? { image } : {}),
       };
 
-      const response = await fetch(`${API_URL}/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante la pubblicazione del post");
-      }
-
-      const post: Post = await response.json();
-      return post;
+      const docRef = await addDoc(collection(db, "posts"), body);
+      return { id: docRef.id, ...body } as Post;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante la pubblicazione del post");
     }
-  }
+  },
 );
 
 // Diffonde un post ("Diffondi"): crea un nuovo post a nome dell'utente loggato
@@ -127,30 +127,17 @@ export const repostPost = createAsyncThunk(
         repostOf: String(original.repostOf ?? original.id),
       };
 
-      // L'originale è finto: sul server non esiste, quindi nemmeno la
+      // L'originale è finto: su Firestore non esiste, quindi nemmeno la
       // diffusione può essere salvata. Resta in memoria col prefisso "local-",
       // come i commenti scritti sui post finti.
       if (isDummyId(body.repostOf)) {
         return { ...body, id: `${LOCAL_PREFIX}p-${nanoid()}` } as Post;
       }
 
-      const response = await fetch(`${API_URL}/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante la diffusione del post");
-      }
-
-      const post: Post = await response.json();
-      return post;
+      const docRef = await addDoc(collection(db, "posts"), body);
+      return { id: docRef.id, ...body } as Post;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante la diffusione del post");
     }
   }
 );
@@ -170,75 +157,48 @@ export const toggleLike = createAsyncThunk(
         ? post.likes.filter((id) => id !== userId)
         : [...post.likes, userId];
 
-      // Post finto: il like resta solo in memoria, niente chiamata al server
+      // Post finto: il like resta solo in memoria, niente scrittura su Firestore
       if (isDummyId(post.id)) {
         return { ...post, likes };
       }
 
-      // Post vero: in db.json salviamo solo i like degli utenti reali,
+      // Post vero: in Firestore salviamo solo i like degli utenti reali,
       // quelli finti restano solo in memoria
-      const response = await fetch(`${API_URL}/posts/${post.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify({ likes: likes.filter((id) => !isDummyId(id)) }),
+      await updateDoc(doc(db, "posts", post.id), {
+        likes: likes.filter((id) => !isDummyId(id)),
       });
 
-      if (!response.ok) {
-        return rejectWithValue("Errore durante l'aggiornamento del like");
-      }
-
-      const updated: Post = await response.json();
-      return { ...updated, likes };
+      return { ...post, likes };
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante l'aggiornamento del like");
     }
-  }
+  },
 );
 
 // Elimina un post (solo il proprio: il bottone compare solo sui post dell'utente loggato)
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async (postId: string, { getState, rejectWithValue }) => {
+  async (postId: string, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as StateWithAuth;
-
       // Post solo in memoria (finto, o diffusione di un post finto):
-      // niente da cancellare sul server
+      // niente da cancellare su Firestore
       if (isDummyId(postId) || isLocalId(postId)) {
         return postId;
       }
 
-      const response = await fetch(`${API_URL}/posts/${postId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
+      await deleteDoc(doc(db, "posts", postId));
 
-      if (!response.ok) {
-        return rejectWithValue("Errore durante l'eliminazione del post");
-      }
-
-      // Elimina anche i commenti del post, così non restano orfani in db.json
-      const commentsRes = await fetch(`${API_URL}/comments?postId=${postId}`);
-      if (commentsRes.ok) {
-        const comments: Comment[] = await commentsRes.json();
-        await Promise.all(
-          comments.map((comment) =>
-            fetch(`${API_URL}/comments/${comment.id}`, {
-              method: "DELETE",
-              headers: { Authorization: `Bearer ${auth.token}` },
-            })
-          )
-        );
-      }
+      // Elimina anche i commenti del post, così non restano orfani in Firestore
+      const commentsSnap = await getDocs(
+        query(collection(db, "comments"), where("postId", "==", postId)),
+      );
+      await Promise.all(commentsSnap.docs.map((d) => deleteDoc(d.ref)));
 
       return postId;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante l'eliminazione del post");
     }
-  }
+  },
 );
 
 export interface NewCommentPayload {
@@ -263,58 +223,35 @@ export const addComment = createAsyncThunk(
         createdAt: new Date().toISOString(),
       };
 
-      // Commento su un post finto: resta solo in memoria, niente server
+      // Commento su un post finto: resta solo in memoria, niente Firestore
       if (isDummyId(postId)) {
         return { ...body, id: `${LOCAL_PREFIX}c-${Date.now()}` } as Comment;
       }
 
-      const response = await fetch(`${API_URL}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante la pubblicazione del commento");
-      }
-
-      const comment: Comment = await response.json();
-      return comment;
+      const docRef = await addDoc(collection(db, "comments"), body);
+      return { id: docRef.id, ...body } as Comment;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante la pubblicazione del commento");
     }
-  }
+  },
 );
 
 // Elimina un commento (solo il proprio)
 export const deleteComment = createAsyncThunk(
   "posts/deleteComment",
-  async (commentId: string, { getState, rejectWithValue }) => {
+  async (commentId: string, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as StateWithAuth;
-
-      // Commento solo in memoria (scritto su un post finto): niente server
+      // Commento solo in memoria (scritto su un post finto): niente Firestore
       if (isLocalId(commentId) || isDummyId(commentId)) {
         return commentId;
       }
 
-      const response = await fetch(`${API_URL}/comments/${commentId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante l'eliminazione del commento");
-      }
-
+      await deleteDoc(doc(db, "comments", commentId));
       return commentId;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante l'eliminazione del commento");
     }
-  }
+  },
 );
 
 export const postsSlice = createSlice({

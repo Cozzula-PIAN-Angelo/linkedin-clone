@@ -1,11 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { db } from "../../firebase";
 import type { Experience, User } from "../../types";
-
-const API_URL = "http://localhost:3000";
 
 // Stato minimo che la thunk legge dallo store (evita di importare RootState creando un ciclo)
 interface StateWithAuth {
-  auth: { currentUser: User | null; token: string | null };
+  auth: { currentUser: User | null };
 }
 
 export interface UpdateProfilePayload {
@@ -16,7 +25,7 @@ export interface UpdateProfilePayload {
   avatar?: string;
 }
 
-// Il form manda i campi compilati, userId e id li mettono la thunk e il server
+// Il form manda i campi compilati, userId e id li mettono la thunk e Firestore
 export type NewExperience = Omit<Experience, "id" | "userId">;
 
 interface ProfileState {
@@ -34,8 +43,8 @@ const initialState: ProfileState = {
   loadingExperiences: false,
 };
 
-// Salva le modifiche al profilo dell'utente loggato su db.json.
-// authSlice ascolta il fulfilled per aggiornare currentUser e la sessione.
+// Salva le modifiche al profilo dell'utente loggato su Firestore.
+// authSlice ascolta il fulfilled per aggiornare currentUser.
 export const updateProfile = createAsyncThunk(
   "profile/updateProfile",
   async (changes: UpdateProfilePayload, { getState, rejectWithValue }) => {
@@ -45,42 +54,26 @@ export const updateProfile = createAsyncThunk(
         return rejectWithValue("Nessun utente loggato");
       }
 
-      const response = await fetch(`${API_URL}/users/${auth.currentUser.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify(changes),
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante il salvataggio del profilo");
-      }
-
-      // PATCH su /users restituisce il record completo, hash della password incluso:
-      // lo togliamo prima che finisca in currentUser e nel localStorage
-      const { password: _password, ...user } = (await response.json()) as User;
-      return user as User;
+      await updateDoc(doc(db, "users", auth.currentUser.id), { ...changes });
+      return { ...auth.currentUser, ...changes } as User;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante il salvataggio del profilo");
     }
   }
 );
 
 // Carica le esperienze del profilo aperto. Gli utenti finti (id "dummy-")
-// non esistono su db.json: il server risponde con una lista vuota.
+// non esistono su Firestore: la query restituisce semplicemente una lista vuota.
 export const fetchExperiences = createAsyncThunk(
   "profile/fetchExperiences",
   async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}/experiences?userId=${userId}`);
-      if (!response.ok) {
-        return rejectWithValue("Errore durante il caricamento delle esperienze");
-      }
-      return (await response.json()) as Experience[];
+      const snap = await getDocs(
+        query(collection(db, "experiences"), where("userId", "==", userId)),
+      );
+      return snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Experience);
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante il caricamento delle esperienze");
     }
   }
 );
@@ -94,47 +87,23 @@ export const addExperience = createAsyncThunk(
         return rejectWithValue("Nessun utente loggato");
       }
 
-      const response = await fetch(`${API_URL}/experiences`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify({
-          ...experience,
-          userId: String(auth.currentUser.id),
-        }),
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante il salvataggio dell'esperienza");
-      }
-
-      return (await response.json()) as Experience;
+      const body = { ...experience, userId: String(auth.currentUser.id) };
+      const docRef = await addDoc(collection(db, "experiences"), body);
+      return { id: docRef.id, ...body } as Experience;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante il salvataggio dell'esperienza");
     }
   }
 );
 
 export const deleteExperience = createAsyncThunk(
   "profile/deleteExperience",
-  async (experienceId: string, { getState, rejectWithValue }) => {
+  async (experienceId: string, { rejectWithValue }) => {
     try {
-      const { auth } = getState() as StateWithAuth;
-
-      const response = await fetch(`${API_URL}/experiences/${experienceId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${auth.token}` },
-      });
-
-      if (!response.ok) {
-        return rejectWithValue("Errore durante l'eliminazione dell'esperienza");
-      }
-
+      await deleteDoc(doc(db, "experiences", experienceId));
       return experienceId;
     } catch {
-      return rejectWithValue("Errore di connessione al server");
+      return rejectWithValue("Errore durante l'eliminazione dell'esperienza");
     }
   }
 );
