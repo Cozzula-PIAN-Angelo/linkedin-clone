@@ -25,6 +25,7 @@ import {
 } from "react-bootstrap-icons";
 import VillainLogo from "../../components/VillainLogo";
 import HorrorSkullLogo from "../../components/HorrorSkullLogo";
+import FantasyRingLogo from "../../components/FantasyRingLogo";
 
 export type BrandTheme = "default" | "villain" | "fantasy" | "cyberpunk" | "horror";
 
@@ -83,7 +84,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
   fantasy: {
     label: "Fantasy",
     swatch: "#1f6d4c",
-    logo: ShieldFill,
+    logo: FantasyRingLogo,
     icons: {
       network: ShieldFill,
       jobs: Gem,

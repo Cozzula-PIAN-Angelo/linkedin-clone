@@ -52,7 +52,7 @@ function PostCard({ post, author }: PostCardProps) {
   const authorName = author ? `${author.name} ${author.surname}` : "Utente eliminato";
 
   return (
-    <article className="bg-body rounded-2 border">
+    <article className="post-card bg-body rounded-2 border">
       {/* Header: autore, headline, quanto tempo fa */}
       <div className="d-flex align-items-start gap-2 p-3 pb-2">
         <Avatar
@@ -159,7 +159,7 @@ function PostCard({ post, author }: PostCardProps) {
           variant="link"
           size="sm"
           onClick={() => dispatch(toggleLike(post))}
-          className={`text-decoration-none fw-semibold d-flex align-items-center gap-2 ${
+          className={`post-action-btn text-decoration-none fw-semibold d-flex align-items-center gap-2 ${
             isLiked ? "text-primary" : "text-secondary"
           }`}
         >
@@ -170,7 +170,7 @@ function PostCard({ post, author }: PostCardProps) {
           variant="link"
           size="sm"
           onClick={() => setShowComments((open) => !open)}
-          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
+          className="post-action-btn text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
         >
           <ChatText size={18} />
           Commenta
@@ -178,7 +178,7 @@ function PostCard({ post, author }: PostCardProps) {
         <Button
           variant="link"
           size="sm"
-          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
+          className="post-action-btn text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
         >
           <ArrowRepeat size={18} />
           Diffondi
@@ -186,7 +186,7 @@ function PostCard({ post, author }: PostCardProps) {
         <Button
           variant="link"
           size="sm"
-          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
+          className="post-action-btn text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
         >
           <SendFill size={18} />
           Invia

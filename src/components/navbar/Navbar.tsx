@@ -52,9 +52,9 @@ function Navbar() {
             >
               <div
                 className="bg-primary rounded-1 d-flex align-items-center justify-content-center text-white fw-bold"
-                style={{ width: 34, height: 34, fontSize: "1.1rem" }}
+                style={{ width: 38, height: 38, fontSize: "1.1rem" }}
               >
-                <LogoIcon size={20} />
+                <LogoIcon size={24} />
               </div>
             </BsNavbar.Brand>
 

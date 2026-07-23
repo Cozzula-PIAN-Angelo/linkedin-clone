@@ -43,6 +43,17 @@
       "job": [],
       "location": "",
       "id": 4
+    },
+    {
+      "email": "test-claude-engraved@example.test",
+      "password": "$2a$10$6azb.g9UZJdW3em7zwecQOxvUl7PDt/gy2dTBd90Sf7BhzS8OqJqi",
+      "name": "Test",
+      "surname": "Claude11",
+      "headline": "",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 5
     }
   ],
   "posts": [
@@ -78,6 +89,13 @@
       "createdAt": "2026-07-23T08:00:19.849Z",
       "likes": [],
       "id": 4
+    },
+    {
+      "authorId": "6",
+      "content": "ciao come stai",
+      "createdAt": "2026-07-23T13:01:09.514Z",
+      "likes": [],
+      "id": 5
     }
   ],
   "comments": [
