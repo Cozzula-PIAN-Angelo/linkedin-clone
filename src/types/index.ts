@@ -15,10 +15,29 @@ export interface User {
 export interface JobTitle {
   id: string;
   title: string;
+  /* l'interfaccia deve essere così come vedi questa Cri
+    id: string;
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  */
 }
 
 export interface Post {
   id: string;
+  authorId: string;
+  content: string;
+  createdAt: string;
+  // Elenco degli id utente che hanno consigliato il post
+  likes: string[];
+  // Immagine opzionale del post, salvata come data URL (base64) in db.json
+  image?: string;
+}
+
+export interface Comment {
+  id: string;
+  postId: string;
   authorId: string;
   content: string;
   createdAt: string;

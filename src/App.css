@@ -1,0 +1,25 @@
+/* ***** BODY BG ***** */
+body {
+  background-color: whitesmoke;
+}
+
+/* ***** PROFILO ***** */
+.profile-card {
+  img {
+    background-color: black;
+    aspect-ratio: 1/1;
+    width: 120px;
+  }
+}
+
+/* ***** POST ***** */
+.post-avatar {
+  height: 40px;
+  aspect-ratio: 1/1;
+  background-color: black;
+  flex-shrink: 0;
+}
+
+.post-sub {
+  font-size: 0.9rem;
+}

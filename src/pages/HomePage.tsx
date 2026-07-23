@@ -2,6 +2,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import ProfileCard from "../components/ProfileCard";
 import { NewsSection } from "../features/news";
 import { useCopy } from "../features/theme/copy";
+import Footer from "../components/Footer";
+import { Feed } from "../features/posts";
 
 function HomePage() {
   const copy = useCopy();
@@ -14,14 +16,12 @@ function HomePage() {
         </Col>
 
         <Col xs={12} md={8} lg={7}>
-          {/* Feed post: task di un altro membro del team, qui solo placeholder */}
-          <div className="bg-body rounded-2 border p-3 text-secondary text-center">
-            {copy.feedPlaceholder}
-          </div>
+          <Feed />
         </Col>
 
-        <Col lg={3} className="d-none d-lg-block">
+        <Col xs={12} lg={3}>
           <NewsSection />
+          <Footer />
         </Col>
       </Row>
     </Container>
