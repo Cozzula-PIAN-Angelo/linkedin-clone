@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Profili utente: leggibili da chi è loggato (servono per mostrare autori
+    // dei post), modificabili solo dal proprietario del profilo.
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // Post: chiunque sia loggato può leggerli e crearne di propri.
+    // Solo l'autore può cancellare o modificare il contenuto; chiunque sia
+    // loggato può però aggiornare il solo campo "likes" (toggle del "Consiglia").
+    match /posts/{postId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(request.resource.data.authorId);
+      allow update: if isOwner(resource.data.authorId)
+        || (isSignedIn()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']));
+      allow delete: if isOwner(resource.data.authorId);
+    }
+
+    // Commenti: chiunque sia loggato può leggerli e crearne di propri.
+    // Solo l'autore può cancellarli; nessuna modifica prevista (l'app non li edita).
+    match /comments/{commentId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(request.resource.data.authorId);
+      allow update: if false;
+      allow delete: if isOwner(resource.data.authorId);
+    }
+
+    // Esperienze del profilo: leggibili da chi è loggato, creabili/cancellabili
+    // solo dal proprietario del profilo a cui appartengono.
+    match /experiences/{experienceId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(request.resource.data.userId);
+      allow update: if false;
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    // Collegamenti (rete): leggibili da chi è loggato. Solo chi invia la
+    // richiesta può crearla; solo il destinatario può accettarla (e solo
+    // aggiornando lo status); mittente o destinatario possono rimuoverla
+    // (ritirare una richiesta, ignorare un invito, rimuovere un collegamento).
+    match /connections/{connectionId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(request.resource.data.requesterId);
+      allow update: if isOwner(resource.data.addresseeId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if isOwner(resource.data.requesterId)
+        || isOwner(resource.data.addresseeId);
+    }
+  }
+}

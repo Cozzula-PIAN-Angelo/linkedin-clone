@@ -25,9 +25,15 @@ import {
 } from "react-bootstrap-icons";
 import VillainLogo from "../../components/VillainLogo";
 import HorrorSkullLogo from "../../components/HorrorSkullLogo";
+import CyberpunkEffects from "./CyberpunkEffects";
 import FantasyRingLogo from "../../components/FantasyRingLogo";
 
-export type BrandTheme = "default" | "villain" | "fantasy" | "cyberpunk" | "horror";
+export type BrandTheme =
+  | "default"
+  | "villain"
+  | "fantasy"
+  | "cyberpunk"
+  | "horror";
 
 export const brandThemes: BrandTheme[] = [
   "default",
@@ -56,6 +62,7 @@ export type ThemeConfig = {
   swatch: string;
   logo: IconComponent;
   icons: NavIconSet;
+  effects?: ComponentType;
 };
 
 export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
@@ -102,6 +109,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       messaging: CodeSlash,
       more: RocketTakeoffFill,
     },
+    effects: CyberpunkEffects,
   },
   horror: {
     label: "Horror",
