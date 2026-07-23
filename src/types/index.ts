@@ -35,6 +35,16 @@ export interface Post {
   image?: string;
 }
 
+// Richiesta di collegamento: nasce "pending" e diventa "accepted".
+// Quelle verso gli utenti finti hanno id "dummy-" e vivono solo in memoria.
+export interface Connection {
+  id: string;
+  requesterId: string;
+  addresseeId: string;
+  status: "pending" | "accepted";
+  createdAt: string;
+}
+
 export interface Comment {
   id: string;
   postId: string;

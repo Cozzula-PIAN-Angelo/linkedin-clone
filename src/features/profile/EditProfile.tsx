@@ -1,26 +1,39 @@
-import { useState } from "react";
-import type { SubmitEvent } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import type { User } from "../../types";
-import { mockUsers } from "../../mockData";
+import { Alert, Container, Row, Col, Card, Form, Button, Spinner } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { updateProfile, clearProfileError } from "./profileSlice";
 
 function EditProfile() {
-  const user: User = mockUsers[0];
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.currentUser);
+  const { saving, error } = useAppSelector((state) => state.profile);
 
-  const [name, setName] = useState(user.name);
-  const [surname, setSurname] = useState(user.surname);
+  const [name, setName] = useState(user?.name ?? "");
+  const [surname, setSurname] = useState(user?.surname ?? "");
   const [professionalTitle, setProfessionalTitle] = useState(
-    () => localStorage.getItem("professionalTitle") ?? "Frontend Developer",
+    user?.headline ?? "",
   );
 
-  const handleSubmit = (e: SubmitEvent) => {
+  useEffect(() => {
+    dispatch(clearProfileError());
+  }, [dispatch]);
+
+  // Dietro ProtectedRoute c'è sempre un utente loggato, ma TypeScript non lo sa
+  if (!user) return null;
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    localStorage.setItem("name", name);
-    localStorage.setItem("surname", surname);
-    localStorage.setItem("professionalTitle", professionalTitle);
-    navigate("/profile");
+    try {
+      await dispatch(
+        updateProfile({ name, surname, headline: professionalTitle })
+      ).unwrap();
+      navigate("/profile");
+    } catch {
+      // errore già disponibile in state.profile.error, mostrato dall'Alert sotto
+    }
   };
 
   const exit = () => {
@@ -47,6 +60,11 @@ function EditProfile() {
               </Button>
 
               <Form onSubmit={handleSubmit} className="w-100">
+                {error && (
+                  <Alert variant="danger" className="py-2 small">
+                    {error}
+                  </Alert>
+                )}
                 <Row className="g-3">
                   <Col xs={12} md={6}>
                     <Form.Group controlId="editName">
@@ -88,8 +106,8 @@ function EditProfile() {
                   >
                     Annulla
                   </Button>
-                  <Button type="submit" className="d-block mt-3">
-                    Salva modifiche
+                  <Button type="submit" className="d-block mt-3" disabled={saving}>
+                    {saving ? <Spinner animation="border" size="sm" /> : "Salva modifiche"}
                   </Button>
                 </div>
               </Form>

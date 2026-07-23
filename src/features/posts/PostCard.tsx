@@ -10,6 +10,7 @@ import {
   ThreeDots,
   Trash,
 } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import CommentSection from "./CommentSection";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -51,27 +52,44 @@ function PostCard({ post, author }: PostCardProps) {
   // L'autore può mancare se il suo account è stato eliminato da db.json
   const authorName = author ? `${author.name} ${author.surname}` : "Utente eliminato";
 
+  const authorInfo = (
+    <>
+      <Avatar
+        src={author?.avatar}
+        name={author?.name ?? "?"}
+        surname={author?.surname ?? "?"}
+        size={48}
+      />
+      <div className="flex-grow-1" style={{ minWidth: 0 }}>
+        <div className="fw-bold text-truncate">{authorName}</div>
+        {author?.headline && (
+          <div className="text-secondary small text-truncate">
+            {author.headline}
+          </div>
+        )}
+        <div className="text-secondary small d-flex align-items-center gap-1">
+          {timeAgo(post.createdAt)} · <Globe2 size={13} />
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <article className="bg-body rounded-2 border">
-      {/* Header: autore, headline, quanto tempo fa */}
+      {/* Header: autore, headline, quanto tempo fa. Avatar e nome portano
+          al profilo dell'autore (nessun link se l'account è stato eliminato) */}
       <div className="d-flex align-items-start gap-2 p-3 pb-2">
-        <Avatar
-          src={author?.avatar}
-          name={author?.name ?? "?"}
-          surname={author?.surname ?? "?"}
-          size={48}
-        />
-        <div className="flex-grow-1" style={{ minWidth: 0 }}>
-          <div className="fw-bold text-truncate">{authorName}</div>
-          {author?.headline && (
-            <div className="text-secondary small text-truncate">
-              {author.headline}
-            </div>
-          )}
-          <div className="text-secondary small d-flex align-items-center gap-1">
-            {timeAgo(post.createdAt)} · <Globe2 size={13} />
-          </div>
-        </div>
+        {author ? (
+          <Link
+            to={`/profile/${post.authorId}`}
+            className="d-flex align-items-start gap-2 flex-grow-1 text-decoration-none text-body"
+            style={{ minWidth: 0 }}
+          >
+            {authorInfo}
+          </Link>
+        ) : (
+          authorInfo
+        )}
 
         {isOwnPost && (
           <Dropdown align="end">

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { User } from "../../types/index";
 import { saveSession, loadSession, clearSession } from "./authStorage";
+import { updateProfile } from "../profile/profileSlice";
 
 // Tipi per i dati di Input
 export interface LoginPayload {
@@ -193,6 +194,14 @@ export const authSlice = createSlice({
       .addCase(deleteAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      // UPDATE PROFILE (thunk in features/profile): currentUser resta qui
+      // l'unica fonte di verità, quindi va aggiornato insieme alla sessione
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        if (state.token) {
+          saveSession(state.token, action.payload);
+        }
       });
   },
 });
