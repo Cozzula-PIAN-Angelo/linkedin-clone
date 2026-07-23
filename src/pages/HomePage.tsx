@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileCard from "../components/ProfileCard";
 import { NewsSection } from "../features/news";
+import Footer from "../components/Footer";
 
 function HomePage() {
   return (
@@ -17,8 +18,9 @@ function HomePage() {
           </div>
         </Col>
 
-        <Col lg={3} className="d-none d-lg-block">
+        <Col xs={12} lg={3}>
           <NewsSection />
+          <Footer />
         </Col>
       </Row>
     </Container>
