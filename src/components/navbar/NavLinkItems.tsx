@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import type { Icon } from "react-bootstrap-icons";
+import type { IconComponent } from "../../features/theme/themeConfig";
 
 type NavLinkItemProps = {
   to: string;
   label: string;
-  icon: Icon;
+  icon: IconComponent;
 };
 
 function NavLinkItem({ to, label, icon: IconComponent }: NavLinkItemProps) {

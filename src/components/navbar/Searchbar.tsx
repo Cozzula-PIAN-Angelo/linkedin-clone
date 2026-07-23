@@ -1,8 +1,11 @@
 import { Search } from "react-bootstrap-icons";
 import { Form } from "react-bootstrap";
+import { useCopy } from "../../features/theme/copy";
 
 // Nessuna prop di ricerca (onSearch/value) per ora: solo layout, verrà aggiunta quando si integra la ricerca reale
 function SearchBar() {
+  const copy = useCopy();
+
   return (
     <>
       <button
@@ -19,7 +22,7 @@ function SearchBar() {
           </span>
           <Form.Control
             type="search"
-            placeholder="Cerca"
+            placeholder={copy.searchPlaceholder}
             className="bg-body-secondary border-0"
           />
         </div>
