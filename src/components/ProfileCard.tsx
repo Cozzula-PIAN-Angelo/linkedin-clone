@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
+import ElectricBorder from "./effects/ElectricBorder";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useCopy } from "../features/theme/copy";
 import { fetchNetwork, involvesUser } from "../features/network/networkSlice";
@@ -8,6 +9,8 @@ import { fetchNetwork, involvesUser } from "../features/network/networkSlice";
 function ProfileCard() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.currentUser);
+  const brandTheme = useAppSelector((state) => state.theme.brandTheme);
+  const mode = useAppSelector((state) => state.theme.mode);
   const connections = useAppSelector((state) => state.network.connections);
   const copy = useCopy();
 
@@ -22,7 +25,7 @@ function ProfileCard() {
     (c) => c.status === "accepted" && involvesUser(c, String(user.id))
   ).length;
 
-  return (
+  const card = (
     <div className="bg-body rounded-2 border overflow-hidden">
       <div className="bg-primary-subtle" style={{ height: 56 }} />
 
@@ -61,6 +64,19 @@ function ProfileCard() {
       </Link>
     </div>
   );
+
+  if (brandTheme === "cyberpunk") {
+    return (
+      <ElectricBorder
+        color={mode === "dark" ? "#9d00ff" : "#ff0044"}
+        borderRadius={8}
+      >
+        {card}
+      </ElectricBorder>
+    );
+  }
+
+  return card;
 }
 
 export default ProfileCard;
