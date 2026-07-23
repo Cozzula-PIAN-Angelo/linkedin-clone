@@ -9,6 +9,7 @@ function ProfileCard() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.currentUser);
   const connections = useAppSelector((state) => state.network.connections);
+  const copy = useCopy();
 
   // Carica i collegamenti per mostrare il conteggio vero
   useEffect(() => {

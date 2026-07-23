@@ -3,6 +3,8 @@ import type { User } from "../../types/index";
 import { saveSession, loadSession, clearSession } from "./authStorage";
 import { updateProfile } from "../profile/profileSlice";
 
+const API_URL = "http://localhost:3000";
+
 // Tipi per i dati di Input
 export interface LoginPayload {
   email: string;
@@ -41,7 +43,7 @@ export const loginUser = createAsyncThunk(
   async (credentials: LoginPayload, { rejectWithValue }) => {
     try {
       // 🟢 USIAMO /login AL POSTO DI /users!
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -81,7 +83,7 @@ export const registerUser = createAsyncThunk(
         location: "",
       };
 
-      const response = await fetch("http://localhost:3000/users", {
+      const response = await fetch(`${API_URL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -115,7 +117,7 @@ export const deleteAccount = createAsyncThunk(
         return rejectWithValue("Nessun utente loggato");
       }
 
-      const response = await fetch(`http://localhost:3000/users/${user.id}`, {
+      const response = await fetch(`${API_URL}/users/${user.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

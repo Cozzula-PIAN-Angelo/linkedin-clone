@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Container, Card, Row, Col, Button, Spinner } from "react-bootstrap";
 import RoleForm from "./RoleForm";
-import type { ExperienceFormData } from "./RoleForm";
 import Experencies from "./Experiences";
+import { addExperience, fetchExperiences } from "./profileSlice";
 import Posts from "./Posts";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -25,16 +25,27 @@ function ProfilePage() {
   const allPosts = useAppSelector((state) => state.posts.items);
   const loading = useAppSelector((state) => state.posts.loading);
   const connections = useAppSelector((state) => state.network.connections);
-  const [experiences, setExperencies] = useState<
-    (ExperienceFormData & { id: string })[]
-  >([]);
+  const experiences = useAppSelector((state) => state.profile.experiences);
+  const loadingExperiences = useAppSelector(
+    (state) => state.profile.loadingExperiences
+  );
+
+  const isOwnProfile = !id || String(id) === String(currentUser?.id);
+  // Id del profilo mostrato: serve fuori dagli hook per caricare le esperienze
+  const profileId = isOwnProfile ? currentUser?.id : id;
 
   useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchNetwork());
   }, [dispatch]);
 
-  const isOwnProfile = !id || String(id) === String(currentUser?.id);
+  // Le esperienze si ricaricano ogni volta che cambia il profilo aperto
+  useEffect(() => {
+    if (profileId) {
+      dispatch(fetchExperiences(String(profileId)));
+    }
+  }, [dispatch, profileId]);
+
   // Gli altri profili (anche gli utenti finti) si pescano dagli autori del feed
   const user = isOwnProfile
     ? currentUser
@@ -143,14 +154,7 @@ function ProfilePage() {
         <Container className="mt-3">
           <Row className="justify-content-center">
             <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-              <RoleForm
-                onAdd={(exp) =>
-                  setExperencies([
-                    ...experiences,
-                    { id: crypto.randomUUID(), ...exp },
-                  ])
-                }
-              />
+              <RoleForm onAdd={(exp) => dispatch(addExperience(exp))} />
             </Col>
           </Row>
         </Container>
@@ -159,7 +163,11 @@ function ProfilePage() {
       <Container className="mt-3">
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-            <Experencies experiences={experiences} />
+            <Experencies
+              experiences={experiences}
+              canEdit={isOwnProfile}
+              loading={loadingExperiences}
+            />
           </Col>
         </Row>
       </Container>

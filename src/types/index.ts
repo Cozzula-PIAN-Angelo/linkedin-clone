@@ -24,6 +24,16 @@ export interface JobTitle {
   */
 }
 
+// Esperienza lavorativa mostrata nel profilo, salvata su db.json
+export interface Experience {
+  id: string;
+  userId: string;
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+}
+
 export interface Post {
   id: string;
   authorId: string;

@@ -9,6 +9,7 @@ import RedirectIfAuth from "./features/auth/RedirectIfAuth";
 import ProfilePage from "./features/profile/ProfilePage";
 import EditProfile from "./features/profile/EditProfile";
 import NetworkPage from "./pages/NetworkPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import { useDummyNetwork } from "./features/network/useDummyNetwork";
 import type { RootState } from "./app/store";
 import { useCopy } from "./features/theme/copy";
@@ -50,6 +51,9 @@ function App() {
         {/* Profilo di un altro utente ("edit" vince su ":id" per ranking) */}
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/network" element={<NetworkPage />} />
+        {/* URL inesistente: pagina 404 con la navbar (se non sei loggato
+            ProtectedRoute ti manda comunque al login) */}
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
