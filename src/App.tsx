@@ -11,9 +11,14 @@ import EditProfile from "./features/profile/EditProfile";
 import NetworkPage from "./pages/NetworkPage";
 import { useDummyNetwork } from "./features/network/useDummyNetwork";
 import type { RootState } from "./app/store";
+import { useCopy } from "./features/theme/copy";
 
 function App() {
   const theme = useSelector((state: RootState) => state.theme.mode);
+  const brandTheme = useSelector(
+    (state: RootState) => state.theme.brandTheme,
+  );
+  const copy = useCopy();
 
   // Attività finta della rete (inviti in arrivo, accettazioni): vive qui
   // perché App è sempre montata, così i timer non muoiono cambiando pagina
@@ -22,6 +27,14 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-brand-theme", brandTheme);
+  }, [brandTheme]);
+
+  useEffect(() => {
+    document.title = copy.pageTitle;
+  }, [copy.pageTitle]);
 
   return (
     <Routes>

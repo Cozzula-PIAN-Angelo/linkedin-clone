@@ -1,12 +1,14 @@
 import { Badge, Dropdown } from "react-bootstrap";
-import { Bell } from "react-bootstrap-icons";
+import { BellFill } from "react-bootstrap-icons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { removeNotification } from "./notificationSlice";
+import { useCopy } from "../theme/copy";
 
 function NotificationBell() {
   const notifications = useAppSelector((state) => state.notification.items);
   const dispatch = useAppDispatch();
   const unreadCount = notifications.filter((n) => !n.read).length;
+  const copy = useCopy();
 
   const handleRemove = (id: string) => {
     dispatch(removeNotification(id));
@@ -20,7 +22,7 @@ function NotificationBell() {
         className="d-flex flex-column align-items-center text-secondary bg-transparent border-0 px-2 py-0"
       >
         <span className="position-relative d-flex">
-          <Bell size={20} />
+          <BellFill size={20} />
           {unreadCount > 0 && (
             <Badge
               bg="danger"
@@ -32,14 +34,16 @@ function NotificationBell() {
             </Badge>
           )}
         </span>
-        <span className="d-none d-lg-inline small">Notifiche</span>
+        <span className="d-none d-lg-inline small">
+          {copy.notifications.label}
+        </span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu style={{ minWidth: 300 }}>
-        <Dropdown.Header>Notifiche</Dropdown.Header>
+        <Dropdown.Header>{copy.notifications.label}</Dropdown.Header>
         {notifications.length === 0 && (
           <Dropdown.ItemText className="text-muted small">
-            Nessuna notifica
+            {copy.notifications.empty}
           </Dropdown.ItemText>
         )}
         {notifications.map((notification) => (

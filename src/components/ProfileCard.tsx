@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useCopy } from "../features/theme/copy";
 import { fetchNetwork, involvesUser } from "../features/network/networkSlice";
 
 function ProfileCard() {
@@ -49,9 +50,11 @@ function ProfileCard() {
         to="/network"
         className="d-block px-3 py-2 text-decoration-none text-body"
       >
-        <div className="small">Collegamenti</div>
+        <div className="small">{copy.profile.connections}</div>
         <div className="d-flex justify-content-between align-items-center">
-          <span className="text-secondary small">Amplia la tua rete</span>
+          <span className="text-secondary small">
+            {copy.profile.growNetwork}
+          </span>
           <span className="fw-semibold small">{connectionCount}</span>
         </div>
       </Link>

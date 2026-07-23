@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Button, Dropdown, Modal } from "react-bootstrap";
 import {
+  BinocularsFill,
   BoxArrowRight,
-  Grid3x3GapFill,
-  List,
+  Fire,
   MoonStarsFill,
   PersonFill,
+  Radioactive,
   SunFill,
   ThreeDots,
-  TrashFill,
 } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logout, deleteAccount } from "../../features/auth/authSlice";
 import { toggleTheme } from "../../features/theme/themeSlice";
+import { useCopy } from "../../features/theme/copy";
 
 function NavbarActions() {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const theme = useAppSelector((state) => state.theme.mode);
+  const copy = useCopy();
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -46,7 +48,7 @@ function NavbarActions() {
         className="btn btn-light d-sm-none rounded-circle p-2"
         aria-label="Altro"
       >
-        <List size={20} />
+        <Radioactive size={20} />
       </button>
 
       <button
@@ -62,7 +64,7 @@ function NavbarActions() {
         )}
       </button>
 
-      <Grid3x3GapFill size={20} className="d-none d-md-block text-secondary" />
+      <BinocularsFill size={20} className="d-none d-md-block text-secondary" />
 
       <ThreeDots size={20} className="d-sm-none text-secondary" />
 
@@ -95,14 +97,14 @@ function NavbarActions() {
               </Dropdown.Item>
               <Dropdown.Item onClick={() => dispatch(logout())}>
                 <BoxArrowRight className="me-2" />
-                Esci
+                {copy.userMenu.logout}
               </Dropdown.Item>
               <Dropdown.Item
                 className="text-danger"
                 onClick={() => setShowConfirm(true)}
               >
-                <TrashFill className="me-2" />
-                Elimina account
+                <Fire className="me-2" />
+                {copy.userMenu.deleteAccount}
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -113,26 +115,28 @@ function NavbarActions() {
             centered
           >
             <Modal.Header closeButton>
-              <Modal.Title className="h6">Eliminare l'account?</Modal.Title>
+              <Modal.Title className="h6">
+                {copy.deleteModal.title}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              L'account <b>{currentUser.email}</b> verrà cancellato per sempre
-              dal server, insieme ai suoi dati. L'operazione non si può
-              annullare.
+              {copy.deleteModal.bodyBefore}
+              <b>{currentUser.email}</b>
+              {copy.deleteModal.bodyAfter}
               {deleteError && (
                 <div className="text-danger small mt-2">{deleteError}</div>
               )}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setShowConfirm(false)}>
-                Annulla
+                {copy.deleteModal.cancel}
               </Button>
               <Button
                 variant="danger"
                 onClick={handleDelete}
                 disabled={deleting}
               >
-                {deleting ? "Eliminazione..." : "Elimina definitivamente"}
+                {deleting ? copy.deleteModal.confirming : copy.deleteModal.confirm}
               </Button>
             </Modal.Footer>
           </Modal>
