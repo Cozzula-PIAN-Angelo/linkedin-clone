@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap-icons";
 import Avatar from "../Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { logout, deleteAccount } from "../../features/auth/authSlice";
+import { logoutUser, deleteAccount } from "../../features/auth/authSlice";
 import { toggleTheme } from "../../features/theme/themeSlice";
 
 function NavbarActions() {
@@ -87,7 +87,7 @@ function NavbarActions() {
                 <small className="text-muted">{currentUser.email}</small>
               </Dropdown.Header>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={() => dispatch(logout())}>
+              <Dropdown.Item onClick={() => logoutUser()}>
                 <BoxArrowRight className="me-2" />
                 Esci
               </Dropdown.Item>
