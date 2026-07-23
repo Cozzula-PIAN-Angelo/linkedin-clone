@@ -73,7 +73,6 @@ function App() {
   return (
     <>
       {Effects && <Effects />}
-      <>
       <FantasyDust />
       <Routes>
           <Route element={<RedirectIfAuth />}>
@@ -97,6 +96,7 @@ function App() {
       </Routes>
     </>
   );
+
 }
 
 export default App;

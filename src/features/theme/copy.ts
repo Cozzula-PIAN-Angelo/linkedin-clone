@@ -212,6 +212,11 @@ const fantasyCopy: Copy = {
     headlinePlaceholder: "es. Guardiano dei Confini",
     submit: "Giura fedeltà",
   },
+  notFound: {
+    title: "Sentiero perduto",
+    message: "Questo cammino non è segnato su nessuna mappa del Regno.",
+    backHome: "Torna alla Taverna",
+  },
 };
 
 // Tutti i temi easter egg condividono gli stessi testi "da cattivo"
