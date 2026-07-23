@@ -17,6 +17,7 @@ body {
   height: 40px;
   aspect-ratio: 1/1;
   background-color: black;
+  flex-shrink: 0;
 }
 
 .post-sub {
