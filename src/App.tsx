@@ -6,6 +6,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 import RedirectIfAuth from "./features/auth/RedirectIfAuth";
+import ProfilePage from "./features/profile/ProfilePage";
+import EditProfile from "./features/profile/EditProfile";
 import type { RootState } from "./app/store";
 
 function App() {
@@ -24,7 +26,8 @@ function App() {
 
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/profile" element={<ProfilePage />} /> */}
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/edit" element={<EditProfile />} />
       </Route>
     </Routes>
   );
