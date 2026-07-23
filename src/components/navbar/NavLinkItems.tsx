@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import type { IconComponent } from "../../features/theme/themeConfig";
 
 type NavLinkItemProps = {
@@ -9,13 +9,18 @@ type NavLinkItemProps = {
 
 function NavLinkItem({ to, label, icon: IconComponent }: NavLinkItemProps) {
   return (
-    <Link
+    <NavLink
       to={to}
-      className="d-flex flex-column align-items-center text-secondary text-decoration-none px-2"
+      end
+      className={({ isActive }) =>
+        `nav-link-item d-flex flex-column align-items-center text-decoration-none px-2 ${
+          isActive ? "active text-body" : "text-secondary"
+        }`
+      }
     >
       <IconComponent size={20} />
       <span className="d-none d-lg-inline small">{label}</span>
-    </Link>
+    </NavLink>
   );
 }
 

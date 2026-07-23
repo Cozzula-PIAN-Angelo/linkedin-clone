@@ -121,61 +121,87 @@
   color: #8fe3b8;
 }
 
-/* ---------- Cyberpunk: neon ciano/magenta su nero ---------- */
+/* ---------- Cyberpunk: neon caldo (rosso/giallo) in chiaro, freddo (viola/blu) in scuro ---------- */
 [data-brand-theme="cyberpunk"][data-bs-theme="light"] {
-  --bs-primary: #d6009c;
-  --bs-primary-rgb: 214, 0, 156;
-  --bs-primary-text-emphasis: #7a0057;
-  --bs-primary-bg-subtle: #ffe0f6;
-  --bs-primary-border-subtle: #ff8adf;
-  --bs-link-color: #0088a8;
-  --bs-link-color-rgb: 0, 136, 168;
-  --bs-link-hover-color: #005f75;
-  --bs-link-hover-color-rgb: 0, 95, 117;
+  --bs-primary: #ff0044;
+  --bs-primary-rgb: 255, 0, 68;
+  --bs-primary-text-emphasis: #99002a;
+  --bs-primary-bg-subtle: #ffe0e8;
+  --bs-primary-border-subtle: #ff8aa8;
+  --bs-link-color: #b8860b;
+  --bs-link-color-rgb: 184, 134, 11;
+  --bs-link-hover-color: #8a6508;
+  --bs-link-hover-color-rgb: 138, 101, 8;
 }
 
 [data-brand-theme="cyberpunk"][data-bs-theme="dark"] {
-  --bs-primary: #ff2bd6;
-  --bs-primary-rgb: 255, 43, 214;
-  --bs-primary-text-emphasis: #ff8adf;
-  --bs-primary-bg-subtle: #2a0a22;
-  --bs-primary-border-subtle: #6b1256;
-  --bs-link-color: #00e5ff;
-  --bs-link-color-rgb: 0, 229, 255;
-  --bs-link-hover-color: #7dfaff;
-  --bs-link-hover-color-rgb: 125, 250, 255;
+  --bs-primary: #9d00ff;
+  --bs-primary-rgb: 157, 0, 255;
+  --bs-primary-text-emphasis: #d9a3ff;
+  --bs-primary-bg-subtle: #1c0630;
+  --bs-primary-border-subtle: #5c1a99;
+  --bs-link-color: #2b6bff;
+  --bs-link-color-rgb: 43, 107, 255;
+  --bs-link-hover-color: #6b9bff;
+  --bs-link-hover-color-rgb: 107, 155, 255;
   --bs-body-bg: #050505;
 }
 
-[data-brand-theme="cyberpunk"] .btn-primary {
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .btn-primary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #ff2bd6;
-  --bs-btn-border-color: #ff2bd6;
+  --bs-btn-bg: #ff0044;
+  --bs-btn-border-color: #ff0044;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #c400a8;
-  --bs-btn-hover-border-color: #c400a8;
-  --bs-btn-focus-shadow-rgb: 255, 43, 214;
+  --bs-btn-hover-bg: #c40036;
+  --bs-btn-hover-border-color: #c40036;
+  --bs-btn-focus-shadow-rgb: 255, 0, 68;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #a3008a;
-  --bs-btn-active-border-color: #a3008a;
+  --bs-btn-active-bg: #a3002d;
+  --bs-btn-active-border-color: #a3002d;
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #ff2bd6;
-  --bs-btn-disabled-border-color: #ff2bd6;
+  --bs-btn-disabled-bg: #ff0044;
+  --bs-btn-disabled-border-color: #ff0044;
 }
 
-[data-brand-theme="cyberpunk"] .form-control:focus {
-  border-color: #00e5ff;
-  box-shadow: 0 0 0 0.25rem rgba(0, 229, 255, 0.25);
+[data-brand-theme="cyberpunk"][data-bs-theme="dark"] .btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #9d00ff;
+  --bs-btn-border-color: #9d00ff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #7a00c4;
+  --bs-btn-hover-border-color: #7a00c4;
+  --bs-btn-focus-shadow-rgb: 157, 0, 255;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #5c0099;
+  --bs-btn-active-border-color: #5c0099;
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #9d00ff;
+  --bs-btn-disabled-border-color: #9d00ff;
 }
 
-[data-brand-theme="cyberpunk"] .notification-item:hover {
-  background-color: #ffe0f6;
-  color: #d6009c;
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .form-control:focus {
+  border-color: #ffe600;
+  box-shadow: 0 0 0 0.25rem rgba(255, 230, 0, 0.35);
+}
+
+[data-brand-theme="cyberpunk"][data-bs-theme="dark"] .form-control:focus {
+  border-color: #2b6bff;
+  box-shadow: 0 0 0 0.25rem rgba(43, 107, 255, 0.35);
+}
+
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .notification-item:hover {
+  background-color: #ffe0e8;
+  color: #99002a;
 }
 
 [data-brand-theme="cyberpunk"][data-bs-theme="dark"] .notification-item:hover {
-  background-color: #2a0a22;
-  color: #ff8adf;
+  background-color: #1c0630;
+  color: #d9a3ff;
+}
+
+[data-brand-theme="cyberpunk"] .nav-link-item:hover,
+[data-brand-theme="cyberpunk"] .nav-link-item.active {
+  color: var(--bs-primary) !important;
 }
 
 /* ---------- Horror: sangue e muschio marcio su nero ---------- */
