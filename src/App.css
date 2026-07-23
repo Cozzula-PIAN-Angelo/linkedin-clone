@@ -8,6 +8,7 @@ body {
   img {
     background-color: black;
     aspect-ratio: 1/1;
+    width: 120px;
   }
 }
 
