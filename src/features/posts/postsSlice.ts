@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { isDummyId, isLocalId, LOCAL_PREFIX } from "./dummyFeed";
 import type { Comment, Post, User } from "../../types";
@@ -106,6 +106,55 @@ export const createPost = createAsyncThunk(
   }
 );
 
+// Diffonde un post ("Diffondi"): crea un nuovo post a nome dell'utente loggato
+// che rimanda all'originale, senza copiarne il testo
+export const repostPost = createAsyncThunk(
+  "posts/repostPost",
+  async (original: Post, { getState, rejectWithValue }) => {
+    try {
+      const { auth } = getState() as StateWithAuth;
+      if (!auth.currentUser) {
+        return rejectWithValue("Devi essere loggato per diffondere");
+      }
+
+      const body = {
+        authorId: String(auth.currentUser.id),
+        content: "",
+        createdAt: new Date().toISOString(),
+        likes: [],
+        // Diffondere una diffusione rimanda sempre al post originale,
+        // così non si creano catene di card annidate
+        repostOf: String(original.repostOf ?? original.id),
+      };
+
+      // L'originale è finto: sul server non esiste, quindi nemmeno la
+      // diffusione può essere salvata. Resta in memoria col prefisso "local-",
+      // come i commenti scritti sui post finti.
+      if (isDummyId(body.repostOf)) {
+        return { ...body, id: `${LOCAL_PREFIX}p-${nanoid()}` } as Post;
+      }
+
+      const response = await fetch(`${API_URL}/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        return rejectWithValue("Errore durante la diffusione del post");
+      }
+
+      const post: Post = await response.json();
+      return post;
+    } catch {
+      return rejectWithValue("Errore di connessione al server");
+    }
+  }
+);
+
 // Aggiunge o toglie il "Consiglia" dell'utente loggato su un post
 export const toggleLike = createAsyncThunk(
   "posts/toggleLike",
@@ -155,6 +204,12 @@ export const deletePost = createAsyncThunk(
   async (postId: string, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState() as StateWithAuth;
+
+      // Post solo in memoria (finto, o diffusione di un post finto):
+      // niente da cancellare sul server
+      if (isDummyId(postId) || isLocalId(postId)) {
+        return postId;
+      }
 
       const response = await fetch(`${API_URL}/posts/${postId}`, {
         method: "DELETE",
@@ -311,8 +366,11 @@ export const postsSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.loading = false;
         // Il server conosce solo i dati veri: i contenuti finti già in memoria
-        // vanno preservati, altrimenti un ricaricamento li farebbe sparire
-        const dummyPosts = state.items.filter((p) => isDummyId(p.id));
+        // vanno preservati, altrimenti un ricaricamento li farebbe sparire.
+        // Valgono anche le diffusioni di post finti, che hanno prefisso "local-"
+        const dummyPosts = state.items.filter(
+          (p) => isDummyId(p.id) || isLocalId(p.id)
+        );
         const dummyAuthors = state.authors.filter((u) => isDummyId(u.id));
         const memoryComments = state.comments.filter(
           (c) => isDummyId(c.id) || isLocalId(c.id)
@@ -337,6 +395,13 @@ export const postsSlice = createSlice({
       })
       .addCase(createPost.rejected, (state, action) => {
         state.posting = false;
+        state.error = action.payload as string;
+      })
+      // DIFFONDI
+      .addCase(repostPost.fulfilled, (state, action) => {
+        state.items.unshift(action.payload);
+      })
+      .addCase(repostPost.rejected, (state, action) => {
         state.error = action.payload as string;
       })
       // LIKE
