@@ -24,6 +24,16 @@ export interface JobTitle {
   */
 }
 
+// Esperienza lavorativa mostrata nel profilo, salvata su db.json
+export interface Experience {
+  id: string;
+  userId: string;
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+}
+
 export interface Post {
   id: string;
   authorId: string;
@@ -33,6 +43,16 @@ export interface Post {
   likes: string[];
   // Immagine opzionale del post, salvata come data URL (base64) in db.json
   image?: string;
+}
+
+// Richiesta di collegamento: nasce "pending" e diventa "accepted".
+// Quelle verso gli utenti finti hanno id "dummy-" e vivono solo in memoria.
+export interface Connection {
+  id: string;
+  requesterId: string;
+  addresseeId: string;
+  status: "pending" | "accepted";
+  createdAt: string;
 }
 
 export interface Comment {

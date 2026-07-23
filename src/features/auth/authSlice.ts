@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { User } from "../../types/index";
 import { saveSession, loadSession, clearSession } from "./authStorage";
+import { updateProfile } from "../profile/profileSlice";
+
+const API_URL = "http://localhost:3000";
 
 // Tipi per i dati di Input
 export interface LoginPayload {
@@ -40,7 +43,7 @@ export const loginUser = createAsyncThunk(
   async (credentials: LoginPayload, { rejectWithValue }) => {
     try {
       // 🟢 USIAMO /login AL POSTO DI /users!
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -80,7 +83,7 @@ export const registerUser = createAsyncThunk(
         location: "",
       };
 
-      const response = await fetch("http://localhost:3000/users", {
+      const response = await fetch(`${API_URL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -114,7 +117,7 @@ export const deleteAccount = createAsyncThunk(
         return rejectWithValue("Nessun utente loggato");
       }
 
-      const response = await fetch(`http://localhost:3000/users/${user.id}`, {
+      const response = await fetch(`${API_URL}/users/${user.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -193,6 +196,14 @@ export const authSlice = createSlice({
       .addCase(deleteAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      // UPDATE PROFILE (thunk in features/profile): currentUser resta qui
+      // l'unica fonte di verità, quindi va aggiornato insieme alla sessione
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        if (state.token) {
+          saveSession(state.token, action.payload);
+        }
       });
   },
 });

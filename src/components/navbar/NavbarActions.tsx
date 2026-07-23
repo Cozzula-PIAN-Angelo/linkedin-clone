@@ -5,10 +5,12 @@ import {
   BoxArrowRight,
   Fire,
   MoonStarsFill,
+  PersonFill,
   Radioactive,
   SunFill,
   ThreeDots,
 } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logout, deleteAccount } from "../../features/auth/authSlice";
@@ -89,6 +91,10 @@ function NavbarActions() {
                 <small className="text-muted">{currentUser.email}</small>
               </Dropdown.Header>
               <Dropdown.Divider />
+              <Dropdown.Item as={Link} to="/profile">
+                <PersonFill className="me-2" />
+                Vedi profilo
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => dispatch(logout())}>
                 <BoxArrowRight className="me-2" />
                 {copy.userMenu.logout}

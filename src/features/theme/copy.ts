@@ -47,6 +47,11 @@ export type Copy = {
     headlinePlaceholder: string;
     submit: string;
   };
+  notFound: {
+    title: string;
+    message: string;
+    backHome: string;
+  };
 };
 
 const defaultCopy: Copy = {
@@ -97,6 +102,11 @@ const defaultCopy: Copy = {
     headlinePlaceholder: "es. Full Stack Developer",
     submit: "Registrati",
   },
+  notFound: {
+    title: "Pagina non trovata",
+    message: "Il link che hai seguito non porta da nessuna parte.",
+    backHome: "Torna alla home",
+  },
 };
 
 const villainCopy: Copy = {
@@ -146,6 +156,11 @@ const villainCopy: Copy = {
     alreadyHave: "Hai già un fascicolo?",
     headlinePlaceholder: "es. Signore del Male in pensione",
     submit: "Unisciti alla Lega",
+  },
+  notFound: {
+    title: "Nascondiglio non trovato",
+    message: "Questo covo è stato smantellato. O non è mai esistito.",
+    backHome: "Torna al quartier generale",
   },
 };
 
