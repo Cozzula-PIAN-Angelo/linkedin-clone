@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Dropdown } from "react-bootstrap";
+import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import {
   ArrowRepeat,
   ChatText,
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import CommentSection from "./CommentSection";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { deletePost, toggleLike } from "./postsSlice";
+import { deletePost, repostPost, toggleLike } from "./postsSlice";
 import { timeAgo } from "./timeAgo";
 import type { Post, User } from "../../types";
 
@@ -35,8 +35,24 @@ function PostCard({ post, author }: PostCardProps) {
         (comment) => String(comment.postId) === String(post.id)
       ).length
   );
+  // Se il post è una diffusione, l'originale da mostrare incorporato
+  const original = useAppSelector((state) =>
+    post.repostOf
+      ? state.posts.items.find((p) => String(p.id) === String(post.repostOf))
+      : undefined
+  );
+  const originalAuthor = useAppSelector((state) =>
+    original
+      ? state.posts.authors.find(
+          (user) => String(user.id) === String(original.authorId)
+        )
+      : undefined
+  );
+
   const [expanded, setExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const isOwnPost =
     currentUser !== null && String(currentUser.id) === String(post.authorId);
@@ -51,6 +67,19 @@ function PostCard({ post, author }: PostCardProps) {
 
   // L'autore può mancare se il suo account è stato eliminato da db.json
   const authorName = author ? `${author.name} ${author.surname}` : "Utente eliminato";
+
+  // Link condivisibile al singolo post, usato dalla modale "Invia"
+  const postUrl = `${window.location.origin}/post/${post.id}`;
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(postUrl);
+      setCopied(true);
+    } catch {
+      // Clipboard negata dal browser: il link resta selezionabile a mano
+      setCopied(false);
+    }
+  };
 
   const authorInfo = (
     <>
@@ -131,6 +160,54 @@ function PostCard({ post, author }: PostCardProps) {
         )}
       </div>
 
+      {/* Post diffuso: l'originale incorporato in un riquadro */}
+      {post.repostOf && (
+        <div className="mx-3 mb-2 border rounded-2 p-2">
+          {original ? (
+            <>
+              <div className="d-flex align-items-center gap-2 mb-1">
+                <Avatar
+                  src={originalAuthor?.avatar}
+                  name={originalAuthor?.name ?? "?"}
+                  surname={originalAuthor?.surname ?? "?"}
+                  size={32}
+                />
+                <div style={{ minWidth: 0 }}>
+                  {originalAuthor ? (
+                    <Link
+                      to={`/profile/${original.authorId}`}
+                      className="fw-bold small text-decoration-none text-body d-block text-truncate"
+                    >
+                      {originalAuthor.name} {originalAuthor.surname}
+                    </Link>
+                  ) : (
+                    <div className="fw-bold small">Utente eliminato</div>
+                  )}
+                  <div className="text-secondary small">
+                    {timeAgo(original.createdAt)}
+                  </div>
+                </div>
+              </div>
+              <div className="small" style={{ whiteSpace: "pre-wrap" }}>
+                {original.content}
+              </div>
+              {original.image && (
+                <img
+                  src={original.image}
+                  alt="Contenuto del post originale"
+                  className="w-100 d-block rounded-1 mt-2"
+                  style={{ maxHeight: 320, objectFit: "cover" }}
+                />
+              )}
+            </>
+          ) : (
+            <div className="text-secondary small text-center py-2">
+              Post originale non più disponibile.
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Immagine del post */}
       {post.image && (
         <img
@@ -196,6 +273,7 @@ function PostCard({ post, author }: PostCardProps) {
         <Button
           variant="link"
           size="sm"
+          onClick={() => dispatch(repostPost(post))}
           className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
         >
           <ArrowRepeat size={18} />
@@ -204,6 +282,10 @@ function PostCard({ post, author }: PostCardProps) {
         <Button
           variant="link"
           size="sm"
+          onClick={() => {
+            setCopied(false);
+            setShowShare(true);
+          }}
           className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
         >
           <SendFill size={18} />
@@ -212,6 +294,33 @@ function PostCard({ post, author }: PostCardProps) {
       </div>
 
       {showComments && <CommentSection post={post} />}
+
+      {/* "Invia": condivide il post copiandone il link */}
+      <Modal show={showShare} onHide={() => setShowShare(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="h6">Invia il post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="small text-secondary">
+            Copia il link e mandalo a chi vuoi: chi lo apre vedrà questo post.
+          </p>
+          <Form.Control
+            type="text"
+            value={postUrl}
+            readOnly
+            onFocus={(e) => e.target.select()}
+          />
+          {copied && (
+            <div className="text-success small mt-2">Link copiato!</div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowShare(false)}>
+            Chiudi
+          </Button>
+          <Button onClick={copyLink}>Copia link</Button>
+        </Modal.Footer>
+      </Modal>
     </article>
   );
 }
