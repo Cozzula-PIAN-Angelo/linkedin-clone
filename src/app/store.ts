@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
+import postsReducer from "../features/posts/postsSlice";
 import { newsApi } from "../features/news/newsApi";
 import notificationReducer from "../features/notification/notificationSlice";
 import themeReducer from "../features/theme/themeSlice";
@@ -10,8 +11,8 @@ export const store = configureStore({
     notification: notificationReducer,
     theme: themeReducer,
     auth: authReducer,
+    posts: postsReducer,
     // ogni feature aggiunge la propria riga qui, es:
-    // posts: postsReducer,
     // profile: profileReducer,
   },
   middleware: (getDefaultMiddleware) =>
