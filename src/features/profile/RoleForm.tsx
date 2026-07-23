@@ -21,8 +21,12 @@ function RoleForm({ onAdd }: RoleFormProps) {
     description: "",
   });
 
+  // Ora le esperienze finiscono su db.json: meglio non salvare righe vuote
+  const isValid = form.role.trim() !== "" && form.company.trim() !== "";
+
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
+    if (!isValid) return;
     onAdd(form);
     setForm({ role: "", company: "", period: "", description: "" });
   };
@@ -72,7 +76,11 @@ function RoleForm({ onAdd }: RoleFormProps) {
               </Col>
             </Row>
           </Form.Group>
-          <Button type="submit" className="d-block ms-auto mt-3">
+          <Button
+            type="submit"
+            className="d-block ms-auto mt-3"
+            disabled={!isValid}
+          >
             Aggiungi
           </Button>
         </Form>
