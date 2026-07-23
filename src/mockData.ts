@@ -9,6 +9,8 @@ export const mockUsers: User[] = [
     surname: "Rossi",
     avatar: "/avatars/mario.png",
     job: [{ id: "j1", title: "Frontend Developer" }],
+    headline: "Frontend Developer",
+    location: "",
   },
 ];
 

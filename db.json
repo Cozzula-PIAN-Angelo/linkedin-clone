@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "email": "cristian@error.it",
+      "password": "$2a$10$1qZmI7GgYK6fOb8X2BcM8u7Wo7irOkCJOsMRcOq79bu7jqUBqRFmO",
+      "name": "cristian",
+      "surname": "nunez jorge",
+      "headline": "BABBO",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 1
+    },
+    {
+      "email": "ANGELO@LOKI.IT",
+      "password": "$2a$10$KbyKvyq0MxvHEpPDHeTkyut7NB1pVwbIqS8I8.l1cYKgSLwYflHFi",
+      "name": "ANGELO",
+      "surname": "LOKI",
+      "headline": "BABBO",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 2
+    },
+    {
+      "email": "johnsmithkyon1996@gmail.com",
+      "password": "$2a$10$LXXuVMTgkN4smzcyXlIXk.60gOoxV.VqBQAQsmMnFf3hp365B.6Fi",
+      "name": "Angelo",
+      "surname": "Cozzula",
+      "headline": "Suca minchia",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 3
+    },
+    {
+      "email": "claudio@pelato.it",
+      "password": "$2a$10$KFZFFLP3W5pUeFfAWfdJbeq2sXo2UQ4iiVJWUZE/Er9X2CQPSlAYW",
+      "name": "Claudio",
+      "surname": "Nocapelli",
+      "headline": "Sicuramente non parrucchiere",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 4
+    }
+  ]
+}

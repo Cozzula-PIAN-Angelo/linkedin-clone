@@ -1,0 +1,9 @@
+.notification-item:hover {
+  background-color: #eef3f8;
+  color: #0a66c2;
+}
+
+[data-bs-theme="dark"] .notification-item:hover {
+  background-color: #1d2226;
+  color: #70b5f9;
+}
