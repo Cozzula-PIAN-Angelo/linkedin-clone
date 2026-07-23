@@ -43,6 +43,17 @@
       "job": [],
       "location": "",
       "id": 4
+    },
+    {
+      "email": "sbregaz@sbregi.vez",
+      "password": "$2a$10$8WcQ5i28/De7Zfsah6HYiuTHS2eE5S2n8/Ceef9NvuBbbSMDNqq2.",
+      "name": "Zorgon ",
+      "surname": "Z di",
+      "headline": "Clown",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 5
     }
   ],
   "posts": [
@@ -78,6 +89,22 @@
       "createdAt": "2026-07-23T08:00:19.849Z",
       "likes": [],
       "id": 4
+    },
+    {
+      "authorId": "5",
+      "content": "Ce stan' tutt' cos'! :O",
+      "createdAt": "2026-07-23T09:31:10.215Z",
+      "likes": [
+        "5"
+      ],
+      "id": 5
+    },
+    {
+      "authorId": "5",
+      "content": "Sale certamente",
+      "createdAt": "2026-07-23T10:06:17.704Z",
+      "likes": [],
+      "id": 6
     }
   ],
   "comments": [
@@ -101,6 +128,13 @@
       "content": "klk",
       "createdAt": "2026-07-23T07:52:30.706Z",
       "id": 3
+    },
+    {
+      "postId": "5",
+      "authorId": "5",
+      "content": "UAAAAAAAAANM",
+      "createdAt": "2026-07-23T09:37:58.647Z",
+      "id": 4
     }
   ]
 }

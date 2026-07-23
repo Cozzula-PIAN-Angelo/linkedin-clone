@@ -10,6 +10,7 @@ import ProfilePage from "./features/profile/ProfilePage";
 import EditProfile from "./features/profile/EditProfile";
 import type { RootState } from "./app/store";
 import { useCopy } from "./features/theme/copy";
+import { themeConfigs } from "./features/theme/themeConfig";
 
 function App() {
   const theme = useSelector((state: RootState) => state.theme.mode);
@@ -17,6 +18,7 @@ function App() {
     (state: RootState) => state.theme.brandTheme,
   );
   const copy = useCopy();
+  const Effects = themeConfigs[brandTheme].effects;
 
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);
@@ -31,18 +33,21 @@ function App() {
   }, [copy.pageTitle]);
 
   return (
-    <Routes>
-      <Route element={<RedirectIfAuth />}>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Route>
+    <>
+      {Effects && <Effects />}
+      <Routes>
+        <Route element={<RedirectIfAuth />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/edit" element={<EditProfile />} />
-      </Route>
-    </Routes>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
