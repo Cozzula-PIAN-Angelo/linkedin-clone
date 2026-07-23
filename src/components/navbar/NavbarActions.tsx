@@ -13,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { logout, deleteAccount } from "../../features/auth/authSlice";
+import { logoutUser, deleteAccount } from "../../features/auth/authSlice";
 import { toggleTheme } from "../../features/theme/themeSlice";
 import { useCopy } from "../../features/theme/copy";
 
@@ -95,7 +95,7 @@ function NavbarActions() {
                 <PersonFill className="me-2" />
                 Vedi profilo
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => dispatch(logout())}>
+              <Dropdown.Item onClick={() => logoutUser()}>
                 <BoxArrowRight className="me-2" />
                 {copy.userMenu.logout}
               </Dropdown.Item>

@@ -87,7 +87,9 @@
       "authorId": "1",
       "content": "klk",
       "createdAt": "2026-07-23T08:00:19.849Z",
-      "likes": [],
+      "likes": [
+        "4"
+      ],
       "id": 4
     },
     {
@@ -130,11 +132,18 @@
       "id": 3
     },
     {
+      "postId": "4",
+      "authorId": "4",
+      "content": "Ricorda i tuoi spiriti guida",
+      "createdAt": "2026-07-23T09:38:52.383Z",
+      "id": 4
+    },
+    {
       "postId": "5",
       "authorId": "5",
       "content": "UAAAAAAAAANM",
       "createdAt": "2026-07-23T09:37:58.647Z",
-      "id": 4
+      "id": 5
     }
   ],
   "connections": [],
