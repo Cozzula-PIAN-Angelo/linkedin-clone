@@ -1,6 +1,7 @@
 import { createElement } from "react";
 import type { ComponentType } from "react";
 import {
+  BellFill,
   BookFill,
   BriefcaseFill,
   Bug,
@@ -8,19 +9,20 @@ import {
   ChatDotsFill,
   CodeSlash,
   CpuFill,
+  Crosshair2,
+  Diagram3Fill,
   Droplet,
+  ExclamationOctagonFill,
   EyeFill,
   Feather,
   Fire,
   Gem,
+  Incognito,
   List,
   Magic,
   MoonStars,
   PeopleFill,
-  RocketTakeoffFill,
   ShieldFill,
-  Terminal,
-  Wifi,
   Broadcast,
 } from "react-bootstrap-icons";
 import VillainLogo from "../../components/VillainLogo";
@@ -49,6 +51,7 @@ type NavIconSet = {
   jobs: IconComponent;
   messaging: IconComponent;
   more: IconComponent;
+  notifications: IconComponent;
 };
 
 export type ThemeConfig = {
@@ -69,6 +72,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       jobs: BriefcaseFill,
       messaging: ChatDotsFill,
       more: List,
+      notifications: BellFill,
     },
   },
   villain: {
@@ -80,6 +84,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       jobs: CashCoin,
       messaging: Broadcast,
       more: Magic,
+      notifications: BellFill,
     },
   },
   fantasy: {
@@ -91,6 +96,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       jobs: Gem,
       messaging: Feather,
       more: BookFill,
+      notifications: BellFill,
     },
   },
   cyberpunk: {
@@ -98,10 +104,11 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
     swatch: "#ff2bd6",
     logo: CpuFill,
     icons: {
-      network: Wifi,
-      jobs: Terminal,
+      network: Diagram3Fill,
+      jobs: Crosshair2,
       messaging: CodeSlash,
-      more: RocketTakeoffFill,
+      more: Incognito,
+      notifications: ExclamationOctagonFill,
     },
     effects: CyberpunkEffects,
   },
@@ -114,6 +121,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       jobs: Droplet,
       messaging: Bug,
       more: Fire,
+      notifications: BellFill,
     },
   },
 };

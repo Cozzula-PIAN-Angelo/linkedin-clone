@@ -4,6 +4,7 @@ export type Copy = {
   pageTitle: string;
   brandName: string;
   nav: {
+    home: string;
     network: string;
     jobs: string;
     messaging: string;
@@ -58,6 +59,7 @@ const defaultCopy: Copy = {
   pageTitle: "linkedin-clone",
   brandName: "LinkedIn",
   nav: {
+    home: "Home",
     network: "Il mio network",
     jobs: "Lavoro",
     messaging: "Messaggistica",
@@ -113,6 +115,7 @@ const villainCopy: Copy = {
   pageTitle: "ex-Villain | La rete per super-cattivi disoccupati",
   brandName: "ex-Villain",
   nav: {
+    home: "Home",
     network: "La Congrega",
     jobs: "Taglie",
     messaging: "Messaggi Segreti",
@@ -164,10 +167,32 @@ const villainCopy: Copy = {
   },
 };
 
-// Tutti i temi easter egg (villain/fantasy/cyberpunk/horror) condividono gli
-// stessi testi "da cattivo": solo colori e icone cambiano da un tema all'altro.
-// Il default (LinkedIn normale) usa invece i testi originali.
+// I temi easter egg (villain/fantasy/cyberpunk/horror) condividono gli stessi
+// testi "da cattivo": solo colori e icone cambiano da un tema all'altro.
+// Il default (LinkedIn normale) usa invece i testi originali. Cyberpunk fa
+// eccezione solo per le etichette della navbar, sovrascritte sotto.
+const cyberpunkCopy: Copy = {
+  ...villainCopy,
+  nav: {
+    home: "Base",
+    network: "Cyberspace",
+    jobs: "Bounties",
+    messaging: "Codici Segreti",
+    more: "Darknet",
+  },
+  notifications: {
+    ...villainCopy.notifications,
+    label: "Criticità",
+  },
+  news: {
+    ...villainCopy.news,
+    title: "News from the Net",
+  },
+};
+
 export function useCopy(): Copy {
   const brandTheme = useAppSelector((state) => state.theme.brandTheme);
-  return brandTheme === "default" ? defaultCopy : villainCopy;
+  if (brandTheme === "default") return defaultCopy;
+  if (brandTheme === "cyberpunk") return cyberpunkCopy;
+  return villainCopy;
 }
