@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileCard from "../components/ProfileCard";
 import { NewsSection } from "../features/news";
+import { Feed } from "../features/posts";
 
 function HomePage() {
   return (
@@ -11,10 +12,7 @@ function HomePage() {
         </Col>
 
         <Col xs={12} md={8} lg={7}>
-          {/* Feed post: task di un altro membro del team, qui solo placeholder */}
-          <div className="bg-body rounded-2 border p-3 text-secondary text-center">
-            Feed post (in arrivo)
-          </div>
+          <Feed />
         </Col>
 
         <Col lg={3} className="d-none d-lg-block">
