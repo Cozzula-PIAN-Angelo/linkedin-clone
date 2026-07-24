@@ -54,7 +54,7 @@ function ProfilePage() {
   if (!user) {
     // Feed ancora in caricamento, id inesistente o autore eliminato da db.json
     return (
-      <Container className="mt-5 text-center">
+      <Container className="text-center" style={{ paddingTop: 68 }}>
         {loading ? (
           <Spinner animation="border" />
         ) : (
@@ -86,7 +86,7 @@ function ProfilePage() {
 
   return (
     <>
-      <Container className="mt-3">
+      <Container style={{ paddingTop: 68 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
             <Card className="profile-card border-0">
