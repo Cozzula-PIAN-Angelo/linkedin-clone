@@ -10,7 +10,7 @@ function NotFoundPage() {
   return (
     <Container
       className="text-center"
-      style={{ paddingTop: 84, maxWidth: 1160 }}
+      style={{ paddingTop: 80, maxWidth: 1160 }}
     >
       <div className="display-1 fw-bold text-secondary">404</div>
       <h1 className="h4 mt-2">{copy.notFound.title}</h1>

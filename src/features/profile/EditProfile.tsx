@@ -64,7 +64,7 @@ function EditProfile() {
   };
 
   return (
-    <Container style={{ paddingTop: 84, maxWidth: 1160 }}>
+    <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="justify-content-center">
         <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
           <Card className="profile-card border-0">

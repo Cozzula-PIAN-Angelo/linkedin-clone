@@ -24,7 +24,7 @@ function PostPage() {
   }, [dispatch]);
 
   return (
-    <Container style={{ paddingTop: 84, maxWidth: 1160 }}>
+    <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="justify-content-center">
         <Col xs={12} md={10} lg={7}>
           {post ? (

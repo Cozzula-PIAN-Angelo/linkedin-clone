@@ -43,6 +43,24 @@ html {
   }
 }
 
+/* Linea sotto la voce attiva della navbar (Home, La mia rete, ...):
+   currentColor segue il colore già usato dallo stato "active" di ciascun
+   tema, senza doverlo ridefinire qui. */
+.nav-link-item {
+  position: relative;
+}
+
+.nav-link-item.active::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+}
+
 /* ---------- ex-Villain: rosso/nero minaccioso ---------- */
 [data-brand-theme="villain"][data-bs-theme="light"] {
   --bs-primary: #c1121f;
