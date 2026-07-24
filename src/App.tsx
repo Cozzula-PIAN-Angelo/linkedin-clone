@@ -14,6 +14,7 @@ import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDummyNetwork } from "./features/network/useDummyNetwork";
+import { useNotificationsListener } from "./features/notification/useNotificationsListener";
 import { useCopy } from "./features/theme/copy";
 import { themeConfigs } from "./features/theme/themeConfig";
 import { auth, db } from "./firebase";
@@ -33,6 +34,10 @@ function App() {
   // Attività finta della rete (inviti in arrivo, accettazioni): vive qui
   // perché App è sempre montata, così i timer non muoiono cambiando pagina
   useDummyNetwork();
+
+  // Notifiche reali (like, commenti, inviti da altri utenti): listener
+  // realtime su Firestore, vive qui per restare attivo su tutte le pagine
+  useNotificationsListener();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", theme);

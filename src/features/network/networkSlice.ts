@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { DUMMY_PREFIX, isDummyId } from "../posts/dummyFeed";
+import { sendNotification } from "../notification/sendNotification";
 import type { Connection, User } from "../../types";
 
 // Stato minimo che le thunk leggono dallo store (evita di importare RootState creando un ciclo)
@@ -80,6 +81,14 @@ export const sendRequest = createAsyncThunk(
       }
 
       const docRef = await addDoc(collection(db, "connections"), body);
+
+      const displayName = `${auth.currentUser.name} ${auth.currentUser.surname}`;
+      void sendNotification(
+        addresseeId,
+        String(auth.currentUser.id),
+        `${displayName} vuole collegarsi con te`,
+      );
+
       return { id: docRef.id, ...body } as Connection;
     } catch {
       return rejectWithValue("Errore durante l'invio della richiesta");
@@ -90,7 +99,7 @@ export const sendRequest = createAsyncThunk(
 // Accetta un invito ricevuto
 export const acceptRequest = createAsyncThunk(
   "network/acceptRequest",
-  async (connection: Connection, { rejectWithValue }) => {
+  async (connection: Connection, { getState, rejectWithValue }) => {
     try {
       // Invito finto: si accetta solo in memoria
       if (isDummyId(connection.id)) {
@@ -100,6 +109,18 @@ export const acceptRequest = createAsyncThunk(
       await updateDoc(doc(db, "connections", connection.id), {
         status: "accepted",
       });
+
+      // Notifica chi aveva inviato la richiesta
+      const { auth } = getState() as StateWithAuth;
+      if (auth.currentUser) {
+        const displayName = `${auth.currentUser.name} ${auth.currentUser.surname}`;
+        void sendNotification(
+          connection.requesterId,
+          String(auth.currentUser.id),
+          `${displayName} ha accettato il tuo invito di collegamento`,
+        );
+      }
+
       return { ...connection, status: "accepted" as const };
     } catch {
       return rejectWithValue("Errore durante l'accettazione dell'invito");

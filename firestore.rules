@@ -62,5 +62,17 @@ service cloud.firestore {
       allow delete: if isOwner(resource.data.requesterId)
         || isOwner(resource.data.addresseeId);
     }
+        // Notifiche: leggibili/cancellabili solo dal destinatario. La creazione
+    // è permessa a chi compie l'azione (il "mittente" della notifica), mai
+    // verso se stessi (niente auto-notifiche per un proprio like/commento).
+    match /notifications/{notificationId} {
+      allow read: if isOwner(resource.data.recipientId);
+      allow create: if isSignedIn()
+        && request.resource.data.actorId == request.auth.uid
+        && request.resource.data.recipientId != request.auth.uid;
+      allow update: if false;
+      allow delete: if isOwner(resource.data.recipientId);
+    }
+
   }
 }
