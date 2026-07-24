@@ -1,0 +1,201 @@
+/* ==========================================================================
+   1. OVERLAY E EFFETTI AMBIENTALI (pointer-events: none)
+   ========================================================================== */
+
+.horror-effects-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+  transition: background-color 0.05s ease-in-out;
+}
+
+/* Flash del Tuono */
+.horror-effects-overlay.flash-active {
+  background-color: rgba(230, 230, 250, 0.22) !important;
+  box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.35);
+}
+
+.horror-rain-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Vignettatura Rossa */
+.horror-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(120, 0, 0, 0.3) 75%,
+    rgba(5, 0, 0, 0.85) 100%
+  );
+  animation: horrorPulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes horrorPulse {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* SANGUE SULLA NAVBAR */
+.horror-blood-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  opacity: 0.55;
+  background-image: url("/bloodDrip.png");
+  background-repeat: repeat-x;
+  background-size: contain;
+  mix-blend-mode: color-dodge;
+  filter: drop-shadow(0 2px 5px rgba(139, 0, 0, 0.6));
+}
+
+/* Badge Biohazard in basso a SINISTRA */
+.horror-warning-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(18, 0, 0, 0.85);
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  font-family: monospace;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+  animation: glitchText 2.5s infinite;
+  pointer-events: none;
+}
+
+.biohazard-icon {
+  font-size: 1rem;
+  margin-right: 5px;
+}
+
+@keyframes glitchText {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  94% {
+    opacity: 0.8;
+    transform: translate(-2px, 1px);
+  }
+  96% {
+    opacity: 0.9;
+    transform: translate(2px, -1px);
+  }
+  98% {
+    opacity: 0.4;
+    transform: translate(-1px, -1px);
+  }
+}
+
+/* ==========================================================================
+   2. SFONDO TEMA HORROR & CURSORE MIRINO (CROSSHAIR CUSTOM)
+   ========================================================================== */
+
+/* Cursore Standard: Ombrello Umbrella */
+html[data-brand-theme="horror"],
+body[data-brand-theme="horror"] {
+  background-color: #050202 !important;
+  background-image:
+    linear-gradient(rgba(5, 2, 2, 0.85), rgba(5, 2, 2, 0.85)),
+    url("/umbrellaPic.jpeg") !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  color: #f8f9fa !important;
+
+  cursor:
+    url("/umbrellaCursor.png") 16 16,
+    auto !important;
+}
+
+/* HOVER: Il cursore cambia e diventa il MIRINO ROSSO VECTORIALE */
+body[data-brand-theme="horror"] a:hover,
+body[data-brand-theme="horror"] button:hover,
+body[data-brand-theme="horror"] input:hover,
+body[data-brand-theme="horror"] select:hover,
+body[data-brand-theme="horror"] textarea:hover,
+body[data-brand-theme="horror"] [role="button"]:hover,
+body[data-brand-theme="horror"] .nav-link:hover,
+body[data-brand-theme="horror"] .card:hover {
+  cursor:
+    url("/crosshair.svg") 16 16,
+    crosshair !important;
+  filter: drop-shadow(0 0 8px rgba(255, 30, 30, 0.9)) !important;
+  transition: filter 0.1s ease-in-out;
+}
+
+/* CLICK / SPARO: Rinculo dell'elemento + Lampo di sparo */
+body[data-brand-theme="horror"] a:active,
+body[data-brand-theme="horror"] button:active,
+body[data-brand-theme="horror"] [role="button"]:active,
+body[data-brand-theme="horror"] .nav-link:active {
+  transform: scale(0.95) translate(0px, -2px) !important;
+  filter: drop-shadow(0 0 15px rgba(255, 60, 0, 1)) brightness(1.4) !important;
+}
+
+/* ==========================================================================
+   3. STILI CARD, NAVBAR E INPUT
+   ========================================================================== */
+
+[data-brand-theme="horror"] .card,
+[data-brand-theme="horror"] .navbar,
+[data-brand-theme="horror"] .modal-content,
+[data-brand-theme="horror"] .list-group-item,
+[data-brand-theme="horror"] .offcanvas {
+  background-color: rgba(13, 15, 18, 0.9) !important;
+  backdrop-filter: blur(4px);
+  border-color: #2c0b0e !important;
+  color: #e0e0e0 !important;
+}
+
+[data-brand-theme="horror"] .card {
+  border-left: 3px solid #dc3545 !important;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.15) !important;
+}
+
+[data-brand-theme="horror"] .card:hover {
+  border-left-color: #ff001e !important;
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.35) !important;
+}
+
+/* Input Form */
+[data-brand-theme="horror"] input,
+[data-brand-theme="horror"] textarea,
+[data-brand-theme="horror"] select {
+  background-color: rgba(6, 7, 8, 0.9) !important;
+  border-color: #491217 !important;
+  color: #ffffff !important;
+}
+
+[data-brand-theme="horror"] input:focus,
+[data-brand-theme="horror"] textarea:focus {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 8px rgba(220, 53, 69, 0.4) !important;
+}
+
+[data-brand-theme="horror"] .text-muted,
+[data-brand-theme="horror"] .text-body-secondary {
+  color: #989da2 !important;
+}

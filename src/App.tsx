@@ -31,7 +31,7 @@ function App() {
   // rendering dei messaggi
   const user = useSelector((state: RootState) => state.auth.currentUser);
   const copy = useCopy();
-  const Effects = themeConfigs[brandTheme].effects;
+  const Effects = themeConfigs[brandTheme]?.effects;
 
   // Attività finta della rete (inviti in arrivo, accettazioni): vive qui
   // perché App è sempre montata, così i timer non muoiono cambiando pagina
@@ -43,6 +43,7 @@ function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-brand-theme", brandTheme);
+    document.body.setAttribute("data-brand-theme", brandTheme);
   }, [brandTheme]);
 
   useEffect(() => {

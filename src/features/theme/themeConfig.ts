@@ -26,8 +26,15 @@ import {
 import VillainLogo from "../../components/VillainLogo";
 import HorrorSkullLogo from "../../components/HorrorSkullLogo";
 import CyberpunkEffects from "./CyberpunkEffects";
+// dentro themeConfig.ts
+import HorrorEffects from "./HorrorEffects";
 
-export type BrandTheme = "default" | "villain" | "fantasy" | "cyberpunk" | "horror";
+export type BrandTheme =
+  | "default"
+  | "villain"
+  | "fantasy"
+  | "cyberpunk"
+  | "horror";
 
 export const brandThemes: BrandTheme[] = [
   "default",
@@ -106,8 +113,8 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
     effects: CyberpunkEffects,
   },
   horror: {
-    label: "Horror",
-    swatch: "#7a0d0d",
+    label: "Umbrella Corp (Horror)",
+    swatch: "#dc3545",
     logo: HorrorSkullLogo,
     icons: {
       network: MoonStars,
@@ -115,5 +122,6 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       messaging: Bug,
       more: Fire,
     },
+    effects: HorrorEffects, 
   },
 };

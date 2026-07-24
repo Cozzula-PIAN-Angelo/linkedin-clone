@@ -1,6 +1,8 @@
 /* ***** BODY BG ***** */
+
 body {
-  background-color: whitesmoke;
+  /* Rimosso whitesmoke fisso per permettere ai temi di controllare lo sfondo */
+  min-height: 100vh;
 }
 
 /* ***** PROFILO ***** */
@@ -23,3 +25,4 @@ body {
 .post-sub {
   font-size: 0.9rem;
 }
+
