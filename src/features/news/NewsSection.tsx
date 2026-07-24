@@ -38,7 +38,7 @@ function NewsSection() {
               target="_blank"
               rel="noreferrer"
               action
-              className="news-board-item d-flex align-items-start gap-2"
+              className="news-board-item d-flex align-items-start gap-2 cursor-target"
             >
               {item.imageURL && (
                 <img

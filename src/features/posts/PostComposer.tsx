@@ -76,7 +76,7 @@ function PostComposer() {
           <button
             type="button"
             onClick={openModal}
-            className="btn border rounded-pill flex-grow-1 text-start text-secondary fw-semibold py-2 px-3"
+            className="btn border rounded-pill flex-grow-1 text-start text-secondary fw-semibold py-2 px-3 cursor-target"
           >
             Avvia un post
           </button>
@@ -87,7 +87,7 @@ function PostComposer() {
             variant="link"
             size="sm"
             onClick={openModal}
-            className="text-decoration-none text-secondary fw-semibold"
+            className="text-decoration-none text-secondary fw-semibold cursor-target"
           >
             <CameraVideoFill className="text-success me-2" size={18} />
             Video
@@ -96,7 +96,7 @@ function PostComposer() {
             variant="link"
             size="sm"
             onClick={openModal}
-            className="text-decoration-none text-secondary fw-semibold"
+            className="text-decoration-none text-secondary fw-semibold cursor-target"
           >
             <ImageIcon className="text-primary me-2" size={18} />
             Foto
@@ -105,7 +105,7 @@ function PostComposer() {
             variant="link"
             size="sm"
             onClick={openModal}
-            className="text-decoration-none text-secondary fw-semibold"
+            className="text-decoration-none text-secondary fw-semibold cursor-target"
           >
             <FileEarmarkTextFill className="text-warning me-2" size={18} />
             Scrivi un articolo
@@ -163,7 +163,7 @@ function PostComposer() {
                 variant="dark"
                 size="sm"
                 onClick={() => setImage(null)}
-                className="position-absolute top-0 end-0 m-2 rounded-circle d-flex align-items-center justify-content-center p-0"
+                className="position-absolute top-0 end-0 m-2 rounded-circle d-flex align-items-center justify-content-center p-0 cursor-target"
                 style={{ width: 32, height: 32 }}
                 aria-label="Rimuovi immagine"
               >
@@ -185,7 +185,7 @@ function PostComposer() {
           <Button
             variant="link"
             onClick={() => fileInputRef.current?.click()}
-            className="text-secondary p-2"
+            className="text-secondary p-2 cursor-target"
             aria-label="Aggiungi un'immagine"
             title="Aggiungi un'immagine"
           >
@@ -194,7 +194,7 @@ function PostComposer() {
 
           <Button
             variant="primary"
-            className="rounded-pill px-3"
+            className="rounded-pill px-3 cursor-target"
             disabled={!canPublish}
             onClick={handlePublish}
           >
