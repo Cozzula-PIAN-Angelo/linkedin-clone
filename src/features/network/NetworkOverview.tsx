@@ -21,7 +21,7 @@ function NetworkOverview() {
   const acceptedCount = mine.filter((c) => c.status === "accepted").length;
 
   return (
-    <Card as="aside" aria-label="Panoramica rete" className="bg-white rounded-2 border mb-3">
+    <Card as="aside" aria-label="Panoramica rete" className="bg-body-tertiary rounded-2 border mb-3">
       <Card.Body>
         <Card.Title className="fs-6 mb-3">Panoramica rete</Card.Title>
         <div className="d-flex justify-content-around text-center">
