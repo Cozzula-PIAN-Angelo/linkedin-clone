@@ -65,7 +65,7 @@ function PostComposer() {
 
   return (
     <>
-      <div className="bg-body rounded-2 border p-3">
+      <div className="post-composer-card bg-body rounded-2 border p-3">
         <div className="d-flex align-items-center gap-2">
           <Avatar
             src={user.avatar}
