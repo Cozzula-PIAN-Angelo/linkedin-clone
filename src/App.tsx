@@ -11,6 +11,7 @@ import RedirectIfAuth from "./features/auth/RedirectIfAuth";
 import ProfilePage from "./features/profile/ProfilePage";
 import EditProfile from "./features/profile/EditProfile";
 import NetworkPage from "./pages/NetworkPage";
+import JobsPage from "./features/jobs/JobsPage";
 import PostPage from "./pages/PostPage";
 import MessagingPage from "./pages/MessagingPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -114,6 +115,7 @@ function App() {
           {/* Profilo di un altro utente ("edit" vince su ":id" per ranking) */}
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/network" element={<NetworkPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
           {/* Singolo post: è la destinazione del link condiviso con "Invia" */}
           <Route path="/post/:id" element={<PostPage />} />
           {/* Messaggistica a schermo intero: stessa chat AI del pannello */}
