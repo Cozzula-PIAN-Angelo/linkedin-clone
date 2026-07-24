@@ -50,21 +50,21 @@ function NavbarActions() {
           <>
             <Link
               to="/network"
-              className="text-secondary"
+              className="text-secondary cursor-target"
               aria-label={copy.nav.network}
             >
               <icons.network size={26} />
             </Link>
             <Link
               to="/jobs"
-              className="text-secondary"
+              className="text-secondary cursor-target"
               aria-label={copy.nav.jobs}
             >
               <icons.jobs size={26} />
             </Link>
             <Link
               to="/messaging"
-              className="text-secondary"
+              className="text-secondary cursor-target"
               aria-label={copy.nav.messaging}
             >
               <icons.messaging size={26} />
@@ -74,7 +74,7 @@ function NavbarActions() {
 
         <button
           type="button"
-          className="btn btn-light rounded-circle p-2"
+          className="btn btn-light rounded-circle d-flex align-items-center justify-content-center p-2 cursor-target"
           aria-label={copy.nav.more}
           onClick={() => setShowMobileNav((v) => !v)}
         >
@@ -84,7 +84,7 @@ function NavbarActions() {
 
       <button
         type="button"
-        className="btn p-2 border-0 bg-transparent text-body"
+        className="btn p-2 border-0 bg-transparent text-body cursor-target"
         aria-label="Cambia tema"
         onClick={() => dispatch(toggleTheme())}
       >
@@ -100,7 +100,7 @@ function NavbarActions() {
           <Dropdown align="end">
             <Dropdown.Toggle
               variant="light"
-              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2"
+              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2 cursor-target"
               id="user-menu"
               aria-label="Menu utente"
             >

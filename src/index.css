@@ -540,6 +540,8 @@ html {
   --bs-link-color-rgb: 184, 134, 11;
   --bs-link-hover-color: #8a6508;
   --bs-link-hover-color-rgb: 138, 101, 8;
+  --bs-body-bg: #ffcc33;
+  --bs-body-bg-rgb: 255, 204, 51;
 }
 
 [data-brand-theme="cyberpunk"][data-bs-theme="dark"] {
@@ -553,6 +555,7 @@ html {
   --bs-link-hover-color: #6b9bff;
   --bs-link-hover-color-rgb: 107, 155, 255;
   --bs-body-bg: #050505;
+  --bs-body-bg-rgb: 5, 5, 5;
 }
 
 [data-brand-theme="cyberpunk"][data-bs-theme="light"] .btn-primary {
@@ -610,6 +613,26 @@ html {
 [data-brand-theme="cyberpunk"] .nav-link-item:hover,
 [data-brand-theme="cyberpunk"] .nav-link-item.active {
   color: var(--bs-primary) !important;
+}
+
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .bg-body,
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .card {
+  background-image: linear-gradient(135deg, #ffe680, #ffcc33 45%, #ff9500);
+}
+
+[data-brand-theme="cyberpunk"],
+[data-brand-theme="cyberpunk"] body {
+  font-family: "Rajdhani", sans-serif;
+}
+
+[data-brand-theme="cyberpunk"] h1,
+[data-brand-theme="cyberpunk"] h2,
+[data-brand-theme="cyberpunk"] h3,
+[data-brand-theme="cyberpunk"] h4,
+[data-brand-theme="cyberpunk"] h5,
+[data-brand-theme="cyberpunk"] h6,
+[data-brand-theme="cyberpunk"] .navbar-brand {
+  font-family: "Orbitron", sans-serif;
 }
 
 /* ---------- Horror: sangue e muschio marcio su nero ---------- */

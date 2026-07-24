@@ -132,7 +132,7 @@ export const fetchAIReply = createAsyncThunk(
     ];
 
     // Recupero chiave da Vite
-    const apiKey = (import.meta as any).env?.VITE_GROQ_API_KEY;
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
 
     if (!apiKey) {
       console.error("❌ API Key VITE_GROQ_API_KEY non trovata nel file .env!");

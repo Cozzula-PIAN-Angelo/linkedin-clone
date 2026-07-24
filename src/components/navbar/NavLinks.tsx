@@ -12,7 +12,7 @@ function NavLinks() {
   const copy = useCopy();
 
   const links = [
-    { to: "/", label: "Home", icon: HouseDoorFill },
+    { to: "/", label: copy.nav.home, icon: HouseDoorFill },
     { to: "/network", label: copy.nav.network, icon: icons.network },
     { to: "/jobs", label: copy.nav.jobs, icon: icons.jobs },
     { to: "/messaging", label: copy.nav.messaging, icon: icons.messaging },

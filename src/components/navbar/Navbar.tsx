@@ -49,7 +49,7 @@ function Navbar() {
             <BsNavbar.Brand
               as={Link}
               to="/"
-              className="p-0 me-2"
+              className="p-0 me-2 cursor-target"
               aria-label={copy.brandName}
               onClick={handleLogoClick}
             >

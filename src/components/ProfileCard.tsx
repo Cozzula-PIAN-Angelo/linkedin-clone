@@ -42,7 +42,7 @@ function ProfileCard() {
 
       <Link
         to="/profile"
-        className="d-block px-3 pb-3 text-decoration-none text-body"
+        className="d-block px-3 pb-3 text-decoration-none text-body cursor-target"
       >
         <div style={{ marginTop: -44 }}>
           <Avatar
@@ -89,7 +89,7 @@ function ProfileCard() {
 
       <Link
         to="/network"
-        className="d-block px-3 py-2 text-decoration-none text-body"
+        className="d-block px-3 py-2 text-decoration-none text-body cursor-target"
       >
         <div className="small">{copy.profile.connections}</div>
         <div className="d-flex justify-content-between align-items-center">
@@ -113,8 +113,10 @@ function ProfileCard() {
     return (
       <>
         <ElectricBorder
-          color={mode === "dark" ? "#9d00ff" : "#ff0044"}
+          color={mode === "dark" ? "#9d00ff" : "#ff6600"}
           borderRadius={8}
+          chaos={0.2}
+          speed={1.4}
         >
           {card}
         </ElectricBorder>

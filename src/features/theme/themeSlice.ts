@@ -1,5 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 import { brandThemes } from "./themeConfig";
 import type { BrandTheme } from "./themeConfig";
 
@@ -44,3 +46,19 @@ const themeSlice = createSlice({
 
 export const { toggleTheme, setBrandTheme } = themeSlice.actions;
 export default themeSlice.reducer;
+
+// Cambia il tema localmente e, se l'utente è loggato, lo salva anche sul suo
+// profilo Firestore: così al prossimo login (anche da un altro dispositivo)
+// ritrova lo stesso tema invece di ripartire da "default".
+export const setBrandThemeForUser = createAsyncThunk(
+  "theme/setBrandThemeForUser",
+  async (
+    { theme, uid }: { theme: BrandTheme; uid: string | null },
+    { dispatch },
+  ) => {
+    dispatch(setBrandTheme(theme));
+    if (uid) {
+      await updateDoc(doc(db, "users", uid), { brandTheme: theme });
+    }
+  },
+);

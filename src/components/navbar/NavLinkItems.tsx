@@ -19,7 +19,7 @@ function NavLinkItem({
       to={to}
       end
       className={({ isActive }) =>
-        `nav-link-item d-flex flex-column align-items-center text-decoration-none px-2 ${
+        `nav-link-item cursor-target d-flex flex-column align-items-center text-decoration-none px-2 ${
           isActive ? "active text-body" : "text-secondary"
         } ${className}`
       }
