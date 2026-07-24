@@ -78,8 +78,8 @@ html {
   background-color: currentColor;
 }
 
-/* Finestra messaggistica: al montaggio "sale" da sotto il bordo inferiore
-   invece di comparire di scatto già in posizione. */
+/* Finestra messaggistica: al primo montaggio (login) "sale" da sotto il
+   bordo inferiore invece di comparire di scatto già in posizione. */
 .messaging-drawer {
   animation: messaging-drawer-rise 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -91,6 +91,27 @@ html {
   }
   to {
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Corpo della chat: montato/smontato da React ad ogni click sulla barra
+   "Messaggi" (toggleMinimize), quindi anima ad ogni apertura, non solo al
+   login. Cresce in altezza dal basso verso l'alto: il contenitore fisso
+   resta ancorato a bottom-0, quindi il pannello sembra "sollevarsi" sopra
+   la barra invece di comparire di colpo. */
+.messaging-drawer-body {
+  overflow: hidden;
+  animation: messaging-drawer-body-rise 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes messaging-drawer-body-rise {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 400px;
     opacity: 1;
   }
 }

@@ -120,7 +120,10 @@ export default function MessagingDrawer() {
 
       {/* 🟢 CORPO DEL DRAWER */}
       {!isMinimized && (
-        <div style={{ height: "400px" }} className="d-flex flex-column">
+        <div
+          style={{ height: "400px" }}
+          className="messaging-drawer-body d-flex flex-column"
+        >
           {/* VISTA 1: LISTA CONTATTI */}
           {!activeContact ? (
             <div className="overflow-auto flex-grow-1 p-2">
