@@ -78,6 +78,23 @@ html {
   background-color: currentColor;
 }
 
+/* Finestra messaggistica: al montaggio "sale" da sotto il bordo inferiore
+   invece di comparire di scatto già in posizione. */
+.messaging-drawer {
+  animation: messaging-drawer-rise 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes messaging-drawer-rise {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* ---------- ex-Villain: rosso/nero minaccioso ---------- */
 [data-brand-theme="villain"][data-bs-theme="light"] {
   --bs-primary: #c1121f;

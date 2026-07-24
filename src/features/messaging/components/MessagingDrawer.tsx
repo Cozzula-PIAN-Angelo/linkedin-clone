@@ -54,7 +54,7 @@ export default function MessagingDrawer() {
 
   return (
     <div
-      className="position-fixed bottom-0 z-3"
+      className="messaging-drawer position-fixed bottom-0 z-3"
       style={{
         width: "340px",
         right: "max(20px, calc((100vw - 1140px) / 2))",
