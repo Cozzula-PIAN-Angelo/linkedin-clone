@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import ProfileCard from "../components/ProfileCard";
+import LotrRing from "../components/LotrRing";
 import { NewsSection } from "../features/news";
 import Footer from "../components/Footer";
 import { Feed } from "../features/posts";
@@ -10,6 +11,7 @@ function HomePage() {
       <Row className="g-3">
         <Col xs={12} md={4} lg={2}>
           <ProfileCard />
+          <LotrRing />
         </Col>
 
         <Col xs={12} md={8} lg={7}>

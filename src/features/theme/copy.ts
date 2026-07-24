@@ -164,10 +164,67 @@ const villainCopy: Copy = {
   },
 };
 
-// Tutti i temi easter egg (villain/fantasy/cyberpunk/horror) condividono gli
-// stessi testi "da cattivo": solo colori e icone cambiano da un tema all'altro.
+const fantasyCopy: Copy = {
+  pageTitle: "Regno Libero | La rete dei viandanti e degli eroi",
+  brandName: "Regno Libero",
+  nav: {
+    network: "La Compagnia",
+    jobs: "Missioni",
+    messaging: "Corvi Messaggeri",
+    more: "Pergamene",
+  },
+  searchPlaceholder: "Cerca tra i viandanti...",
+  notifications: {
+    label: "Presagi",
+    empty: "Nessun presagio, per ora",
+  },
+  userMenu: {
+    logout: "Lascia la Taverna",
+    deleteAccount: "Cancella il nome dalle Cronache",
+  },
+  deleteModal: {
+    title: "Cancellare il tuo nome dalle Cronache?",
+    bodyBefore: "Le gesta di ",
+    bodyAfter:
+      " saranno cancellate per sempre dalle Cronache del Regno, insieme a tutti i tuoi ricordi. Non c'è ritorno da questo cammino.",
+    cancel: "Ritorna sui tuoi passi",
+    confirm: "Cancella per sempre",
+    confirming: "Le pergamene bruciano...",
+  },
+  feedPlaceholder: "Taverna (in arrivo)",
+  profile: {
+    connections: "Compagni di viaggio",
+    growNetwork: "Radduna la tua Compagnia",
+  },
+  news: {
+    title: "Bandi e Proclami",
+    error: "Il corvo messaggero si è perso. Riprova più tardi.",
+  },
+  login: {
+    title: "Entra nella Taverna",
+    newHere: "Nuovo viandante da queste parti?",
+    signUpLink: "Unisciti alla Compagnia",
+    submit: "Entra",
+  },
+  register: {
+    title: "Unisciti alla Compagnia",
+    alreadyHave: "Hai già un nome nelle Cronache?",
+    headlinePlaceholder: "es. Guardiano dei Confini",
+    submit: "Giura fedeltà",
+  },
+  notFound: {
+    title: "Sentiero perduto",
+    message: "Questo cammino non è segnato su nessuna mappa del Regno.",
+    backHome: "Torna alla Taverna",
+  },
+};
+
+// Tutti i temi easter egg condividono gli stessi testi "da cattivo"
+// (villainCopy), tranne fantasy che ha la sua nomenclatura dedicata.
 // Il default (LinkedIn normale) usa invece i testi originali.
 export function useCopy(): Copy {
   const brandTheme = useAppSelector((state) => state.theme.brandTheme);
-  return brandTheme === "default" ? defaultCopy : villainCopy;
+  if (brandTheme === "default") return defaultCopy;
+  if (brandTheme === "fantasy") return fantasyCopy;
+  return villainCopy;
 }

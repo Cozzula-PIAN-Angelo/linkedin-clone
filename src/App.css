@@ -1,6 +1,6 @@
 /* ***** BODY BG ***** */
 body {
-  background-color: whitesmoke;
+  background-color: var(--bs-body-bg, whitesmoke);
 }
 
 /* ***** PROFILO ***** */
