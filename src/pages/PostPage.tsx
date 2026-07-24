@@ -24,7 +24,7 @@ function PostPage() {
   }, [dispatch]);
 
   return (
-    <Container style={{ paddingTop: 68 }}>
+    <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="justify-content-center">
         <Col xs={12} md={10} lg={7}>
           {post ? (
@@ -39,7 +39,7 @@ function PostPage() {
                 Questo post non esiste più, oppure era un contenuto
                 dimostrativo andato perso al ricaricamento.
               </p>
-              <Link to="/">Torna al feed</Link>
+              <Link to="/" className="cursor-target">Torna al feed</Link>
             </div>
           )}
         </Col>

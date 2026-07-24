@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Row, Col, Card, Form, Button, Spinner } from "react-bootstrap";
+import Avatar from "../../components/Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateProfile, clearProfileError } from "./profileSlice";
 import { fileToResizedDataUrl } from "../posts/imageUtils";
@@ -64,17 +65,20 @@ function EditProfile() {
   };
 
   return (
-    <Container style={{ paddingTop: 68 }}>
+    <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="justify-content-center">
         <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-          <Card className="profile-card border-0">
+          <Card className="profile-card bg-white rounded-2 border">
             <Card.Title className="mt-3 ps-3">Modifica profilo</Card.Title>
             <Card.Body className="d-flex flex-column align-items-center">
-              <img
-                src={avatar}
-                alt={`${user.name} ${user.surname}`}
-                className="avatar-profile rounded-circle mb-3"
-              />
+              <div className="mb-3">
+                <Avatar
+                  src={avatar}
+                  name={user.name}
+                  surname={user.surname}
+                  size={120}
+                />
+              </div>
               <Form.Control
                 ref={fileInput}
                 type="file"
@@ -84,7 +88,7 @@ function EditProfile() {
               />
               <Button
                 size="sm"
-                className="bg-body text-muted border border-secondary mb-3"
+                className="bg-body text-muted border border-secondary mb-3 cursor-target"
                 onClick={() => fileInput.current?.click()}
               >
                 Cambia foto
@@ -138,11 +142,15 @@ function EditProfile() {
                   <Button
                     type="button"
                     onClick={exit}
-                    className="bg-body text-muted border border-secondary d-block ms-auto mt-3 me-2"
+                    className="bg-body text-muted border border-secondary d-block ms-auto mt-3 me-2 cursor-target"
                   >
                     Annulla
                   </Button>
-                  <Button type="submit" className="d-block mt-3" disabled={saving}>
+                  <Button
+                    type="submit"
+                    className="d-block mt-3 cursor-target"
+                    disabled={saving}
+                  >
                     {saving ? <Spinner animation="border" size="sm" /> : "Salva modifiche"}
                   </Button>
                 </div>

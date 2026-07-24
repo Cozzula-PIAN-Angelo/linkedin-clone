@@ -7,22 +7,75 @@
    per l'elenco temi e le icone associate.
    ============================================================ */
 
-/* Sfondo di base (whitesmoke) SOLO in tema chiaro. È vincolato a
-   [data-bs-theme="light"]: senza questo vincolo la regola sovrascriveva anche
-   lo sfondo scuro di Bootstrap, e il tema default in dark mode restava chiaro.
-   I temi brand che vogliono un altro sfondo lo ridefiniscono con specificità
-   più alta ([data-brand-theme][data-bs-theme=...]) e continuano a vincere. */
-[data-bs-theme="light"] {
-  --bs-body-bg: whitesmoke;
+/* Sfondo di base per tema default e per le varianti "chiaro": grigio caldo,
+   più riposante del whitesmoke. In scuro viene sovrascritto qui sotto. */
+:root {
+  --bs-body-bg: #f3f2ef;
 }
 
-/* Tema default in scuro: la PAGINA (body) è più scura delle card, per dare
-   profondità come su LinkedIn — non nera, un carbone bluastro. Le card usano
-   .bg-body (#212529 di Bootstrap) e così restano più chiare e "galleggiano".
-   Vincolato a [data-brand-theme="default"]: i temi brand hanno il proprio
-   sfondo e non vengono toccati. */
+/* Tema default in scuro: le superfici (card, .bg-body) su un grigio scuro
+   morbido, non nero puro, come fanno gli altri temi. */
+[data-brand-theme="default"][data-bs-theme="dark"] {
+  --bs-body-bg: #1b1f23;
+}
+
+/* ...e la PAGINA (body) ancora più scura delle card, per dare profondità come
+   su LinkedIn. Vincolato a [data-brand-theme="default"]: i temi brand hanno il
+   proprio sfondo e non vengono toccati. */
 [data-brand-theme="default"][data-bs-theme="dark"] body {
   background-color: #15171c;
+}
+
+/* Riserva sempre lo spazio della scrollbar verticale: senza, le pagine corte
+   risultano più larghe di quelle con scroll (il Container si ricentra). */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Card profilo "appiccicata" durante lo scroll, solo da lg in su (sotto, le
+   colonne si impilano e non avrebbe senso fissarla). */
+@media (min-width: 992px) {
+  .sticky-sidebar {
+    position: sticky;
+    top: 80px;
+    align-self: flex-start;
+  }
+}
+
+/* Colonne della Home: larghezze in pixel calibrate sulle proporzioni reali di
+   LinkedIn, invece delle sole frazioni della griglia Bootstrap. */
+@media (min-width: 992px) {
+  .home-col-profile {
+    flex: 0 0 235px;
+    max-width: 235px;
+  }
+
+  .home-col-feed {
+    flex: 1 1 0%;
+    max-width: none;
+  }
+
+  .home-col-news {
+    flex: 0 0 310px;
+    max-width: 310px;
+  }
+}
+
+/* Linea sotto la voce attiva della navbar (Home, La mia rete, ...):
+   currentColor segue il colore già usato dallo stato "active" di ciascun tema. */
+.nav-link-item {
+  position: relative;
+}
+
+.nav-link-item.active::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
 }
 
 /* ---------- ex-Villain: rosso/nero minaccioso ---------- */

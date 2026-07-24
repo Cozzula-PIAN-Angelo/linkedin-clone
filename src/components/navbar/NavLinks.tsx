@@ -16,11 +16,11 @@ function NavLinks() {
     { to: "/network", label: copy.nav.network, icon: icons.network },
     { to: "/jobs", label: copy.nav.jobs, icon: icons.jobs },
     { to: "/messaging", label: copy.nav.messaging, icon: icons.messaging },
-    { to: "/more", label: copy.nav.more, icon: icons.more },
+    { to: "/more", label: copy.nav.more, icon: icons.more, className: "d-lg-none" },
   ];
 
   return (
-    <Nav className="d-none d-sm-flex flex-row position-absolute top-50 start-50 translate-middle gap-1 gap-md-2">
+    <Nav className="d-none d-sm-flex flex-row ms-auto gap-1 gap-md-2">
       {links.slice(0, 4).map((link) => (
         <NavLinkItem key={link.to} {...link} />
       ))}

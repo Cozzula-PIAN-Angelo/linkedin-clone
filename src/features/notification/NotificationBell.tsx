@@ -23,20 +23,23 @@ function NotificationBell() {
         bsPrefix="btn"
         className="d-flex flex-column align-items-center text-secondary bg-transparent border-0 px-2 py-0 cursor-target"
       >
-        <span className="position-relative d-flex">
+        <span className="position-relative d-flex mt-1">
           <BellIcon size={20} />
           {unreadCount > 0 && (
             <Badge
               bg="danger"
               pill
-              className="position-absolute top-0 start-100 translate-middle"
-              style={{ fontSize: "0.6rem" }}
+              className="position-absolute top-0 start-100"
+              style={{ fontSize: "0.6rem", transform: "translate(-40%, -20%)" }}
             >
               {unreadCount}
             </Badge>
           )}
         </span>
-        <span className="d-none d-lg-inline small">
+        <span
+          className="d-none d-lg-inline"
+          style={{ fontSize: "0.72rem" }}
+        >
           {copy.notifications.label}
         </span>
       </Dropdown.Toggle>
