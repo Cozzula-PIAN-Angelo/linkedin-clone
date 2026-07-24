@@ -1,0 +1,82 @@
+.muzzle-flash-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+  overflow: hidden;
+}
+
+/* Punto di origine dello sparo */
+.shot-effect {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Lampo di fuoco rosso/arancio centrale */
+.flash-core {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    #ff4d00 50%,
+    rgba(255, 0, 0, 0) 100%
+  );
+  border-radius: 50%;
+  animation: flashPop 0.15s ease-out forwards;
+}
+
+@keyframes flashPop {
+  0% {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Scintille a raggiera */
+.spark-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  background: #ffcc00;
+  box-shadow: 0 0 6px #ff3300;
+  animation: sparkShoot 0.2s ease-out forwards;
+}
+
+.spark-1 {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.spark-2 {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+.spark-3 {
+  transform: translate(-50%, -50%) rotate(225deg);
+}
+.spark-4 {
+  transform: translate(-50%, -50%) rotate(315deg);
+}
+
+@keyframes sparkShoot {
+  0% {
+    width: 4px;
+    opacity: 1;
+  }
+  100% {
+    width: 28px;
+    opacity: 0;
+  }
+}
