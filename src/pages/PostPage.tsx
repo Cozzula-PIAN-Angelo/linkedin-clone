@@ -39,7 +39,7 @@ function PostPage() {
                 Questo post non esiste più, oppure era un contenuto
                 dimostrativo andato perso al ricaricamento.
               </p>
-              <Link to="/">Torna al feed</Link>
+              <Link to="/" className="cursor-target">Torna al feed</Link>
             </div>
           )}
         </Col>

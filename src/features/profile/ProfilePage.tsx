@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Container, Card, Row, Col, Button, Spinner } from "react-bootstrap";
+import Avatar from "../../components/Avatar";
 import RoleForm from "./RoleForm";
 import Experencies from "./Experiences";
 import { addExperience, fetchExperiences } from "./profileSlice";
@@ -92,13 +93,16 @@ function ProfilePage() {
       <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-            <Card className="profile-card border-0">
+            <Card className="profile-card bg-white rounded-2 border">
               <Card.Body className="d-flex flex-column align-items-center">
-                <img
-                  src={user.avatar}
-                  alt={`${user.name} ${user.surname}`}
-                  className="avatar-profile rounded-circle mb-3"
-                />
+                <div className="mb-3">
+                  <Avatar
+                    src={user.avatar}
+                    name={user.name}
+                    surname={user.surname}
+                    size={120}
+                  />
+                </div>
                 <Card.Title>
                   {user.name} {user.surname}
                 </Card.Title>
@@ -108,20 +112,20 @@ function ProfilePage() {
                 {isOwnProfile ? (
                   <Button
                     onClick={editProfile}
-                    className="bg-white text-primary "
+                    className="bg-white text-primary cursor-target"
                   >
                     Modifica profilo
                   </Button>
                 ) : !connection ? (
                   <Button
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() => dispatch(sendRequest(String(user.id)))}
                   >
                     Collegati
                   </Button>
                 ) : isRequestReceived ? (
                   <Button
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() => dispatch(acceptRequest(connection))}
                   >
                     Accetta invito
@@ -129,7 +133,7 @@ function ProfilePage() {
                 ) : connection.status === "pending" ? (
                   <Button
                     variant="outline-secondary"
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() =>
                       dispatch(removeConnection(String(connection.id)))
                     }
@@ -139,7 +143,7 @@ function ProfilePage() {
                 ) : (
                   <Button
                     variant="outline-primary"
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() =>
                       dispatch(removeConnection(String(connection.id)))
                     }

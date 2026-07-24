@@ -70,7 +70,7 @@ export default function MessagingDrawer() {
     >
       {/* 🟢 BARRA SUPERIORE (HEADER) */}
       <div
-        className="d-flex align-items-center justify-content-between px-3 py-2 border-bottom"
+        className="d-flex align-items-center justify-content-between px-3 py-2 border-bottom cursor-target"
         style={{
           cursor: "pointer",
           backgroundColor: "rgba(248, 249, 250, 0.6)",
@@ -81,7 +81,7 @@ export default function MessagingDrawer() {
         <div className="d-flex align-items-center gap-2">
           {activeContact && !isMinimized ? (
             <button
-              className="btn btn-link p-0 text-dark border-0 me-1"
+              className="btn btn-link p-0 text-dark border-0 me-1 cursor-target"
               onClick={(e) => {
                 e.stopPropagation();
                 dispatch(setActiveContact(null));
@@ -105,7 +105,7 @@ export default function MessagingDrawer() {
           {/* Tasto Reset Chat: visibile solo se siamo dentro una chat attiva */}
           {activeContact && !isMinimized && (
             <button
-              className="btn btn-link p-0 text-secondary border-0 hover-text-danger"
+              className="btn btn-link p-0 text-secondary border-0 hover-text-danger cursor-target"
               title="Reset e svuota chat"
               onClick={(e) => {
                 e.stopPropagation();
@@ -131,7 +131,7 @@ export default function MessagingDrawer() {
                   <div
                     key={contact.id}
                     onClick={() => dispatch(setActiveContact(contact.id))}
-                    className="d-flex align-items-center gap-2 p-2 rounded-3 mb-1"
+                    className="d-flex align-items-center gap-2 p-2 rounded-3 mb-1 cursor-target"
                     style={{
                       cursor: "pointer",
                       transition: "background 0.2s",
@@ -286,7 +286,7 @@ export default function MessagingDrawer() {
                 />
                 <button
                   type="submit"
-                  className="btn btn-primary rounded-circle d-flex align-items-center justify-content-center p-0"
+                  className="btn btn-primary rounded-circle d-flex align-items-center justify-content-center p-0 cursor-target"
                   style={{
                     width: "30px",
                     height: "30px",

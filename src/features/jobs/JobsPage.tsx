@@ -87,7 +87,10 @@ function JobsPage() {
                 onChange={(e) => setQuery(e.target.value)}
               />
             </div>
-            <Button type="submit" className="rounded-pill flex-shrink-0">
+            <Button
+              type="submit"
+              className="rounded-pill flex-shrink-0 cursor-target"
+            >
               Cerca
             </Button>
           </Form>
@@ -137,7 +140,7 @@ function JobsPage() {
                   target="_blank"
                   rel="noreferrer"
                   action
-                  className="d-flex gap-3 align-items-start"
+                  className="d-flex gap-3 align-items-start cursor-target"
                 >
                   {job.companyLogo && (
                     <img
