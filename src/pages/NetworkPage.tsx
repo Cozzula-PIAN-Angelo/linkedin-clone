@@ -106,7 +106,7 @@ function NetworkPage() {
     everyone.get(String(c.requesterId) === meId ? String(c.addresseeId) : String(c.requesterId));
 
   return (
-    <Container style={{ paddingTop: 68 }}>
+    <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="g-3">
         <Col xs={12} md={4} lg={3}>
           <NetworkOverview />
