@@ -49,7 +49,7 @@ function PersonInfo({ user }: { user: User | undefined }) {
   return (
     <Link
       to={`/profile/${user.id}`}
-      className="text-decoration-none text-body"
+      className="text-decoration-none text-body cursor-target"
       style={{ minWidth: 0 }}
     >
       {info}
@@ -145,14 +145,14 @@ function NetworkPage() {
                       <Button
                         size="sm"
                         variant="outline-secondary"
-                        className="rounded-pill"
+                        className="rounded-pill cursor-target"
                         onClick={() => dispatch(removeConnection(String(connection.id)))}
                       >
                         Ignora
                       </Button>
                       <Button
                         size="sm"
-                        className="rounded-pill"
+                        className="rounded-pill cursor-target"
                         onClick={() => dispatch(acceptRequest(connection))}
                       >
                         Accetta
@@ -178,7 +178,7 @@ function NetworkPage() {
                     <Button
                       size="sm"
                       variant="outline-secondary"
-                      className="rounded-pill flex-shrink-0"
+                      className="rounded-pill flex-shrink-0 cursor-target"
                       onClick={() => dispatch(removeConnection(String(connection.id)))}
                     >
                       Ritira
@@ -209,7 +209,7 @@ function NetworkPage() {
                     <Button
                       size="sm"
                       variant="outline-secondary"
-                      className="rounded-pill flex-shrink-0"
+                      className="rounded-pill flex-shrink-0 cursor-target"
                       onClick={() => dispatch(removeConnection(String(connection.id)))}
                     >
                       Rimuovi
@@ -232,7 +232,7 @@ function NetworkPage() {
                         <Card.Body className="d-flex flex-column align-items-center">
                           <Link
                             to={`/profile/${user.id}`}
-                            className="text-decoration-none text-body d-flex flex-column align-items-center w-100"
+                            className="text-decoration-none text-body d-flex flex-column align-items-center w-100 cursor-target"
                             style={{ minWidth: 0 }}
                           >
                             <Avatar
@@ -272,7 +272,7 @@ function NetworkPage() {
                           <Button
                             size="sm"
                             variant="outline-primary"
-                            className="rounded-pill mt-auto"
+                            className="rounded-pill mt-auto cursor-target"
                             onClick={() => dispatch(sendRequest(String(user.id)))}
                           >
                             Collegati

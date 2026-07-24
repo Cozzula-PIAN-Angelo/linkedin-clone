@@ -58,7 +58,7 @@ function MessagingPage() {
                         key={contact.id}
                         type="button"
                         onClick={() => dispatch(setActiveContact(contact.id))}
-                        className={`w-100 border-0 text-start d-flex align-items-center gap-2 p-3 border-bottom ${
+                        className={`w-100 border-0 text-start d-flex align-items-center gap-2 p-3 border-bottom cursor-target ${
                           isActive ? "bg-primary bg-opacity-10" : "bg-transparent"
                         }`}
                       >
@@ -111,7 +111,7 @@ function MessagingPage() {
                       </div>
                       <Button
                         variant="link"
-                        className="text-secondary p-1"
+                        className="text-secondary p-1 cursor-target"
                         title="Svuota la conversazione"
                         onClick={() => dispatch(resetChat(activeContact.id))}
                       >
@@ -168,7 +168,7 @@ function MessagingPage() {
                       />
                       <Button
                         type="submit"
-                        className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                        className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 cursor-target"
                         style={{ width: 40, height: 40 }}
                       >
                         <SendFill size={16} />

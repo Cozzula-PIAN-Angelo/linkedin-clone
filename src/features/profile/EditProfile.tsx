@@ -88,7 +88,7 @@ function EditProfile() {
               />
               <Button
                 size="sm"
-                className="bg-white text-muted border border-secondary mb-3"
+                className="bg-white text-muted border border-secondary mb-3 cursor-target"
                 onClick={() => fileInput.current?.click()}
               >
                 Cambia foto
@@ -142,11 +142,15 @@ function EditProfile() {
                   <Button
                     type="button"
                     onClick={exit}
-                    className="bg-white text-muted border border-secondary d-block ms-auto mt-3 me-2"
+                    className="bg-white text-muted border border-secondary d-block ms-auto mt-3 me-2 cursor-target"
                   >
                     Annulla
                   </Button>
-                  <Button type="submit" className="d-block mt-3" disabled={saving}>
+                  <Button
+                    type="submit"
+                    className="d-block mt-3 cursor-target"
+                    disabled={saving}
+                  >
                     {saving ? <Spinner animation="border" size="sm" /> : "Salva modifiche"}
                   </Button>
                 </div>

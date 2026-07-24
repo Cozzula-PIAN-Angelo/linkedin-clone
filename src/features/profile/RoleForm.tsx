@@ -78,7 +78,7 @@ function RoleForm({ onAdd }: RoleFormProps) {
           </Form.Group>
           <Button
             type="submit"
-            className="d-block ms-auto mt-3"
+            className="d-block ms-auto mt-3 cursor-target"
             disabled={!isValid}
           >
             Aggiungi

@@ -52,7 +52,7 @@ function Experencies({ experiences, canEdit, loading }: ExperenciesProps) {
               <Button
                 variant="link"
                 size="sm"
-                className="text-secondary p-0"
+                className="text-secondary p-0 cursor-target"
                 title="Elimina esperienza"
                 onClick={() => dispatch(deleteExperience(String(exp.id)))}
               >

@@ -112,20 +112,20 @@ function ProfilePage() {
                 {isOwnProfile ? (
                   <Button
                     onClick={editProfile}
-                    className="bg-white text-primary "
+                    className="bg-white text-primary cursor-target"
                   >
                     Modifica profilo
                   </Button>
                 ) : !connection ? (
                   <Button
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() => dispatch(sendRequest(String(user.id)))}
                   >
                     Collegati
                   </Button>
                 ) : isRequestReceived ? (
                   <Button
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() => dispatch(acceptRequest(connection))}
                   >
                     Accetta invito
@@ -133,7 +133,7 @@ function ProfilePage() {
                 ) : connection.status === "pending" ? (
                   <Button
                     variant="outline-secondary"
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() =>
                       dispatch(removeConnection(String(connection.id)))
                     }
@@ -143,7 +143,7 @@ function ProfilePage() {
                 ) : (
                   <Button
                     variant="outline-primary"
-                    className="rounded-pill"
+                    className="rounded-pill cursor-target"
                     onClick={() =>
                       dispatch(removeConnection(String(connection.id)))
                     }
