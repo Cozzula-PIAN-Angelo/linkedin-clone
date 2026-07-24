@@ -478,6 +478,25 @@ html {
   box-shadow: 0 0 10px 2px rgba(230, 184, 0, 0.75);
 }
 
+/* Di notte la polvere dorata diventa lapilli, stesso giallo caldo di EvilEye */
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .fantasy-firefly-dot {
+  background-color: #ffee86;
+  box-shadow: 0 0 10px 2px rgba(255, 238, 134, 0.75);
+}
+
+/* Card semi-trasparenti di notte, per lasciar intravedere l'occhio di sfondo.
+   Le "card" dell'app sono implementate in modo incoerente (componente Card di
+   react-bootstrap con classe .card, oppure semplici div con bg-body/bg-white),
+   quindi copriamo tutti i selettori coinvolti. .list-group-item serve per le
+   righe della sezione news: hanno un proprio sfondo bianco solido, distinto
+   dalla card esterna che le contiene. */
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .card,
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .bg-body,
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .bg-white,
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .list-group-item {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
 /* Anello 3D rotante ("LOTR-ish Ring" di J. Steinbach, adattato in CSS puro
    senza Sass/jQuery): 20 fasce dorate impilate a incastro con transform 3D,
    che ruotano lentamente mostrando una frase incisa lettera per lettera. */
