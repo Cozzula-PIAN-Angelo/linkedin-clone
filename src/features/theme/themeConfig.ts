@@ -30,6 +30,7 @@ import HorrorSkullLogo from "../../components/HorrorSkullLogo";
 import CyberpunkEffects from "./CyberpunkEffects";
 // dentro themeConfig.ts
 import HorrorEffects from "./HorrorEffects";
+import FantasyEffects from "./FantasyEffects";
 import FantasyRingLogo from "../../components/FantasyRingLogo";
 
 export type BrandTheme =
@@ -106,6 +107,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       more: BookFill,
       notifications: BellFill,
     },
+    effects: FantasyEffects,
   },
   cyberpunk: {
     label: "Cyberpunk",
