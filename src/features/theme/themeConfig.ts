@@ -28,8 +28,14 @@ import {
 import VillainLogo from "../../components/VillainLogo";
 import HorrorSkullLogo from "../../components/HorrorSkullLogo";
 import CyberpunkEffects from "./CyberpunkEffects";
+import FantasyRingLogo from "../../components/FantasyRingLogo";
 
-export type BrandTheme = "default" | "villain" | "fantasy" | "cyberpunk" | "horror";
+export type BrandTheme =
+  | "default"
+  | "villain"
+  | "fantasy"
+  | "cyberpunk"
+  | "horror";
 
 export const brandThemes: BrandTheme[] = [
   "default",
@@ -90,7 +96,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
   fantasy: {
     label: "Fantasy",
     swatch: "#1f6d4c",
-    logo: ShieldFill,
+    logo: FantasyRingLogo,
     icons: {
       network: ShieldFill,
       jobs: Gem,

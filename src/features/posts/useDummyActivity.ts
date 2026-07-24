@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { addNotification } from "../notification/notificationSlice";
 import {
   dummyCommentArrived,
   dummyLikeArrived,
@@ -33,13 +34,19 @@ function nextDelay(): number {
 export function useDummyActivity() {
   const dispatch = useAppDispatch();
   const ready = useAppSelector(
-    (state) => !state.posts.loading && state.posts.error === null
+    (state) => !state.posts.loading && state.posts.error === null,
   );
   const items = useAppSelector((state) => state.posts.items);
+  const currentUser = useAppSelector((state) => state.auth.currentUser);
 
   // I timer leggono i post dal ref: così vedono sempre il feed aggiornato
   // senza dover riavviare l'effetto a ogni cambiamento
   const itemsRef = useRef(items);
+  const currentUserRef = useRef(currentUser);
+  useEffect(() => {
+    currentUserRef.current = currentUser;
+  }, [currentUser]);
+
   useEffect(() => {
     itemsRef.current = items;
   }, [items]);
@@ -61,21 +68,50 @@ export function useDummyActivity() {
         // Un utente finto mette "Consiglia" a un post a caso (anche vostro)
         const post = posts[Math.floor(Math.random() * posts.length)];
         const candidates = pools.users.filter(
-          (user) => !post.likes.includes(String(user.id))
+          (user) => !post.likes.includes(String(user.id)),
         );
         if (candidates.length > 0) {
-          const user = candidates[Math.floor(Math.random() * candidates.length)];
+          const user =
+            candidates[Math.floor(Math.random() * candidates.length)];
           dispatch(
-            dummyLikeArrived({ postId: String(post.id), userId: String(user.id) })
+            dummyLikeArrived({
+              postId: String(post.id),
+              userId: String(user.id),
+            }),
           );
+
+          if (String(post.authorId) === String(currentUserRef.current?.id)) {
+            dispatch(
+              addNotification(
+                `${user.name} ${user.surname} ha messo "Consiglia" al tuo post`,
+              ),
+            );
+          }
         }
       } else {
         // Un utente finto commenta un post a caso (anche vostro)
         const post = posts[Math.floor(Math.random() * posts.length)];
-        dispatch(dummyCommentArrived(buildDummyComment(pools, String(post.id))));
+        const comment = buildDummyComment(pools, String(post.id));
+        dispatch(dummyCommentArrived(comment));
+
+        if (String(post.authorId) === String(currentUserRef.current?.id)) {
+          const author = pools.users.find(
+            (user) => String(user.id) === String(comment.authorId),
+          );
+          dispatch(
+            addNotification(
+              author
+                ? `${author.name} ${author.surname} ha commentato il tuo post`
+                : "Hai un nuovo commento al tuo post",
+            ),
+          );
+        }
       }
 
-      timer = window.setTimeout(() => performRandomActivity(pools), nextDelay());
+      timer = window.setTimeout(
+        () => performRandomActivity(pools),
+        nextDelay(),
+      );
     };
 
     (async () => {
@@ -88,7 +124,10 @@ export function useDummyActivity() {
           dispatch(seedDummyFeed(buildInitialDummyFeed(pools)));
         }
 
-        timer = window.setTimeout(() => performRandomActivity(pools), nextDelay());
+        timer = window.setTimeout(
+          () => performRandomActivity(pools),
+          nextDelay(),
+        );
       } catch {
         // DummyJSON non raggiungibile: pazienza, il feed mostra solo i post veri
       }

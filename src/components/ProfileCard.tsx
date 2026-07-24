@@ -22,7 +22,7 @@ function ProfileCard() {
   if (!user) return null;
 
   const connectionCount = connections.filter(
-    (c) => c.status === "accepted" && involvesUser(c, String(user.id))
+    (c) => c.status === "accepted" && involvesUser(c, String(user.id)),
   ).length;
 
   const card = (
@@ -39,6 +39,7 @@ function ProfileCard() {
             name={user.name}
             surname={user.surname}
             size={72}
+            ringed
           />
         </div>
         <div className="fw-bold fs-5 mt-2">
