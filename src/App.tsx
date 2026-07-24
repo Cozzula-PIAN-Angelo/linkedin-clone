@@ -12,6 +12,7 @@ import ProfilePage from "./features/profile/ProfilePage";
 import EditProfile from "./features/profile/EditProfile";
 import NetworkPage from "./pages/NetworkPage";
 import PostPage from "./pages/PostPage";
+import MessagingPage from "./pages/MessagingPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDummyNetwork } from "./features/network/useDummyNetwork";
 import { useNotificationsListener } from "./features/notification/useNotificationsListener";
@@ -98,6 +99,8 @@ function App() {
           <Route path="/network" element={<NetworkPage />} />
           {/* Singolo post: è la destinazione del link condiviso con "Invia" */}
           <Route path="/post/:id" element={<PostPage />} />
+          {/* Messaggistica a schermo intero: stessa chat AI del pannello */}
+          <Route path="/messaging" element={<MessagingPage />} />
           {/* URL inesistente: pagina 404 con la navbar (se non sei loggato
               ProtectedRoute ti manda comunque al login) */}
           <Route path="*" element={<NotFoundPage />} />
