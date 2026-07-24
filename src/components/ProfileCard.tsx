@@ -37,7 +37,7 @@ function ProfileCard() {
   ).length;
 
   const card = (
-    <div className="bg-body rounded-2 border overflow-hidden">
+    <div className="home-profile-card bg-body rounded-2 border overflow-hidden">
       <div className="bg-primary-subtle" style={{ height: 64 }} />
 
       <Link

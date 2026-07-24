@@ -106,7 +106,7 @@ function PostCard({ post, author }: PostCardProps) {
   );
 
   return (
-    <article className="bg-body rounded-2 border">
+    <article className="post-card bg-body rounded-2 border">
       {/* Header: autore, headline, quanto tempo fa. Avatar e nome portano
           al profilo dell'autore (nessun link se l'account è stato eliminato) */}
       <div className="d-flex align-items-start gap-2 p-3 pb-2">

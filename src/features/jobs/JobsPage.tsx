@@ -66,7 +66,7 @@ function JobsPage() {
   return (
     <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="g-3">
-        <Col xs={12} md={4} lg={3}>
+        <Col xs={12} md={4} lg={3} className="sticky-sidebar">
           <ProfileCard />
         </Col>
 
