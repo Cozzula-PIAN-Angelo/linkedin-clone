@@ -12,7 +12,7 @@ const footerLinks = [
 
 function Footer() {
   return (
-    <div className="mt-3">
+    <div className="app-footer mt-3">
       <div className="d-flex flex-wrap gap-2">
         {footerLinks.map((link) => (
           <span

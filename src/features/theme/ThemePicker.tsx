@@ -36,6 +36,7 @@ function ThemePicker({ show, onClose }: ThemePickerProps) {
                 key={key}
                 variant={current === key ? "primary" : "outline-secondary"}
                 className="d-flex align-items-center gap-2 text-start"
+                disabled={key === "villain"}
                 onClick={() => handleSelect(key)}
               >
                 <span

@@ -39,7 +39,9 @@ function PersonInfo({ user }: { user: User | undefined }) {
           {user ? `${user.name} ${user.surname}` : "Utente eliminato"}
         </div>
         {user?.headline && (
-          <div className="text-secondary small text-truncate">{user.headline}</div>
+          <div className="text-secondary small text-truncate">
+            {user.headline}
+          </div>
         )}
       </div>
     </div>
@@ -61,7 +63,7 @@ function NetworkPage() {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const { connections, users, loading, error } = useAppSelector(
-    (state) => state.network
+    (state) => state.network,
   );
   const authors = useAppSelector((state) => state.posts.authors);
 
@@ -83,27 +85,31 @@ function NetworkPage() {
   everyone.delete(meId);
 
   const mine = connections.filter(
-    (c) => String(c.requesterId) === meId || String(c.addresseeId) === meId
+    (c) => String(c.requesterId) === meId || String(c.addresseeId) === meId,
   );
   const received = mine.filter(
-    (c) => c.status === "pending" && String(c.addresseeId) === meId
+    (c) => c.status === "pending" && String(c.addresseeId) === meId,
   );
   const sent = mine.filter(
-    (c) => c.status === "pending" && String(c.requesterId) === meId
+    (c) => c.status === "pending" && String(c.requesterId) === meId,
   );
   const accepted = mine.filter((c) => c.status === "accepted");
 
   // Suggerimenti: chi non ha nessun rapporto con me (né richiesta né collegamento)
   const relatedIds = new Set(
-    mine.flatMap((c) => [String(c.requesterId), String(c.addresseeId)])
+    mine.flatMap((c) => [String(c.requesterId), String(c.addresseeId)]),
   );
   const suggestions = [...everyone.values()].filter(
-    (user) => !relatedIds.has(String(user.id))
+    (user) => !relatedIds.has(String(user.id)),
   );
 
   // L'altra persona coinvolta in una connessione (non io)
   const otherUser = (c: Connection) =>
-    everyone.get(String(c.requesterId) === meId ? String(c.addresseeId) : String(c.requesterId));
+    everyone.get(
+      String(c.requesterId) === meId
+        ? String(c.addresseeId)
+        : String(c.requesterId),
+    );
 
   return (
     <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
@@ -133,7 +139,9 @@ function NetworkPage() {
                 Inviti ricevuti {received.length > 0 && `(${received.length})`}
               </Card.Title>
               {received.length === 0 ? (
-                <div className="text-secondary small">Nessun invito in sospeso.</div>
+                <div className="text-secondary small">
+                  Nessun invito in sospeso.
+                </div>
               ) : (
                 received.map((connection) => (
                   <div
@@ -146,7 +154,9 @@ function NetworkPage() {
                         size="sm"
                         variant="outline-secondary"
                         className="rounded-pill cursor-target"
-                        onClick={() => dispatch(removeConnection(String(connection.id)))}
+                        onClick={() =>
+                          dispatch(removeConnection(String(connection.id)))
+                        }
                       >
                         Ignora
                       </Button>
@@ -179,7 +189,9 @@ function NetworkPage() {
                       size="sm"
                       variant="outline-secondary"
                       className="rounded-pill flex-shrink-0 cursor-target"
-                      onClick={() => dispatch(removeConnection(String(connection.id)))}
+                      onClick={() =>
+                        dispatch(removeConnection(String(connection.id)))
+                      }
                     >
                       Ritira
                     </Button>
@@ -193,7 +205,8 @@ function NetworkPage() {
           <Card className="bg-body-tertiary rounded-2 border mb-3">
             <Card.Body>
               <Card.Title className="fs-6">
-                I tuoi collegamenti {accepted.length > 0 && `(${accepted.length})`}
+                I tuoi collegamenti{" "}
+                {accepted.length > 0 && `(${accepted.length})`}
               </Card.Title>
               {accepted.length === 0 ? (
                 <div className="text-secondary small">
@@ -210,7 +223,9 @@ function NetworkPage() {
                       size="sm"
                       variant="outline-secondary"
                       className="rounded-pill flex-shrink-0 cursor-target"
-                      onClick={() => dispatch(removeConnection(String(connection.id)))}
+                      onClick={() =>
+                        dispatch(removeConnection(String(connection.id)))
+                      }
                     >
                       Rimuovi
                     </Button>
@@ -224,7 +239,9 @@ function NetworkPage() {
           {suggestions.length > 0 && (
             <Card className="bg-body-tertiary rounded-2 border mb-3">
               <Card.Body>
-                <Card.Title className="fs-6">Persone che potresti conoscere</Card.Title>
+                <Card.Title className="fs-6">
+                  Persone che potresti conoscere
+                </Card.Title>
                 <Row className="g-3 mt-0">
                   {suggestions.map((user) => (
                     <Col key={user.id} xs={12} sm={6} lg={4}>
@@ -254,7 +271,9 @@ function NetworkPage() {
                               </div>
                             </OverlayTrigger>
                             {user.headline ? (
-                              <OverlayTrigger overlay={<Tooltip>{user.headline}</Tooltip>}>
+                              <OverlayTrigger
+                                overlay={<Tooltip>{user.headline}</Tooltip>}
+                              >
                                 <div
                                   className="text-secondary small text-truncate w-100"
                                   style={{ minHeight: "1.2em" }}
@@ -273,7 +292,9 @@ function NetworkPage() {
                             size="sm"
                             variant="outline-primary"
                             className="rounded-pill mt-auto cursor-target"
-                            onClick={() => dispatch(sendRequest(String(user.id)))}
+                            onClick={() =>
+                              dispatch(sendRequest(String(user.id)))
+                            }
                           >
                             Collegati
                           </Button>

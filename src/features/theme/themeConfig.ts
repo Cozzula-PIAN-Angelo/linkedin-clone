@@ -26,10 +26,11 @@ import {
   Broadcast,
 } from "react-bootstrap-icons";
 import VillainLogo from "../../components/VillainLogo";
-import HorrorSkullLogo from "../../components/HorrorSkullLogo";
+import UmbrellaCorpLogo from "../../components/UmbrellaCorpLogo";
 import CyberpunkEffects from "./CyberpunkEffects";
 // dentro themeConfig.ts
 import HorrorEffects from "./HorrorEffects";
+import FantasyEffects from "./FantasyEffects";
 import FantasyRingLogo from "../../components/FantasyRingLogo";
 
 export type BrandTheme =
@@ -84,7 +85,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
     },
   },
   villain: {
-    label: "ex-Villain",
+    label: "Star-wars (Claudio ti vogliamo bene)",
     swatch: "#c1121f",
     logo: VillainLogo,
     icons: {
@@ -106,10 +107,11 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
       more: BookFill,
       notifications: BellFill,
     },
+    effects: FantasyEffects,
   },
   cyberpunk: {
     label: "Cyberpunk",
-    swatch: "#ff2bd6",
+    swatch: "#9d00ff",
     logo: CpuFill,
     icons: {
       network: Diagram3Fill,
@@ -123,7 +125,7 @@ export const themeConfigs: Record<BrandTheme, ThemeConfig> = {
   horror: {
     label: "Umbrella Corp (Horror)",
     swatch: "#dc3545",
-    logo: HorrorSkullLogo,
+    logo: UmbrellaCorpLogo,
     icons: {
       network: MoonStars,
       jobs: Droplet,
