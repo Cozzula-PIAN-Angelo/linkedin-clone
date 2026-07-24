@@ -113,7 +113,7 @@ function PostCard({ post, author }: PostCardProps) {
         {author ? (
           <Link
             to={`/profile/${post.authorId}`}
-            className="d-flex align-items-start gap-2 flex-grow-1 text-decoration-none text-body"
+            className="d-flex align-items-start gap-2 flex-grow-1 text-decoration-none text-body cursor-target"
             style={{ minWidth: 0 }}
           >
             {authorInfo}
@@ -126,7 +126,7 @@ function PostCard({ post, author }: PostCardProps) {
           <Dropdown align="end">
             <Dropdown.Toggle
               variant="link"
-              className="text-secondary p-1 border-0"
+              className="text-secondary p-1 border-0 cursor-target"
               bsPrefix="btn"
               aria-label="Opzioni post"
             >
@@ -154,7 +154,7 @@ function PostCard({ post, author }: PostCardProps) {
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              className="btn btn-link p-0 border-0 align-baseline text-secondary"
+              className="btn btn-link p-0 border-0 align-baseline text-secondary cursor-target"
             >
               altro
             </button>
@@ -178,7 +178,7 @@ function PostCard({ post, author }: PostCardProps) {
                   {originalAuthor ? (
                     <Link
                       to={`/profile/${original.authorId}`}
-                      className="fw-bold small text-decoration-none text-body d-block text-truncate"
+                      className="fw-bold small text-decoration-none text-body d-block text-truncate cursor-target"
                     >
                       {originalAuthor.name} {originalAuthor.surname}
                     </Link>
@@ -240,7 +240,7 @@ function PostCard({ post, author }: PostCardProps) {
             <button
               type="button"
               onClick={() => setShowComments(true)}
-              className="btn btn-link p-0 border-0 text-secondary small text-decoration-none"
+              className="btn btn-link p-0 border-0 text-secondary small text-decoration-none cursor-target"
             >
               {commentCount} {commentCount === 1 ? "commento" : "commenti"}
             </button>
@@ -256,7 +256,7 @@ function PostCard({ post, author }: PostCardProps) {
           variant="link"
           size="sm"
           onClick={() => dispatch(toggleLike(post))}
-          className={`post-action-btn text-decoration-none fw-semibold d-flex align-items-center gap-2 ${
+          className={`post-action-btn text-decoration-none fw-semibold d-flex align-items-center gap-2 cursor-target ${
             isLiked ? "text-primary" : "text-secondary"
           }`}
         >
@@ -271,7 +271,7 @@ function PostCard({ post, author }: PostCardProps) {
           variant="link"
           size="sm"
           onClick={() => setShowComments((open) => !open)}
-          className="post-action-btn text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
+          className="post-action-btn text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2 cursor-target"
         >
           <ChatText size={18} />
           Commenta
@@ -280,7 +280,7 @@ function PostCard({ post, author }: PostCardProps) {
           variant="link"
           size="sm"
           onClick={() => dispatch(repostPost(post))}
-          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
+          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2 cursor-target"
         >
           <ArrowRepeat size={18} />
           Diffondi
@@ -292,7 +292,7 @@ function PostCard({ post, author }: PostCardProps) {
             setCopied(false);
             setShowShare(true);
           }}
-          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2"
+          className="text-decoration-none text-secondary fw-semibold d-flex align-items-center gap-2 cursor-target"
         >
           <SendFill size={18} />
           Invia
@@ -321,10 +321,16 @@ function PostCard({ post, author }: PostCardProps) {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowShare(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowShare(false)}
+            className="cursor-target"
+          >
             Chiudi
           </Button>
-          <Button onClick={copyLink}>Copia link</Button>
+          <Button onClick={copyLink} className="cursor-target">
+            Copia link
+          </Button>
         </Modal.Footer>
       </Modal>
     </article>

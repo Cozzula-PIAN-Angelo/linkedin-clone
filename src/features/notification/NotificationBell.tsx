@@ -1,14 +1,16 @@
 import { Badge, Dropdown } from "react-bootstrap";
-import { BellFill } from "react-bootstrap-icons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { removeNotification } from "./notificationSlice";
 import { useCopy } from "../theme/copy";
+import { themeConfigs } from "../theme/themeConfig";
 
 function NotificationBell() {
   const notifications = useAppSelector((state) => state.notification.items);
   const dispatch = useAppDispatch();
   const unreadCount = notifications.filter((n) => !n.read).length;
   const copy = useCopy();
+  const brandTheme = useAppSelector((state) => state.theme.brandTheme);
+  const BellIcon = themeConfigs[brandTheme].icons.notifications;
 
   const handleRemove = (id: string) => {
     dispatch(removeNotification(id));
@@ -19,10 +21,10 @@ function NotificationBell() {
       <Dropdown.Toggle
         as="button"
         bsPrefix="btn"
-        className="d-flex flex-column align-items-center text-secondary bg-transparent border-0 px-2 py-0"
+        className="d-flex flex-column align-items-center text-secondary bg-transparent border-0 px-2 py-0 cursor-target"
       >
         <span className="position-relative d-flex">
-          <BellFill size={20} />
+          <BellIcon size={20} />
           {unreadCount > 0 && (
             <Badge
               bg="danger"

@@ -4,6 +4,7 @@ export type Copy = {
   pageTitle: string;
   brandName: string;
   nav: {
+    home: string;
     network: string;
     jobs: string;
     messaging: string;
@@ -58,6 +59,7 @@ const defaultCopy: Copy = {
   pageTitle: "linkedin-clone",
   brandName: "LinkedIn",
   nav: {
+    home: "Home",
     network: "Il mio network",
     jobs: "Lavoro",
     messaging: "Messaggistica",
@@ -113,6 +115,7 @@ const villainCopy: Copy = {
   pageTitle: "ex-Villain | La rete per super-cattivi disoccupati",
   brandName: "ex-Villain",
   nav: {
+    home: "Home",
     network: "La Congrega",
     jobs: "Taglie",
     messaging: "Messaggi Segreti",
@@ -164,10 +167,38 @@ const villainCopy: Copy = {
   },
 };
 
+// Villain e horror condividono gli stessi testi "da cattivo": solo colori e
+// icone cambiano da un tema all'altro. Cyberpunk e fantasy hanno invece la
+// propria nomenclatura dedicata. Il default (LinkedIn normale) usa i testi
+// originali.
+const cyberpunkCopy: Copy = {
+  ...villainCopy,
+  nav: {
+    home: "Base",
+    network: "Cyberspace",
+    jobs: "Bounties",
+    messaging: "Codici Segreti",
+    more: "Darknet",
+  },
+  notifications: {
+    ...villainCopy.notifications,
+    label: "Criticità",
+  },
+  news: {
+    ...villainCopy.news,
+    title: "News from the Net",
+  },
+  profile: {
+    connections: "Fixers",
+    growNetwork: "Netrunners alleati",
+  },
+};
+
 const fantasyCopy: Copy = {
   pageTitle: "Regno Libero | La rete dei viandanti e degli eroi",
   brandName: "Regno Libero",
   nav: {
+    home: "Home",
     network: "La Compagnia",
     jobs: "Missioni",
     messaging: "Corvi Messaggeri",
@@ -219,12 +250,10 @@ const fantasyCopy: Copy = {
   },
 };
 
-// Tutti i temi easter egg condividono gli stessi testi "da cattivo"
-// (villainCopy), tranne fantasy che ha la sua nomenclatura dedicata.
-// Il default (LinkedIn normale) usa invece i testi originali.
 export function useCopy(): Copy {
   const brandTheme = useAppSelector((state) => state.theme.brandTheme);
   if (brandTheme === "default") return defaultCopy;
   if (brandTheme === "fantasy") return fantasyCopy;
+  if (brandTheme === "cyberpunk") return cyberpunkCopy;
   return villainCopy;
 }

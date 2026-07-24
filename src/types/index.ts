@@ -10,6 +10,9 @@ export interface User {
   job: JobTitle[];
   headline: string; // Aggiunta per ProfileCard <- Alb
   location: string;
+  // Tema brand scelto con l'easter egg (villain/fantasy/cyberpunk/horror/default),
+  // sincronizzato su Firestore così segue l'utente su ogni dispositivo <- Alb
+  brandTheme?: string;
 }
 
 export interface JobTitle {

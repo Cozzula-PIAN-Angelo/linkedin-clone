@@ -17,7 +17,7 @@ function Footer() {
         {footerLinks.map((link) => (
           <span
             key={link}
-            className="text-secondary"
+            className="text-secondary cursor-target"
             style={{ fontSize: "0.7rem", cursor: "pointer" }}
           >
             {link}

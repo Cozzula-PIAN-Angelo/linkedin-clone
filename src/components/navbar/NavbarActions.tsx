@@ -45,7 +45,7 @@ function NavbarActions() {
     <div className="d-flex align-items-center gap-2 gap-md-3 ms-auto">
       <button
         type="button"
-        className="btn btn-light d-sm-none rounded-circle p-2"
+        className="btn btn-light d-sm-none rounded-circle d-flex align-items-center justify-content-center p-2 cursor-target"
         aria-label="Altro"
       >
         <Radioactive size={20} />
@@ -53,7 +53,7 @@ function NavbarActions() {
 
       <button
         type="button"
-        className="btn p-2 border-0 bg-transparent text-body"
+        className="btn p-2 border-0 bg-transparent text-body cursor-target"
         aria-label="Cambia tema"
         onClick={() => dispatch(toggleTheme())}
       >
@@ -73,7 +73,7 @@ function NavbarActions() {
           <Dropdown align="end">
             <Dropdown.Toggle
               variant="light"
-              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2"
+              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2 cursor-target"
               id="user-menu"
               aria-label="Menu utente"
             >

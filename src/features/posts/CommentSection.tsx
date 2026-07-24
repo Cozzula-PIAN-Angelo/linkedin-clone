@@ -55,7 +55,7 @@ function CommentSection({ post }: CommentSectionProps) {
               type="submit"
               size="sm"
               variant="primary"
-              className="rounded-pill flex-shrink-0"
+              className="rounded-pill flex-shrink-0 cursor-target"
             >
               Pubblica
             </Button>
@@ -109,7 +109,7 @@ function CommentSection({ post }: CommentSectionProps) {
                     variant="link"
                     size="sm"
                     onClick={() => dispatch(deleteComment(String(comment.id)))}
-                    className="text-decoration-none text-secondary p-0 mt-1"
+                    className="text-decoration-none text-secondary p-0 mt-1 cursor-target"
                     style={{ fontSize: "0.75rem" }}
                   >
                     <Trash size={12} className="me-1" />

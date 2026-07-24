@@ -1,6 +1,6 @@
 import { Button, Modal } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setBrandTheme } from "./themeSlice";
+import { setBrandThemeForUser } from "./themeSlice";
 import { brandThemes, themeConfigs } from "./themeConfig";
 import type { BrandTheme } from "./themeConfig";
 
@@ -12,9 +12,10 @@ type ThemePickerProps = {
 function ThemePicker({ show, onClose }: ThemePickerProps) {
   const dispatch = useAppDispatch();
   const current = useAppSelector((state) => state.theme.brandTheme);
+  const currentUser = useAppSelector((state) => state.auth.currentUser);
 
   const handleSelect = (theme: BrandTheme) => {
-    dispatch(setBrandTheme(theme));
+    dispatch(setBrandThemeForUser({ theme, uid: currentUser?.id ?? null }));
     onClose();
   };
 
