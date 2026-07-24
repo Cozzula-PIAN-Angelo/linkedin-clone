@@ -44,8 +44,11 @@ export interface Post {
   createdAt: string;
   // Elenco degli id utente che hanno consigliato il post
   likes: string[];
-  // Immagine opzionale del post, salvata come data URL (base64) in db.json
+  // Immagine opzionale del post, salvata come data URL (base64) in Firestore
   image?: string;
+  // Video opzionale: URL su Firebase Storage (un video non entra in un
+  // documento Firestore, limitato a 1 MB, quindi non si salva come base64)
+  video?: string;
   // Se valorizzato, il post è una diffusione ("Diffondi") e contiene l'id
   // del post originale, che viene mostrato incorporato nella card
   repostOf?: string;

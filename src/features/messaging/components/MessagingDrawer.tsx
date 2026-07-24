@@ -61,8 +61,8 @@ export default function MessagingDrawer() {
         borderRadius: "18px 18px 0 0",
         backdropFilter: "blur(20px) saturate(180%)",
         WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        backgroundColor: "rgba(255, 255, 255, 0.82)",
-        border: "1px solid rgba(255, 255, 255, 0.6)",
+        backgroundColor: "color-mix(in srgb, var(--bs-body-bg) 82%, transparent)",
+        border: "1px solid var(--bs-border-color)",
         boxShadow: "0 12px 40px rgba(0, 0, 0, 0.12)",
         transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         overflow: "hidden",
@@ -73,15 +73,14 @@ export default function MessagingDrawer() {
         className="d-flex align-items-center justify-content-between px-3 py-2 border-bottom cursor-target"
         style={{
           cursor: "pointer",
-          backgroundColor: "rgba(248, 249, 250, 0.6)",
-          borderColor: "rgba(0,0,0,0.06)",
+          backgroundColor: "color-mix(in srgb, var(--bs-tertiary-bg) 70%, transparent)",
         }}
         onClick={() => dispatch(toggleMinimize())}
       >
         <div className="d-flex align-items-center gap-2">
           {activeContact && !isMinimized ? (
             <button
-              className="btn btn-link p-0 text-dark border-0 me-1 cursor-target"
+              className="btn btn-link p-0 text-body border-0 me-1 cursor-target"
               onClick={(e) => {
                 e.stopPropagation();
                 dispatch(setActiveContact(null));
@@ -94,7 +93,7 @@ export default function MessagingDrawer() {
           )}
 
           <span
-            className="fw-semibold text-dark"
+            className="fw-semibold text-body"
             style={{ fontSize: "0.88rem" }}
           >
             {activeContact && !isMinimized ? activeContact.name : "Messaggi"}
@@ -138,7 +137,7 @@ export default function MessagingDrawer() {
                     }}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.backgroundColor =
-                        "rgba(0,0,0,0.04)")
+                        "var(--bs-secondary-bg)")
                     }
                     onMouseLeave={(e) =>
                       (e.currentTarget.style.backgroundColor = "transparent")
@@ -178,7 +177,7 @@ export default function MessagingDrawer() {
                       style={{ fontSize: "0.8rem" }}
                     >
                       <div className="d-flex justify-content-between align-items-center">
-                        <span className="fw-semibold text-dark">
+                        <span className="fw-semibold text-body">
                           {contact.name}
                         </span>
                         <span
@@ -207,7 +206,7 @@ export default function MessagingDrawer() {
                 className="flex-grow-1 p-3 overflow-y-auto"
                 style={{
                   fontSize: "0.82rem",
-                  backgroundColor: "rgba(245,247,250,0.5)",
+                  backgroundColor: "color-mix(in srgb, var(--bs-tertiary-bg) 60%, transparent)",
                   maxHeight: "280px",
                 }}
               >
@@ -227,8 +226,11 @@ export default function MessagingDrawer() {
                         backgroundColor:
                           msg.sender === "user"
                             ? "#007AFF"
-                            : "rgba(255, 255, 255, 0.95)",
-                        color: msg.sender === "user" ? "#fff" : "#1d1d1f",
+                            : "var(--bs-body-bg)",
+                        color:
+                          msg.sender === "user"
+                            ? "#fff"
+                            : "var(--bs-body-color)",
                         boxShadow:
                           msg.sender === "user"
                             ? "0 2px 8px rgba(0,122,255,0.25)"
@@ -236,7 +238,7 @@ export default function MessagingDrawer() {
                         border:
                           msg.sender === "user"
                             ? "none"
-                            : "1px solid rgba(0,0,0,0.05)",
+                            : "1px solid var(--bs-border-color)",
                       }}
                     >
                       {msg.text}
@@ -269,8 +271,7 @@ export default function MessagingDrawer() {
                 }}
                 className="p-2 border-top d-flex gap-2 align-items-center mt-auto"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  borderColor: "rgba(0,0,0,0.05)",
+                  backgroundColor: "color-mix(in srgb, var(--bs-body-bg) 90%, transparent)",
                 }}
               >
                 <Form.Control
@@ -278,7 +279,7 @@ export default function MessagingDrawer() {
                   placeholder="Scrivi un messaggio..."
                   className="rounded-pill border-0 px-3 py-1 shadow-none"
                   style={{
-                    backgroundColor: "rgba(0,0,0,0.05)",
+                    backgroundColor: "var(--bs-secondary-bg)",
                     fontSize: "0.8rem",
                   }}
                   value={inputText}

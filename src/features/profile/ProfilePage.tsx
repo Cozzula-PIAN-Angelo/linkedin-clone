@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Container, Card, Row, Col, Button, Spinner } from "react-bootstrap";
 import Avatar from "../../components/Avatar";
 import RoleForm from "./RoleForm";
-import Experencies from "./Experiences";
+import Experiences from "./Experiences";
 import { addExperience, fetchExperiences } from "./profileSlice";
 import Posts from "./Posts";
 import { useNavigate, useParams } from "react-router-dom";
@@ -93,7 +93,7 @@ function ProfilePage() {
       <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-            <Card className="profile-card bg-white rounded-2 border">
+            <Card className="profile-card bg-body-tertiary rounded-2 border">
               <Card.Body className="d-flex flex-column align-items-center">
                 <div className="mb-3">
                   <Avatar
@@ -112,7 +112,7 @@ function ProfilePage() {
                 {isOwnProfile ? (
                   <Button
                     onClick={editProfile}
-                    className="bg-white text-primary cursor-target"
+                    className="bg-body text-primary cursor-target"
                   >
                     Modifica profilo
                   </Button>
@@ -170,7 +170,7 @@ function ProfilePage() {
       <Container className="mt-3" style={{ maxWidth: 1160 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-            <Experencies
+            <Experiences
               experiences={experiences}
               canEdit={isOwnProfile}
               loading={loadingExperiences}
@@ -186,6 +186,7 @@ function ProfilePage() {
           </Col>
         </Row>
       </Container>
+
     </>
   );
 }

@@ -12,7 +12,7 @@ function Posts({ posts, user }: PostsProps) {
     return (
       <>
         <h2>Post Pubblicati</h2>
-        <Card className="bg-white rounded-2 border">
+        <Card className="bg-body-tertiary rounded-2 border">
           <Card.Body className="mb-3">
             <Card.Subtitle className="text-center text-secondary">
               Questo utente non ha ancora pubblicato nulla.
@@ -26,7 +26,7 @@ function Posts({ posts, user }: PostsProps) {
   return (
     <>
       <h2 className="fs-5">Post Pubblicati</h2>
-      <Card className="bg-white rounded-2 border">
+      <Card className="bg-body-tertiary rounded-2 border">
         {posts.map((post) => (
           <Card.Body key={post.id}>
             <div className="d-flex">
