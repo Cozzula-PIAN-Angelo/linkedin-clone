@@ -54,7 +54,7 @@ function Navbar() {
               onClick={handleLogoClick}
             >
               <div
-                className="d-flex align-items-center justify-content-center text-white fw-bold"
+                className="navbar-logo-box d-flex align-items-center justify-content-center text-white fw-bold"
                 style={{
                   width: 34,
                   height: 34,

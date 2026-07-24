@@ -284,6 +284,39 @@ html {
   color: rgba(230, 205, 124, 0.65);
 }
 
+/* Pulsante menu utente: stesso oro dell'Anello Unico (identico gradiente
+   di .avatar-ringed) invece del grigio chiaro di Bootstrap, che sul verde
+   elfico della navbar stonava. */
+[data-brand-theme="fantasy"][data-bs-theme="light"] .navbar .user-menu-toggle {
+  background: linear-gradient(135deg, #8a6d1d, #fff2b8 45%, #e6b800) !important;
+  border: 1px solid #3a2e05 !important;
+  color: #3a2e05 !important;
+  box-shadow: 0 0 8px rgba(230, 184, 0, 0.55);
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .navbar
+  .user-menu-toggle:hover,
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .navbar
+  .user-menu-toggle:focus,
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .navbar
+  .user-menu-toggle:active {
+  background: linear-gradient(135deg, #e6b800, #fff2b8 45%, #8a6d1d) !important;
+  color: #3a2e05 !important;
+}
+
+/* Cerchio interno (iniziali): stesso verde della navbar invece del grigio
+   di Bootstrap, come un castone incastonato nell'anello d'oro del pulsante. */
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .navbar
+  .user-menu-toggle
+  .avatar-initials {
+  background: linear-gradient(180deg, #1f6d4c 0%, #164f38 100%) !important;
+  color: #e6cd7c !important;
+}
+
 /* Bacheca delle news in stile medievale: asse di legno con avvisi di
    pergamena appuntati, leggermente storti come fogli veri. */
 [data-brand-theme="fantasy"][data-bs-theme="light"] .news-board {
@@ -654,6 +687,82 @@ html {
 [data-brand-theme="cyberpunk"][data-bs-theme="light"] .bg-body,
 [data-brand-theme="cyberpunk"][data-bs-theme="light"] .card {
   background-image: linear-gradient(135deg, #ffe680, #ffcc33 45%, #ff9500);
+}
+
+/* Banner in cima alla card profilo (fascia bg-primary-subtle sopra
+   l'avatar): nero invece del rosa chiaro, il gradiente di .card qui sopra
+   non la copre perché ha il suo bg-primary-subtle sopra. */
+[data-brand-theme="cyberpunk"][data-bs-theme="light"]
+  .home-profile-card
+  .bg-primary-subtle {
+  background-color: #141414 !important;
+  /* Punto luce basato sulla luminosità (bianco che sfuma nel nero), non su
+     una tinta: stesso ruolo dell'angolo chiaro nel gradiente giallo-arancio
+     qui sopra, ma leggibile anche senza percepire la differenza di colore. */
+  background-image: radial-gradient(
+    circle at 22% 25%,
+    rgba(255, 255, 255, 0.3),
+    transparent 60%
+  ) !important;
+}
+
+/* Pulsante menu utente in light: nero invece del bianco di default di
+   Bootstrap, per un tratto scuro che spezzi la tavolozza rosso/giallo. */
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .navbar .user-menu-toggle {
+  background-color: #141414 !important;
+  border-color: #141414 !important;
+  color: #fff !important;
+}
+
+/* Pallino con le iniziali dentro il pulsante menu utente: sfondo del colore
+   della navbar e lettere dello stesso colore delle altre icone di navbar,
+   invece del grigio chiaro di Bootstrap che stonava sul pill nero. */
+[data-brand-theme="cyberpunk"][data-bs-theme="light"]
+  .navbar
+  .user-menu-toggle
+  .avatar-initials {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-secondary-color) !important;
+}
+
+/* Barra di ricerca in light: più scura del grigio chiaro di Bootstrap,
+   che sul giallo/arancio della navbar si perdeva. */
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .navbar .bg-body-secondary {
+  background-color: #141414 !important;
+  color: #fff !important;
+}
+
+[data-brand-theme="cyberpunk"][data-bs-theme="light"]
+  .navbar
+  .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Pulsante menu utente in dark: stesso grigio della barra di ricerca invece
+   del bianco di default di Bootstrap, che sul nero cyberpunk stonava. */
+[data-brand-theme="cyberpunk"][data-bs-theme="dark"] .navbar .user-menu-toggle {
+  background-color: var(--bs-secondary-bg) !important;
+  border-color: var(--bs-border-color) !important;
+  color: var(--bs-body-color) !important;
+}
+
+/* Footer (link in fondo alla sidebar): testo bianco in dark, leggibile sopra
+   lo sfondo quasi nero invece del grigio scuro di .text-secondary. */
+[data-brand-theme="cyberpunk"][data-bs-theme="dark"] .app-footer .text-secondary {
+  color: #fff !important;
+}
+
+/* Footer in light: bianco invece del grigio chiaro di .text-secondary, che
+   sul giallo/arancio della pagina si leggeva a fatica. */
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .app-footer .text-secondary {
+  color: #fff !important;
+}
+
+/* Riquadro del logo in navbar: segue --bs-primary (rosso in light, viola in
+   dark) invece dello swatch fisso del theme picker, che in light restava
+   viola e stonava sul rosso/giallo. */
+[data-brand-theme="cyberpunk"] .navbar-logo-box {
+  background-color: var(--bs-primary) !important;
 }
 
 [data-brand-theme="cyberpunk"],

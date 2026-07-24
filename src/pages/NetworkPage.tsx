@@ -127,7 +127,7 @@ function NetworkPage() {
           )}
 
           {/* Inviti ricevuti */}
-          <Card className="bg-white rounded-2 border mb-3">
+          <Card className="bg-body rounded-2 border mb-3">
             <Card.Body>
               <Card.Title className="fs-6">
                 Inviti ricevuti {received.length > 0 && `(${received.length})`}
@@ -166,7 +166,7 @@ function NetworkPage() {
 
           {/* Richieste inviate, in attesa di risposta */}
           {sent.length > 0 && (
-            <Card className="bg-white rounded-2 border mb-3">
+            <Card className="bg-body rounded-2 border mb-3">
               <Card.Body>
                 <Card.Title className="fs-6">Richieste inviate</Card.Title>
                 {sent.map((connection) => (
@@ -190,7 +190,7 @@ function NetworkPage() {
           )}
 
           {/* I collegamenti veri e propri */}
-          <Card className="bg-white rounded-2 border mb-3">
+          <Card className="bg-body rounded-2 border mb-3">
             <Card.Body>
               <Card.Title className="fs-6">
                 I tuoi collegamenti {accepted.length > 0 && `(${accepted.length})`}
@@ -222,7 +222,7 @@ function NetworkPage() {
 
           {/* Persone che potresti conoscere */}
           {suggestions.length > 0 && (
-            <Card className="bg-white rounded-2 border mb-3">
+            <Card className="bg-body rounded-2 border mb-3">
               <Card.Body>
                 <Card.Title className="fs-6">Persone che potresti conoscere</Card.Title>
                 <Row className="g-3 mt-0">

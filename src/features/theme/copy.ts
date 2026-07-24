@@ -185,12 +185,17 @@ const cyberpunkCopy: Copy = {
     label: "Criticità",
   },
   news: {
-    ...villainCopy.news,
     title: "News from the Net",
+    error: "Connessione al feed interrotta. Riprova più tardi.",
   },
   profile: {
     connections: "Fixers",
     growNetwork: "Netrunners alleati",
+  },
+  notFound: {
+    title: "Segnale perso",
+    message: "Questo nodo della rete non esiste, o è stato cancellato dal sistema.",
+    backHome: "Torna alla Base",
   },
 };
 
