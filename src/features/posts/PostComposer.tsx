@@ -11,6 +11,7 @@ import Avatar from "../../components/Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { createPost } from "./postsSlice";
 import { fileToResizedDataUrl } from "./imageUtils";
+import { uploadVideo } from "./uploadVideo";
 
 // Box "Avvia un post" + modal di pubblicazione, come su LinkedIn
 function PostComposer() {
@@ -23,6 +24,11 @@ function PostComposer() {
   const [image, setImage] = useState<string | null>(null);
   const [imageError, setImageError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Video: teniamo il File (da caricare su Storage) e un URL locale per l'anteprima
+  const [video, setVideo] = useState<{ file: File; url: string } | null>(null);
+  const [videoError, setVideoError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const videoInputRef = useRef<HTMLInputElement>(null);
 
   if (!user) return null;
 
@@ -32,6 +38,9 @@ function PostComposer() {
     setContent("");
     setImage(null);
     setImageError(null);
+    if (video) URL.revokeObjectURL(video.url);
+    setVideo(null);
+    setVideoError(null);
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,17 +60,62 @@ function PostComposer() {
     }
   };
 
+  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    if (!file.type.startsWith("video/")) {
+      setVideoError("Il file selezionato non è un video");
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      setVideoError("Il video è troppo grande (massimo 50 MB)");
+      return;
+    }
+    if (video) URL.revokeObjectURL(video.url);
+    setVideo({ file, url: URL.createObjectURL(file) });
+    setVideoError(null);
+  };
+
+  const removeVideo = () => {
+    if (video) URL.revokeObjectURL(video.url);
+    setVideo(null);
+  };
+
   const handlePublish = async () => {
+    // Il video va prima caricato su Storage: nel post finisce solo il suo URL
+    let videoUrl: string | undefined;
+    if (video) {
+      setUploading(true);
+      setVideoError(null);
+      try {
+        videoUrl = await uploadVideo(video.file, String(user.id));
+      } catch (err) {
+        setVideoError(
+          err instanceof Error
+            ? err.message
+            : "Errore durante il caricamento del video"
+        );
+        setUploading(false);
+        return;
+      }
+      setUploading(false);
+    }
+
     const result = await dispatch(
-      createPost({ content, image: image ?? undefined })
+      createPost({ content, image: image ?? undefined, video: videoUrl })
     );
     if (createPost.fulfilled.match(result)) {
       closeModal();
     }
   };
 
-  // Come su LinkedIn: si può pubblicare con solo testo, solo foto o entrambi
-  const canPublish = (content.trim() !== "" || image !== null) && !posting;
+  // Come su LinkedIn: si può pubblicare con solo testo, foto o video
+  const canPublish =
+    (content.trim() !== "" || image !== null || video !== null) &&
+    !posting &&
+    !uploading;
 
   return (
     <>
@@ -171,10 +225,37 @@ function PostComposer() {
               </Button>
             </div>
           )}
+
+          {videoError && (
+            <Alert variant="warning" className="mb-0 mt-2 py-2">
+              {videoError}
+            </Alert>
+          )}
+
+          {video && (
+            <div className="position-relative mt-2">
+              <video
+                src={video.url}
+                controls
+                className="w-100 rounded-2 d-block"
+                style={{ maxHeight: 400 }}
+              />
+              <Button
+                variant="dark"
+                size="sm"
+                onClick={removeVideo}
+                className="position-absolute top-0 end-0 m-2 rounded-circle d-flex align-items-center justify-content-center p-0 cursor-target"
+                style={{ width: 32, height: 32 }}
+                aria-label="Rimuovi video"
+              >
+                <XLg size={14} />
+              </Button>
+            </div>
+          )}
         </Modal.Body>
 
         <Modal.Footer className="justify-content-between">
-          {/* Input file nascosto: si apre col bottone della foto */}
+          {/* Input file nascosti: immagine e video */}
           <input
             type="file"
             accept="image/*"
@@ -182,15 +263,33 @@ function PostComposer() {
             onChange={handleFileChange}
             className="d-none"
           />
-          <Button
-            variant="link"
-            onClick={() => fileInputRef.current?.click()}
-            className="text-secondary p-2 cursor-target"
-            aria-label="Aggiungi un'immagine"
-            title="Aggiungi un'immagine"
-          >
-            <ImageIcon size={20} />
-          </Button>
+          <input
+            type="file"
+            accept="video/*"
+            ref={videoInputRef}
+            onChange={handleVideoChange}
+            className="d-none"
+          />
+          <div className="d-flex">
+            <Button
+              variant="link"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-secondary p-2 cursor-target"
+              aria-label="Aggiungi un'immagine"
+              title="Aggiungi un'immagine"
+            >
+              <ImageIcon size={20} />
+            </Button>
+            <Button
+              variant="link"
+              onClick={() => videoInputRef.current?.click()}
+              className="text-secondary p-2 cursor-target"
+              aria-label="Aggiungi un video"
+              title="Aggiungi un video"
+            >
+              <CameraVideoFill size={20} />
+            </Button>
+          </div>
 
           <Button
             variant="primary"
@@ -198,7 +297,7 @@ function PostComposer() {
             disabled={!canPublish}
             onClick={handlePublish}
           >
-            {posting ? (
+            {posting || uploading ? (
               <Spinner animation="border" size="sm" />
             ) : (
               "Pubblica"
