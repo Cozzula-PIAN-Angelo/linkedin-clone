@@ -100,7 +100,7 @@ function NavbarActions() {
           <Dropdown align="end">
             <Dropdown.Toggle
               variant="light"
-              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2 cursor-target"
+              className="user-menu-toggle d-flex align-items-center gap-1 rounded-pill p-1 pe-2 cursor-target"
               id="user-menu"
               aria-label="Menu utente"
             >

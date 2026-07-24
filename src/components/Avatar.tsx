@@ -26,7 +26,7 @@ function Avatar({
     return (
       <div className={wrapperClass} style={{ width: size, height: size }}>
         <div
-          className={`rounded-circle bg-secondary-subtle d-flex align-items-center justify-content-center fw-semibold text-secondary-emphasis w-100 h-100 ${className}`}
+          className={`avatar-initials rounded-circle bg-secondary-subtle d-flex align-items-center justify-content-center fw-semibold text-secondary-emphasis w-100 h-100 ${className}`}
           style={{ fontSize: size * 0.4 }}
         >
           {initials}
