@@ -25,7 +25,7 @@ import { authStateResolved } from "./features/auth/authSlice";
 import { useAppDispatch } from "./app/hooks";
 import type { RootState } from "./app/store";
 import type { User } from "./types";
-import MessagingDrawer from "../src/features/messaging/components/MessagingDrawer";
+import MessagingDrawer from "./features/messaging/components/MessagingDrawer";
 import FantasyDust from "./components/FantasyDust";
 
 function App() {

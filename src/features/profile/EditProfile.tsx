@@ -84,7 +84,7 @@ function EditProfile() {
               />
               <Button
                 size="sm"
-                className="bg-white text-muted border border-secondary mb-3"
+                className="bg-body text-muted border border-secondary mb-3"
                 onClick={() => fileInput.current?.click()}
               >
                 Cambia foto
@@ -138,7 +138,7 @@ function EditProfile() {
                   <Button
                     type="button"
                     onClick={exit}
-                    className="bg-white text-muted border border-secondary d-block ms-auto mt-3 me-2"
+                    className="bg-body text-muted border border-secondary d-block ms-auto mt-3 me-2"
                   >
                     Annulla
                   </Button>

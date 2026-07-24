@@ -15,6 +15,7 @@ import { db } from "../../firebase";
 import { isDummyId, isLocalId, LOCAL_PREFIX } from "./dummyFeed";
 import { sendNotification } from "../notification/sendNotification";
 import type { Comment, Post, User } from "../../types";
+import type { StateWithAuth } from "../auth/authState";
 
 // Ordina i post dal più recente al più vecchio
 function byDateDesc(a: Post, b: Post): number {
@@ -39,11 +40,6 @@ const initialState: PostsState = {
   posting: false,
   error: null,
 };
-
-// Stato minimo che le thunk leggono dallo store (evita di importare RootState creando un ciclo)
-interface StateWithAuth {
-  auth: { currentUser: User | null };
-}
 
 // Serve solo ad addComment, per risalire all'autore del post commentato
 interface StateWithPosts {
@@ -84,12 +80,14 @@ export interface NewPostPayload {
   content: string;
   // Data URL dell'immagine allegata (opzionale)
   image?: string;
+  // URL del video su Firebase Storage (opzionale)
+  video?: string;
 }
 
 // Pubblica un nuovo post a nome dell'utente loggato
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async ({ content, image }: NewPostPayload, { getState, rejectWithValue }) => {
+  async ({ content, image, video }: NewPostPayload, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState() as StateWithAuth;
       if (!auth.currentUser) {
@@ -102,6 +100,7 @@ export const createPost = createAsyncThunk(
         createdAt: new Date().toISOString(),
         likes: [] as string[],
         ...(image ? { image } : {}),
+        ...(video ? { video } : {}),
       };
 
       const docRef = await addDoc(collection(db, "posts"), body);

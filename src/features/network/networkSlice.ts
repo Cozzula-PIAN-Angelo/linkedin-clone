@@ -12,11 +12,7 @@ import { db } from "../../firebase";
 import { DUMMY_PREFIX, isDummyId } from "../posts/dummyFeed";
 import { sendNotification } from "../notification/sendNotification";
 import type { Connection, User } from "../../types";
-
-// Stato minimo che le thunk leggono dallo store (evita di importare RootState creando un ciclo)
-interface StateWithAuth {
-  auth: { currentUser: User | null };
-}
+import type { StateWithAuth } from "../auth/authState";
 
 interface NetworkState {
   connections: Connection[];

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface Message {
@@ -192,7 +192,7 @@ export const messagingSlice = createSlice({
           minute: "2-digit",
         });
         contact.messages.push({
-          id: Date.now().toString(),
+          id: nanoid(),
           sender: "user",
           text,
           timestamp: time,
@@ -233,7 +233,7 @@ export const messagingSlice = createSlice({
             minute: "2-digit",
           });
           contact.messages.push({
-            id: Date.now().toString(),
+            id: nanoid(),
             sender: "contact",
             text: replyText,
             timestamp: time,

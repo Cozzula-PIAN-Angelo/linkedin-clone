@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Container, Card, Row, Col, Button, Spinner } from "react-bootstrap";
 import RoleForm from "./RoleForm";
-import Experencies from "./Experiences";
+import Experiences from "./Experiences";
 import { addExperience, fetchExperiences } from "./profileSlice";
 import Posts from "./Posts";
 import { useNavigate, useParams } from "react-router-dom";
@@ -105,7 +105,7 @@ function ProfilePage() {
                 {isOwnProfile ? (
                   <Button
                     onClick={editProfile}
-                    className="bg-white text-primary "
+                    className="bg-body text-primary "
                   >
                     Modifica profilo
                   </Button>
@@ -163,7 +163,7 @@ function ProfilePage() {
       <Container className="mt-3">
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-            <Experencies
+            <Experiences
               experiences={experiences}
               canEdit={isOwnProfile}
               loading={loadingExperiences}
@@ -179,6 +179,7 @@ function ProfilePage() {
           </Col>
         </Row>
       </Container>
+
     </>
   );
 }

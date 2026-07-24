@@ -11,11 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import type { Experience, User } from "../../types";
-
-// Stato minimo che la thunk legge dallo store (evita di importare RootState creando un ciclo)
-interface StateWithAuth {
-  auth: { currentUser: User | null };
-}
+import type { StateWithAuth } from "../auth/authState";
 
 export interface UpdateProfilePayload {
   name: string;

@@ -7,11 +7,22 @@
    per l'elenco temi e le icone associate.
    ============================================================ */
 
-/* Sfondo di base (whitesmoke) per tema default e per le varianti "chiaro";
-   ha specificità più bassa dei blocchi [data-brand-theme][data-bs-theme="dark"]
-   qui sotto, quindi questi ultimi la sovrascrivono correttamente. */
-:root {
+/* Sfondo di base (whitesmoke) SOLO in tema chiaro. È vincolato a
+   [data-bs-theme="light"]: senza questo vincolo la regola sovrascriveva anche
+   lo sfondo scuro di Bootstrap, e il tema default in dark mode restava chiaro.
+   I temi brand che vogliono un altro sfondo lo ridefiniscono con specificità
+   più alta ([data-brand-theme][data-bs-theme=...]) e continuano a vincere. */
+[data-bs-theme="light"] {
   --bs-body-bg: whitesmoke;
+}
+
+/* Tema default in scuro: la PAGINA (body) è più scura delle card, per dare
+   profondità come su LinkedIn — non nera, un carbone bluastro. Le card usano
+   .bg-body (#212529 di Bootstrap) e così restano più chiare e "galleggiano".
+   Vincolato a [data-brand-theme="default"]: i temi brand hanno il proprio
+   sfondo e non vengono toccati. */
+[data-brand-theme="default"][data-bs-theme="dark"] body {
+  background-color: #15171c;
 }
 
 /* ---------- ex-Villain: rosso/nero minaccioso ---------- */

@@ -4,14 +4,14 @@ import type { Experience } from "../../types";
 import { useAppDispatch } from "../../app/hooks";
 import { deleteExperience } from "./profileSlice";
 
-interface ExperenciesProps {
+interface ExperiencesProps {
   experiences: Experience[];
   // Solo sul proprio profilo si possono eliminare le esperienze
   canEdit: boolean;
   loading: boolean;
 }
 
-function Experencies({ experiences, canEdit, loading }: ExperenciesProps) {
+function Experiences({ experiences, canEdit, loading }: ExperiencesProps) {
   const dispatch = useAppDispatch();
 
   if (loading) {
@@ -70,4 +70,4 @@ function Experencies({ experiences, canEdit, loading }: ExperenciesProps) {
   );
 }
 
-export default Experencies;
+export default Experiences;
