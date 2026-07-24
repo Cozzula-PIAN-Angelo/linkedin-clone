@@ -7,11 +7,19 @@
    per l'elenco temi e le icone associate.
    ============================================================ */
 
-/* Sfondo di base (whitesmoke) per tema default e per le varianti "chiaro";
-   ha specificità più bassa dei blocchi [data-brand-theme][data-bs-theme="dark"]
-   qui sotto, quindi questi ultimi la sovrascrivono correttamente. */
+/* Sfondo di base per tema default e per le varianti "chiaro"; ha specificità
+   più bassa dei blocchi [data-brand-theme][data-bs-theme="dark"] qui sotto,
+   quindi questi ultimi la sovrascrivono correttamente. Grigio caldo invece
+   del whitesmoke originale (più piatto/freddo), più riposante alla vista. */
 :root {
-  --bs-body-bg: whitesmoke;
+  --bs-body-bg: #f3f2ef;
+}
+
+/* Il tema default non aveva una vera modalità scura: passando a "dark" lo
+   sfondo restava comunque chiaro. Aggiunto uno sfondo scuro morbido (non
+   nero puro) come già fanno gli altri temi qui sotto. */
+[data-brand-theme="default"][data-bs-theme="dark"] {
+  --bs-body-bg: #1b1f23;
 }
 
 /* Riserva sempre lo spazio della scrollbar verticale: senza questo, le
@@ -20,6 +28,16 @@
    contenuto centrato (Container) si ricalcola sulla larghezza disponibile. */
 html {
   scrollbar-gutter: stable;
+}
+
+/* Card profilo "appiccicata" durante lo scroll, solo da lg in su (sotto le
+   colonne si impilano una sopra l'altra e non avrebbe senso fissarla). */
+@media (min-width: 992px) {
+  .sticky-sidebar {
+    position: sticky;
+    top: 80px;
+    align-self: flex-start;
+  }
 }
 
 /* Colonne della Home: larghezze in pixel calibrate sulle proporzioni reali
