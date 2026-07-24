@@ -13,15 +13,19 @@ function NetworkOverview() {
 
   const meId = String(currentUser.id);
   const mine = connections.filter(
-    (c) => String(c.requesterId) === meId || String(c.addresseeId) === meId
+    (c) => String(c.requesterId) === meId || String(c.addresseeId) === meId,
   );
   const sentCount = mine.filter(
-    (c) => c.status === "pending" && String(c.requesterId) === meId
+    (c) => c.status === "pending" && String(c.requesterId) === meId,
   ).length;
   const acceptedCount = mine.filter((c) => c.status === "accepted").length;
 
   return (
-    <Card as="aside" aria-label="Panoramica rete" className="bg-body rounded-2 border mb-3">
+    <Card
+      as="aside"
+      aria-label="Panoramica rete"
+      className="bg-body-tertiary rounded-2 border mb-3"
+    >
       <Card.Body>
         <Card.Title className="fs-6 mb-3">Panoramica rete</Card.Title>
         <div className="d-flex justify-content-around text-center">

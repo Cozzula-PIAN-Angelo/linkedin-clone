@@ -201,6 +201,14 @@ function PostCard({ post, author }: PostCardProps) {
                   style={{ maxHeight: 320, objectFit: "cover" }}
                 />
               )}
+              {original.video && (
+                <video
+                  src={original.video}
+                  controls
+                  className="w-100 d-block rounded-1 mt-2"
+                  style={{ maxHeight: 320 }}
+                />
+              )}
             </>
           ) : (
             <div className="text-secondary small text-center py-2">
@@ -217,6 +225,16 @@ function PostCard({ post, author }: PostCardProps) {
           alt="Contenuto del post"
           className="w-100 d-block"
           style={{ maxHeight: 600, objectFit: "cover" }}
+        />
+      )}
+
+      {/* Video del post */}
+      {post.video && (
+        <video
+          src={post.video}
+          controls
+          className="w-100 d-block"
+          style={{ maxHeight: 600 }}
         />
       )}
 
