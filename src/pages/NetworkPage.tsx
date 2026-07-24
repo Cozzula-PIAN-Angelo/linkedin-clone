@@ -1,5 +1,15 @@
 import { useEffect } from "react";
-import { Alert, Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Container,
+  OverlayTrigger,
+  Row,
+  Spinner,
+  Tooltip,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../components/Avatar";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -93,7 +103,7 @@ function NetworkPage() {
     everyone.get(String(c.requesterId) === meId ? String(c.addresseeId) : String(c.requesterId));
 
   return (
-    <Container style={{ paddingTop: 68 }}>
+    <Container style={{ paddingTop: 80, maxWidth: 1160 }}>
       <Row className="justify-content-center g-3">
         <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
           {error && (
@@ -214,7 +224,8 @@ function NetworkPage() {
                         <Card.Body className="d-flex flex-column align-items-center">
                           <Link
                             to={`/profile/${user.id}`}
-                            className="text-decoration-none text-body d-flex flex-column align-items-center"
+                            className="text-decoration-none text-body d-flex flex-column align-items-center w-100"
+                            style={{ minWidth: 0 }}
                           >
                             <Avatar
                               src={user.avatar}
@@ -222,15 +233,32 @@ function NetworkPage() {
                               surname={user.surname}
                               size={64}
                             />
-                            <div className="fw-bold mt-2 text-truncate w-100">
-                              {user.name} {user.surname}
-                            </div>
-                            <div
-                              className="text-secondary small text-truncate w-100"
-                              style={{ minHeight: "1.2em" }}
+                            <OverlayTrigger
+                              overlay={
+                                <Tooltip>
+                                  {user.name} {user.surname}
+                                </Tooltip>
+                              }
                             >
-                              {user.headline}
-                            </div>
+                              <div className="fw-bold mt-2 text-truncate w-100">
+                                {user.name} {user.surname}
+                              </div>
+                            </OverlayTrigger>
+                            {user.headline ? (
+                              <OverlayTrigger overlay={<Tooltip>{user.headline}</Tooltip>}>
+                                <div
+                                  className="text-secondary small text-truncate w-100"
+                                  style={{ minHeight: "1.2em" }}
+                                >
+                                  {user.headline}
+                                </div>
+                              </OverlayTrigger>
+                            ) : (
+                              <div
+                                className="text-secondary small text-truncate w-100"
+                                style={{ minHeight: "1.2em" }}
+                              />
+                            )}
                           </Link>
                           <Button
                             size="sm"

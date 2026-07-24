@@ -1,28 +1,30 @@
 import { useState } from "react";
 import { Button, Dropdown, Modal } from "react-bootstrap";
 import {
-  BinocularsFill,
   BoxArrowRight,
   Fire,
+  List,
   MoonStarsFill,
   PersonFill,
-  Radioactive,
   SunFill,
-  ThreeDots,
 } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logoutUser, deleteAccount } from "../../features/auth/authSlice";
 import { toggleTheme } from "../../features/theme/themeSlice";
+import { themeConfigs } from "../../features/theme/themeConfig";
 import { useCopy } from "../../features/theme/copy";
 
 function NavbarActions() {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const theme = useAppSelector((state) => state.theme.mode);
+  const brandTheme = useAppSelector((state) => state.theme.brandTheme);
+  const icons = themeConfigs[brandTheme].icons;
   const copy = useCopy();
 
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -43,17 +45,46 @@ function NavbarActions() {
 
   return (
     <div className="d-flex align-items-center gap-2 gap-md-3 ms-auto">
-      <button
-        type="button"
-        className="btn btn-light d-sm-none rounded-circle p-2"
-        aria-label="Altro"
-      >
-        <Radioactive size={20} />
-      </button>
+      <div className="d-sm-none d-flex align-items-center gap-4">
+        {showMobileNav && (
+          <>
+            <Link
+              to="/network"
+              className="text-secondary cursor-target"
+              aria-label={copy.nav.network}
+            >
+              <icons.network size={26} />
+            </Link>
+            <Link
+              to="/jobs"
+              className="text-secondary cursor-target"
+              aria-label={copy.nav.jobs}
+            >
+              <icons.jobs size={26} />
+            </Link>
+            <Link
+              to="/messaging"
+              className="text-secondary cursor-target"
+              aria-label={copy.nav.messaging}
+            >
+              <icons.messaging size={26} />
+            </Link>
+          </>
+        )}
+
+        <button
+          type="button"
+          className="btn btn-light rounded-circle d-flex align-items-center justify-content-center p-2 cursor-target"
+          aria-label={copy.nav.more}
+          onClick={() => setShowMobileNav((v) => !v)}
+        >
+          <List size={20} />
+        </button>
+      </div>
 
       <button
         type="button"
-        className="btn p-2 border-0 bg-transparent text-body"
+        className="btn p-2 border-0 bg-transparent text-body cursor-target"
         aria-label="Cambia tema"
         onClick={() => dispatch(toggleTheme())}
       >
@@ -64,16 +95,12 @@ function NavbarActions() {
         )}
       </button>
 
-      <BinocularsFill size={20} className="d-none d-md-block text-secondary" />
-
-      <ThreeDots size={20} className="d-sm-none text-secondary" />
-
       {currentUser && (
         <>
           <Dropdown align="end">
             <Dropdown.Toggle
               variant="light"
-              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2"
+              className="d-flex align-items-center gap-1 rounded-pill p-1 pe-2 cursor-target"
               id="user-menu"
               aria-label="Menu utente"
             >

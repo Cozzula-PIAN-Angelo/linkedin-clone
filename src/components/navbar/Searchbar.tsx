@@ -50,7 +50,7 @@ function SearchBar() {
     <>
       <button
         type="button"
-        className="btn btn-light d-lg-none rounded-circle p-2"
+        className="btn btn-light d-lg-none rounded-circle d-flex align-items-center justify-content-center p-2 cursor-target"
         aria-label="Cerca"
       >
         <Search size={18} />
@@ -61,13 +61,13 @@ function SearchBar() {
         onSubmit={(e) => e.preventDefault()}
       >
         <div className="input-group">
-          <span className="input-group-text bg-body-secondary border-0">
+          <span className="input-group-text bg-body-secondary border-0 rounded-start-pill ps-3">
             <Search />
           </span>
           <Form.Control
             type="search"
             placeholder={copy.searchPlaceholder}
-            className="bg-body-secondary border-0"
+            className="bg-body-secondary border-0 rounded-end-pill pe-3"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -92,7 +92,7 @@ function SearchBar() {
                 <Link
                   key={user.id}
                   to={`/profile/${user.id}`}
-                  className="list-group-item list-group-item-action d-flex align-items-center gap-2 px-3 py-2 text-decoration-none"
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-2 px-3 py-2 text-decoration-none cursor-target"
                   // Impedisce che il campo perda il fuoco prima del click,
                   // altrimenti onBlur chiuderebbe la tendina e il link
                   // non verrebbe mai premuto

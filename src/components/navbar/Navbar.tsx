@@ -40,21 +40,31 @@ function Navbar() {
 
   return (
     <>
-      <BsNavbar bg="body" fixed="top" className="border-bottom py-2">
-        <Container className="position-relative align-items-center px-2 px-md-3">
+      <BsNavbar bg="body" fixed="top" className="border-bottom py-1">
+        <Container
+          className="position-relative align-items-center px-2 px-md-3"
+          style={{ maxWidth: 1160 }}
+        >
           <div className="d-flex align-items-center">
             <BsNavbar.Brand
               as={Link}
               to="/"
-              className="p-0 me-2"
+              className="p-0 me-2 cursor-target"
               aria-label={copy.brandName}
               onClick={handleLogoClick}
             >
               <div
-                className="bg-primary rounded-1 d-flex align-items-center justify-content-center text-white fw-bold"
-                style={{ width: 34, height: 34, fontSize: "1.1rem" }}
+                className="d-flex align-items-center justify-content-center text-white fw-bold"
+                style={{
+                  width: 34,
+                  height: 34,
+                  fontSize: "1.95rem",
+                  lineHeight: 1,
+                  borderRadius: 3,
+                  backgroundColor: themeConfigs[brandTheme].swatch,
+                }}
               >
-                <LogoIcon size={20} />
+                <LogoIcon size={24} />
               </div>
             </BsNavbar.Brand>
 

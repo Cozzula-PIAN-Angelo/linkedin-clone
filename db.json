@@ -54,6 +54,17 @@
       "job": [],
       "location": "",
       "id": 5
+    },
+    {
+      "email": "test-claude-engraved@example.test",
+      "password": "$2a$10$6azb.g9UZJdW3em7zwecQOxvUl7PDt/gy2dTBd90Sf7BhzS8OqJqi",
+      "name": "Test",
+      "surname": "Claude11",
+      "headline": "",
+      "avatar": "",
+      "job": [],
+      "location": "",
+      "id": 5
     }
   ],
   "posts": [
@@ -62,11 +73,7 @@
       "authorId": "1",
       "content": "Primo giorno di lavoro sul nostro clone di LinkedIn! Stiamo costruendo il feed, il profilo e le notifiche con React, TypeScript e Redux Toolkit. Ogni membro del team ha la sua feature: è il modo migliore per imparare a lavorare con i branch e le pull request.",
       "createdAt": "2026-07-22T09:30:00.000Z",
-      "likes": [
-        "2",
-        "3",
-        "1"
-      ]
+      "likes": ["2", "3", "1"]
     },
     {
       "id": 2,
@@ -87,18 +94,14 @@
       "authorId": "1",
       "content": "klk",
       "createdAt": "2026-07-23T08:00:19.849Z",
-      "likes": [
-        "4"
-      ],
+      "likes": ["4"],
       "id": 4
     },
     {
       "authorId": "5",
       "content": "Ce stan' tutt' cos'! :O",
       "createdAt": "2026-07-23T09:31:10.215Z",
-      "likes": [
-        "5"
-      ],
+      "likes": ["5"],
       "id": 5
     },
     {
@@ -107,6 +110,13 @@
       "createdAt": "2026-07-23T10:06:17.704Z",
       "likes": [],
       "id": 6
+    },
+    {
+      "authorId": "6",
+      "content": "ciao come stai",
+      "createdAt": "2026-07-23T13:01:09.514Z",
+      "likes": [],
+      "id": 5
     }
   ],
   "comments": [

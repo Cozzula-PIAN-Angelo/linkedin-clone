@@ -4,6 +4,7 @@ export type Copy = {
   pageTitle: string;
   brandName: string;
   nav: {
+    home: string;
     network: string;
     jobs: string;
     messaging: string;
@@ -58,6 +59,7 @@ const defaultCopy: Copy = {
   pageTitle: "linkedin-clone",
   brandName: "LinkedIn",
   nav: {
+    home: "Home",
     network: "Il mio network",
     jobs: "Lavoro",
     messaging: "Messaggistica",
@@ -113,6 +115,7 @@ const villainCopy: Copy = {
   pageTitle: "ex-Villain | La rete per super-cattivi disoccupati",
   brandName: "ex-Villain",
   nav: {
+    home: "Home",
     network: "La Congrega",
     jobs: "Taglie",
     messaging: "Messaggi Segreti",
@@ -164,10 +167,93 @@ const villainCopy: Copy = {
   },
 };
 
-// Tutti i temi easter egg (villain/fantasy/cyberpunk/horror) condividono gli
-// stessi testi "da cattivo": solo colori e icone cambiano da un tema all'altro.
-// Il default (LinkedIn normale) usa invece i testi originali.
+// Villain e horror condividono gli stessi testi "da cattivo": solo colori e
+// icone cambiano da un tema all'altro. Cyberpunk e fantasy hanno invece la
+// propria nomenclatura dedicata. Il default (LinkedIn normale) usa i testi
+// originali.
+const cyberpunkCopy: Copy = {
+  ...villainCopy,
+  nav: {
+    home: "Base",
+    network: "Cyberspace",
+    jobs: "Bounties",
+    messaging: "Codici Segreti",
+    more: "Darknet",
+  },
+  notifications: {
+    ...villainCopy.notifications,
+    label: "Criticità",
+  },
+  news: {
+    ...villainCopy.news,
+    title: "News from the Net",
+  },
+  profile: {
+    connections: "Fixers",
+    growNetwork: "Netrunners alleati",
+  },
+};
+
+const fantasyCopy: Copy = {
+  pageTitle: "Regno Libero | La rete dei viandanti e degli eroi",
+  brandName: "Regno Libero",
+  nav: {
+    home: "Home",
+    network: "La Compagnia",
+    jobs: "Missioni",
+    messaging: "Corvi Messaggeri",
+    more: "Pergamene",
+  },
+  searchPlaceholder: "Cerca tra i viandanti...",
+  notifications: {
+    label: "Presagi",
+    empty: "Nessun presagio, per ora",
+  },
+  userMenu: {
+    logout: "Lascia la Taverna",
+    deleteAccount: "Cancella il nome dalle Cronache",
+  },
+  deleteModal: {
+    title: "Cancellare il tuo nome dalle Cronache?",
+    bodyBefore: "Le gesta di ",
+    bodyAfter:
+      " saranno cancellate per sempre dalle Cronache del Regno, insieme a tutti i tuoi ricordi. Non c'è ritorno da questo cammino.",
+    cancel: "Ritorna sui tuoi passi",
+    confirm: "Cancella per sempre",
+    confirming: "Le pergamene bruciano...",
+  },
+  feedPlaceholder: "Taverna (in arrivo)",
+  profile: {
+    connections: "Compagni di viaggio",
+    growNetwork: "Radduna la tua Compagnia",
+  },
+  news: {
+    title: "Bandi e Proclami",
+    error: "Il corvo messaggero si è perso. Riprova più tardi.",
+  },
+  login: {
+    title: "Entra nella Taverna",
+    newHere: "Nuovo viandante da queste parti?",
+    signUpLink: "Unisciti alla Compagnia",
+    submit: "Entra",
+  },
+  register: {
+    title: "Unisciti alla Compagnia",
+    alreadyHave: "Hai già un nome nelle Cronache?",
+    headlinePlaceholder: "es. Guardiano dei Confini",
+    submit: "Giura fedeltà",
+  },
+  notFound: {
+    title: "Sentiero perduto",
+    message: "Questo cammino non è segnato su nessuna mappa del Regno.",
+    backHome: "Torna alla Taverna",
+  },
+};
+
 export function useCopy(): Copy {
   const brandTheme = useAppSelector((state) => state.theme.brandTheme);
-  return brandTheme === "default" ? defaultCopy : villainCopy;
+  if (brandTheme === "default") return defaultCopy;
+  if (brandTheme === "fantasy") return fantasyCopy;
+  if (brandTheme === "cyberpunk") return cyberpunkCopy;
+  return villainCopy;
 }

@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { isDummyId, isLocalId, LOCAL_PREFIX } from "./dummyFeed";
+import { sendNotification } from "../notification/sendNotification";
 import type { Comment, Post, User } from "../../types";
 
 // Ordina i post dal più recente al più vecchio
@@ -42,6 +43,11 @@ const initialState: PostsState = {
 // Stato minimo che le thunk leggono dallo store (evita di importare RootState creando un ciclo)
 interface StateWithAuth {
   auth: { currentUser: User | null };
+}
+
+// Serve solo ad addComment, per risalire all'autore del post commentato
+interface StateWithPosts {
+  posts: { items: Post[] };
 }
 
 // Carica il feed: i post (dal più recente), gli utenti per gli autori e i commenti
@@ -153,9 +159,10 @@ export const toggleLike = createAsyncThunk(
       }
 
       const userId = String(auth.currentUser.id);
-      const likes = post.likes.includes(userId)
-        ? post.likes.filter((id) => id !== userId)
-        : [...post.likes, userId];
+      const isAdding = !post.likes.includes(userId);
+      const likes = isAdding
+        ? [...post.likes, userId]
+        : post.likes.filter((id) => id !== userId);
 
       // Post finto: il like resta solo in memoria, niente scrittura su Firestore
       if (isDummyId(post.id)) {
@@ -167,6 +174,17 @@ export const toggleLike = createAsyncThunk(
       await updateDoc(doc(db, "posts", post.id), {
         likes: likes.filter((id) => !isDummyId(id)),
       });
+
+      // Notifica l'autore solo quando il like viene aggiunto (non tolto);
+      // sendNotification ignora comunque un eventuale "auto-like"
+      if (isAdding) {
+        const displayName = `${auth.currentUser.name} ${auth.currentUser.surname}`;
+        void sendNotification(
+          post.authorId,
+          userId,
+          `${displayName} ha messo "Consiglia" al tuo post`,
+        );
+      }
 
       return { ...post, likes };
     } catch {
@@ -211,7 +229,7 @@ export const addComment = createAsyncThunk(
   "posts/addComment",
   async ({ postId, content }: NewCommentPayload, { getState, rejectWithValue }) => {
     try {
-      const { auth } = getState() as StateWithAuth;
+      const { auth, posts } = getState() as StateWithAuth & StateWithPosts;
       if (!auth.currentUser) {
         return rejectWithValue("Devi essere loggato per commentare");
       }
@@ -229,6 +247,21 @@ export const addComment = createAsyncThunk(
       }
 
       const docRef = await addDoc(collection(db, "comments"), body);
+
+      // Notifica l'autore del post commentato (sendNotification ignora
+      // da sola un eventuale commento sul proprio post)
+      const commentedPost = posts.items.find(
+        (p) => String(p.id) === String(postId),
+      );
+      if (commentedPost) {
+        const displayName = `${auth.currentUser.name} ${auth.currentUser.surname}`;
+        void sendNotification(
+          commentedPost.authorId,
+          String(auth.currentUser.id),
+          `${displayName} ha commentato il tuo post`,
+        );
+      }
+
       return { id: docRef.id, ...body } as Comment;
     } catch {
       return rejectWithValue("Errore durante la pubblicazione del commento");

@@ -7,7 +7,7 @@ function NewsSection() {
   const copy = useCopy();
 
   return (
-    <Card as="aside" aria-label={copy.news.title}>
+    <Card as="aside" aria-label={copy.news.title} className="news-board">
       <Card.Body>
         <Card.Title as="h2" className="h6 mb-0">
           {copy.news.title}
@@ -38,7 +38,7 @@ function NewsSection() {
               target="_blank"
               rel="noreferrer"
               action
-              className="d-flex align-items-start gap-2"
+              className="news-board-item d-flex align-items-start gap-2 cursor-target"
             >
               {item.imageURL && (
                 <img

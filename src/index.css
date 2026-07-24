@@ -7,6 +7,60 @@
    per l'elenco temi e le icone associate.
    ============================================================ */
 
+/* Sfondo di base (whitesmoke) per tema default e per le varianti "chiaro";
+   ha specificità più bassa dei blocchi [data-brand-theme][data-bs-theme="dark"]
+   qui sotto, quindi questi ultimi la sovrascrivono correttamente. */
+:root {
+  --bs-body-bg: whitesmoke;
+}
+
+/* Riserva sempre lo spazio della scrollbar verticale: senza questo, le
+   pagine con contenuto più corto (senza scroll) risultano leggermente
+   più larghe di quelle con contenuto lungo (con scroll), perché il
+   contenuto centrato (Container) si ricalcola sulla larghezza disponibile. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Colonne della Home: larghezze in pixel calibrate sulle proporzioni reali
+   di LinkedIn (colonna profilo e colonna notizie ~225px/~295px su un
+   contenuto di larghezza analoga), invece delle sole frazioni intere
+   offerte dalla griglia Bootstrap a 12 colonne. */
+@media (min-width: 992px) {
+  .home-col-profile {
+    flex: 0 0 235px;
+    max-width: 235px;
+  }
+
+  .home-col-feed {
+    flex: 1 1 0%;
+    max-width: none;
+  }
+
+  .home-col-news {
+    flex: 0 0 310px;
+    max-width: 310px;
+  }
+}
+
+/* Linea sotto la voce attiva della navbar (Home, La mia rete, ...):
+   currentColor segue il colore già usato dallo stato "active" di ciascun
+   tema, senza doverlo ridefinire qui. */
+.nav-link-item {
+  position: relative;
+}
+
+.nav-link-item.active::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+}
+
 /* ---------- ex-Villain: rosso/nero minaccioso ---------- */
 [data-brand-theme="villain"][data-bs-theme="light"] {
   --bs-primary: #c1121f;
@@ -64,33 +118,36 @@
   color: #ff8a94;
 }
 
-/* ---------- Fantasy: smeraldo/oro antico ---------- */
+/* ---------- Fantasy: chiaro = Alleanza libera (smeraldo/oro/bianco), scuro = Mordor (nero/giallo, rosso appena accennato) ---------- */
 [data-brand-theme="fantasy"][data-bs-theme="light"] {
   --bs-primary: #1f6d4c;
   --bs-primary-rgb: 31, 109, 76;
   --bs-primary-text-emphasis: #123d2b;
-  --bs-primary-bg-subtle: #d8ecdf;
+  --bs-primary-bg-subtle: #cdeadb;
   --bs-primary-border-subtle: #c9a227;
   --bs-link-color: #1f6d4c;
   --bs-link-color-rgb: 31, 109, 76;
-  --bs-link-hover-color: #164f38;
-  --bs-link-hover-color-rgb: 22, 79, 56;
+  --bs-link-hover-color: #c9a227;
+  --bs-link-hover-color-rgb: 201, 162, 39;
+  --bs-body-bg: #a3d9ba;
+  --bs-border-color: #c9a227;
+  --bs-border-color-translucent: rgba(201, 162, 39, 0.35);
 }
 
 [data-brand-theme="fantasy"][data-bs-theme="dark"] {
-  --bs-primary: #3fae7c;
-  --bs-primary-rgb: 63, 174, 124;
-  --bs-primary-text-emphasis: #8fe3b8;
-  --bs-primary-bg-subtle: #0c2118;
-  --bs-primary-border-subtle: #8a6d1d;
-  --bs-link-color: #d4b656;
-  --bs-link-color-rgb: 212, 182, 86;
-  --bs-link-hover-color: #e6cd7c;
-  --bs-link-hover-color-rgb: 230, 205, 124;
-  --bs-body-bg: #0d100d;
+  --bs-primary: #e6b800;
+  --bs-primary-rgb: 230, 184, 0;
+  --bs-primary-text-emphasis: #ffdd55;
+  --bs-primary-bg-subtle: #1a1600;
+  --bs-primary-border-subtle: #4a0e0e;
+  --bs-link-color: #e6b800;
+  --bs-link-color-rgb: 230, 184, 0;
+  --bs-link-hover-color: #ffdd55;
+  --bs-link-hover-color-rgb: 255, 221, 85;
+  --bs-body-bg: #000000;
 }
 
-[data-brand-theme="fantasy"] .btn-primary {
+[data-brand-theme="fantasy"][data-bs-theme="light"] .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #1f6d4c;
   --bs-btn-border-color: #c9a227;
@@ -106,19 +163,388 @@
   --bs-btn-disabled-border-color: #1f6d4c;
 }
 
-[data-brand-theme="fantasy"] .form-control:focus {
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .btn-primary {
+  --bs-btn-color: #000;
+  --bs-btn-bg: #e6b800;
+  --bs-btn-border-color: #4a0e0e;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #ffdd55;
+  --bs-btn-hover-border-color: #7a1717;
+  --bs-btn-focus-shadow-rgb: 230, 184, 0;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #cc9e00;
+  --bs-btn-active-border-color: #4a0e0e;
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #e6b800;
+  --bs-btn-disabled-border-color: #4a0e0e;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .form-control:focus {
   border-color: #c9a227;
   box-shadow: 0 0 0 0.25rem rgba(201, 162, 39, 0.25);
 }
 
-[data-brand-theme="fantasy"] .notification-item:hover {
+[data-brand-theme="fantasy"][data-bs-theme="dark"] .form-control:focus {
+  border-color: #e6b800;
+  box-shadow: 0 0 0 0.25rem rgba(230, 184, 0, 0.25);
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .notification-item:hover {
   background-color: #d8ecdf;
   color: #1f6d4c;
 }
 
 [data-brand-theme="fantasy"][data-bs-theme="dark"] .notification-item:hover {
-  background-color: #0c2118;
-  color: #8fe3b8;
+  background-color: #1a1600;
+  color: #ffdd55;
+  border-left: 2px solid #7a1717;
+}
+
+[data-brand-theme="fantasy"] body,
+[data-brand-theme="fantasy"] {
+  font-family: "Cinzel", serif;
+}
+
+/* Card profilo come una pergamena antica: sfondo a macchie d'invecchiamento,
+   bordo dorato, nastro-sigillo al posto della fascia colorata in alto. */
+[data-brand-theme="fantasy"][data-bs-theme="light"] .home-profile-card {
+  background:
+    radial-gradient(
+      circle at 18% 25%,
+      rgba(139, 108, 66, 0.14) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 82% 75%,
+      rgba(139, 108, 66, 0.12) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 60% 15%,
+      rgba(101, 78, 41, 0.1) 0%,
+      transparent 30%
+    ),
+    linear-gradient(135deg, #f7edd3 0%, #eeddaf 45%, #f4e9c6 75%, #e9d6a4 100%);
+  box-shadow:
+    inset 0 0 20px rgba(101, 78, 41, 0.25),
+    0 2px 8px rgba(60, 45, 10, 0.15);
+  color: #3d2f12;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .home-profile-card
+  .bg-primary-subtle {
+  background: linear-gradient(90deg, #8a6d1d, #e6cd7c 50%, #8a6d1d) !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .home-profile-card
+  .text-secondary {
+  color: #6b5a33 !important;
+}
+
+/* Navbar verde elfico con icone e testo dorati */
+[data-brand-theme="fantasy"][data-bs-theme="light"] .navbar {
+  background: linear-gradient(180deg, #1f6d4c 0%, #164f38 100%) !important;
+  border-bottom: 2px solid #c9a227 !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .navbar .text-secondary,
+[data-brand-theme="fantasy"][data-bs-theme="light"] .navbar .text-body,
+[data-brand-theme="fantasy"][data-bs-theme="light"] .navbar .input-group-text {
+  color: #e6cd7c !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .navbar .bg-body-secondary {
+  background-color: rgba(230, 205, 124, 0.16) !important;
+  color: #e6cd7c !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .navbar
+  .form-control::placeholder {
+  color: rgba(230, 205, 124, 0.65);
+}
+
+/* Bacheca delle news in stile medievale: asse di legno con avvisi di
+   pergamena appuntati, leggermente storti come fogli veri. */
+[data-brand-theme="fantasy"][data-bs-theme="light"] .news-board {
+  background-color: #7a4d22;
+  background-image: url("/textures/wood-grain.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: 3px solid #4a3216;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.45),
+    0 3px 10px rgba(0, 0, 0, 0.25);
+  padding: 4px 0 10px;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .news-board .card-title {
+  color: #f4e9c6;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: 1.3rem;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .news-board-item {
+  background: linear-gradient(135deg, #f7edd3, #ecdcae) !important;
+  border: 1px solid #c9a227 !important;
+  border-radius: 2px;
+  width: calc(100% - 48px);
+  margin: 14px auto;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.35);
+  position: relative;
+  color: #3d2f12;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .news-board-item:nth-child(odd) {
+  transform: rotate(-1.4deg);
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .news-board-item:nth-child(even) {
+  transform: rotate(1.1deg);
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .news-board-item:hover {
+  transform: rotate(0deg) scale(1.02);
+  z-index: 1;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .news-board-item::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff8a8a, #7a1717);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"] .news-board-item small {
+  color: #6b5a33 !important;
+}
+
+/* Composer e post del feed: pagine di diario, avorio con bordo dorato
+   sottile (niente macchie/rotazioni: si ripetono troppe volte nel feed). */
+[data-brand-theme="fantasy"][data-bs-theme="light"] .post-composer-card,
+[data-brand-theme="fantasy"][data-bs-theme="light"] .post-card {
+  background: linear-gradient(160deg, #faf3de, #f1e6c4) !important;
+  border: 1px solid #c9a227 !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .post-composer-card
+  .text-secondary,
+[data-brand-theme="fantasy"][data-bs-theme="light"] .post-card .text-secondary {
+  color: #6b5a33 !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .post-card
+  .post-action-btn {
+  color: #1f6d4c !important;
+}
+
+[data-brand-theme="fantasy"][data-bs-theme="light"]
+  .post-card
+  .post-action-btn.text-primary {
+  color: #a8841f !important;
+}
+
+/* Anello d'oro cesellato attorno all'avatar principale: un cerchio dorato
+   rotante dietro (spirito "Signore degli Anelli") più un bordo scuro netto
+   sopra per dare rilievo, senza appesantire i piccoli avatar del feed. */
+[data-brand-theme="fantasy"] .avatar-ringed {
+  position: relative;
+}
+
+[data-brand-theme="fantasy"] .avatar-ringed::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #8a6d1d,
+    #fff2b8,
+    #e6b800,
+    #8a6d1d,
+    #fff2b8,
+    #e6b800,
+    #8a6d1d
+  );
+  animation: fantasy-ring-spin 6s linear infinite;
+  z-index: -1;
+}
+
+[data-brand-theme="fantasy"] .avatar-ringed::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid #3a2e05;
+  box-shadow:
+    inset 0 0 3px rgba(0, 0, 0, 0.6),
+    0 0 8px rgba(230, 184, 0, 0.55);
+}
+
+@keyframes fantasy-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Polvere dorata per il tema fantasy: puntini generati e animati da GSAP
+   (FantasyDust.tsx) lungo curve casuali continue, non un pattern CSS
+   statico — vedi il componente per la logica di movimento. */
+.fantasy-dust-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.fantasy-firefly-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #ffe066;
+  box-shadow: 0 0 10px 2px rgba(230, 184, 0, 0.75);
+}
+
+/* Anello 3D rotante ("LOTR-ish Ring" di J. Steinbach, adattato in CSS puro
+   senza Sass/jQuery): 20 fasce dorate impilate a incastro con transform 3D,
+   che ruotano lentamente mostrando una frase incisa lettera per lettera. */
+.lotr-ring-scene {
+  position: relative;
+  height: 210px;
+  margin: 4px 0 12px;
+  border-radius: 8px;
+  perspective: 200em;
+  perspective-origin: center center;
+}
+
+.lotr-ring-bearer-center {
+  position: absolute;
+  top: calc(50% - 35px);
+  left: calc(50% + 10px);
+  transform: translate(-50%, -50%) rotateX(-20deg);
+  transform-style: preserve-3d;
+}
+
+.lotr-ring-bearer {
+  font-size: 0;
+  height: 1em;
+  transform-style: preserve-3d;
+  /* Centro reale della circonferenza tracciata dalle 20 fasce (poligono
+     regolare, lato 1em): raggio = 1 / (2*sin(9°)) ≈ 3.196em, apotema
+     ≈ 3.156em. Il perno di rotazione va qui, non al centro del box piatto. */
+  transform-origin: 1.5em center 3.156em;
+  animation: lotr-ring-spin 15s linear infinite;
+}
+
+.lotr-ring {
+  font-size: 18px;
+  position: absolute;
+  top: 0;
+  left: 1em;
+  width: 1em;
+  white-space: nowrap;
+  display: inline-block;
+  backface-visibility: hidden;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(18deg);
+}
+
+.lotr-ring-top,
+.lotr-ring-text,
+.lotr-ring-bottom-1,
+.lotr-ring-bottom-2 {
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  background-image: linear-gradient(
+    135deg,
+    #fff 0%,
+    #fffc84 17%,
+    #d4af37 33%,
+    #fffc84 67%,
+    #d4af37 83%,
+    #886300 100%
+  );
+  background-repeat: repeat;
+  background-size: 20em 5em;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.lotr-ring-text {
+  overflow: hidden;
+  background-position: calc(var(--i) * -1em) -2em;
+  text-indent: calc(var(--i) * -1em);
+  color: #d4af37;
+  letter-spacing: 0.15em;
+  font-family: "Cinzel", serif;
+  text-shadow:
+    -1px -1px 1px #fffc84,
+    1px 1px 1px #886300;
+}
+
+.lotr-ring-top {
+  position: relative;
+  height: 0.5em;
+  background-position: calc(var(--i) * -1em) -1.5em;
+  transform: rotateX(30deg);
+  transform-origin: center bottom;
+}
+
+.lotr-ring-bottom-1 {
+  position: relative;
+  height: 0.5em;
+  background-position: calc(var(--i) * -1em) -3em;
+  transform: rotateX(-30deg);
+  transform-origin: center top;
+}
+
+.lotr-ring-bottom-2 {
+  position: absolute;
+  left: 0;
+  bottom: -1.5em;
+  height: 1.5em;
+  background-position: calc(var(--i) * -1em) -3.5em;
+  transform: rotateX(-150deg) scaleY(1.2);
+  transform-origin: center top;
+}
+
+@keyframes lotr-ring-spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+[data-brand-theme="fantasy"] h1,
+[data-brand-theme="fantasy"] h2,
+[data-brand-theme="fantasy"] h3,
+[data-brand-theme="fantasy"] h4,
+[data-brand-theme="fantasy"] h5,
+[data-brand-theme="fantasy"] .navbar-brand,
+[data-brand-theme="fantasy"] .btn {
+  letter-spacing: 0.02em;
 }
 
 /* ---------- Cyberpunk: neon caldo (rosso/giallo) in chiaro, freddo (viola/blu) in scuro ---------- */
@@ -132,6 +558,8 @@
   --bs-link-color-rgb: 184, 134, 11;
   --bs-link-hover-color: #8a6508;
   --bs-link-hover-color-rgb: 138, 101, 8;
+  --bs-body-bg: #ffcc33;
+  --bs-body-bg-rgb: 255, 204, 51;
 }
 
 [data-brand-theme="cyberpunk"][data-bs-theme="dark"] {
@@ -145,6 +573,7 @@
   --bs-link-hover-color: #6b9bff;
   --bs-link-hover-color-rgb: 107, 155, 255;
   --bs-body-bg: #050505;
+  --bs-body-bg-rgb: 5, 5, 5;
 }
 
 [data-brand-theme="cyberpunk"][data-bs-theme="light"] .btn-primary {
@@ -202,6 +631,26 @@
 [data-brand-theme="cyberpunk"] .nav-link-item:hover,
 [data-brand-theme="cyberpunk"] .nav-link-item.active {
   color: var(--bs-primary) !important;
+}
+
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .bg-body,
+[data-brand-theme="cyberpunk"][data-bs-theme="light"] .card {
+  background-image: linear-gradient(135deg, #ffe680, #ffcc33 45%, #ff9500);
+}
+
+[data-brand-theme="cyberpunk"],
+[data-brand-theme="cyberpunk"] body {
+  font-family: "Rajdhani", sans-serif;
+}
+
+[data-brand-theme="cyberpunk"] h1,
+[data-brand-theme="cyberpunk"] h2,
+[data-brand-theme="cyberpunk"] h3,
+[data-brand-theme="cyberpunk"] h4,
+[data-brand-theme="cyberpunk"] h5,
+[data-brand-theme="cyberpunk"] h6,
+[data-brand-theme="cyberpunk"] .navbar-brand {
+  font-family: "Orbitron", sans-serif;
 }
 
 /* ---------- Horror: sangue e muschio marcio su nero ---------- */

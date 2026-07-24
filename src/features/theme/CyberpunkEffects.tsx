@@ -15,9 +15,17 @@ function CyberpunkEffects() {
         className="position-fixed top-0 start-0 w-100 h-100"
         style={{ zIndex: -1, opacity: 0.9 }}
       >
-        <LetterGlitch glitchColors={isDark ? coolGlitchColors : warmGlitchColors} />
+        <LetterGlitch
+          key={mode}
+          glitchColors={isDark ? coolGlitchColors : warmGlitchColors}
+          glitchSpeed={85}
+        />
       </div>
-      <TargetCursor cursorColor={isDark ? "#9d00ff" : "#ff0044"} />
+      <TargetCursor
+        cursorColor={isDark ? "#9d00ff" : "#ff0044"}
+        cursorColorOnTarget={isDark ? "#2b6bff" : "#ffe600"}
+        spinDuration={3}
+      />
     </>
   );
 }
