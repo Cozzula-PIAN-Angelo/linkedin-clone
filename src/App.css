@@ -9,6 +9,7 @@ body {
     background-color: black;
     aspect-ratio: 1/1;
     width: 120px;
+    object-fit: cover;
   }
 }
 
@@ -18,6 +19,7 @@ body {
   aspect-ratio: 1/1;
   background-color: black;
   flex-shrink: 0;
+  object-fit: cover;
 }
 
 .post-sub {
