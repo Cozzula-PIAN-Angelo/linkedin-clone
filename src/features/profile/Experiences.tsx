@@ -16,7 +16,7 @@ function Experencies({ experiences, canEdit, loading }: ExperenciesProps) {
 
   if (loading) {
     return (
-      <Card className="border-0">
+      <Card className="bg-white rounded-2 border">
         <Card.Title className="mt-3 ps-3">Esperienza</Card.Title>
         <Card.Body className="text-center">
           <Spinner animation="border" size="sm" />
@@ -27,7 +27,7 @@ function Experencies({ experiences, canEdit, loading }: ExperenciesProps) {
 
   if (experiences.length === 0) {
     return (
-      <Card className="border-0">
+      <Card className="bg-white rounded-2 border">
         <Card.Title className="mt-3 ps-3">Esperienza</Card.Title>
         <Card.Body className="border border-muted rounded mb-3 mx-3">
           <Card.Subtitle className="text-center text-secondary">
@@ -39,7 +39,7 @@ function Experencies({ experiences, canEdit, loading }: ExperenciesProps) {
   }
 
   return (
-    <Card className="border-0">
+    <Card className="bg-white rounded-2 border">
       <Card.Title className="mt-3 ps-3">Esperienza</Card.Title>
       {experiences.map((exp) => (
         <Card.Body

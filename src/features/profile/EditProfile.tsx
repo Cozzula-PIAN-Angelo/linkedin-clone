@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Row, Col, Card, Form, Button, Spinner } from "react-bootstrap";
+import Avatar from "../../components/Avatar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { updateProfile, clearProfileError } from "./profileSlice";
 import { fileToResizedDataUrl } from "../posts/imageUtils";
@@ -67,14 +68,17 @@ function EditProfile() {
     <Container style={{ paddingTop: 68 }}>
       <Row className="justify-content-center">
         <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
-          <Card className="profile-card border-0">
+          <Card className="profile-card bg-white rounded-2 border">
             <Card.Title className="mt-3 ps-3">Modifica profilo</Card.Title>
             <Card.Body className="d-flex flex-column align-items-center">
-              <img
-                src={avatar}
-                alt={`${user.name} ${user.surname}`}
-                className="avatar-profile rounded-circle mb-3"
-              />
+              <div className="mb-3">
+                <Avatar
+                  src={avatar}
+                  name={user.name}
+                  surname={user.surname}
+                  size={120}
+                />
+              </div>
               <Form.Control
                 ref={fileInput}
                 type="file"

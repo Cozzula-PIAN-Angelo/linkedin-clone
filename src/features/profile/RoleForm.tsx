@@ -32,7 +32,7 @@ function RoleForm({ onAdd }: RoleFormProps) {
   };
 
   return (
-    <Card className="border-0">
+    <Card className="bg-white rounded-2 border">
       <Card.Title className="mt-3 ps-3">Aggiungi esperienza</Card.Title>
       <Card.Body>
         <Form onSubmit={handleSubmit}>

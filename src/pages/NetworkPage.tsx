@@ -12,6 +12,8 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../components/Avatar";
+import Footer from "../components/Footer";
+import NetworkOverview from "../features/network/NetworkOverview";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   acceptRequest,
@@ -30,6 +32,7 @@ function PersonInfo({ user }: { user: User | undefined }) {
         name={user?.name ?? "?"}
         surname={user?.surname ?? "?"}
         size={48}
+        className="border border-dark"
       />
       <div style={{ minWidth: 0 }}>
         <div className="fw-bold text-truncate">
@@ -104,8 +107,13 @@ function NetworkPage() {
 
   return (
     <Container style={{ paddingTop: 68 }}>
-      <Row className="justify-content-center g-3">
-        <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
+      <Row className="g-3">
+        <Col xs={12} md={4} lg={3}>
+          <NetworkOverview />
+          <Footer />
+        </Col>
+
+        <Col xs={12} md={8} lg={9}>
           {error && (
             <Alert variant="danger" className="py-2 small">
               {error}
@@ -119,7 +127,7 @@ function NetworkPage() {
           )}
 
           {/* Inviti ricevuti */}
-          <Card className="border-0 mb-3">
+          <Card className="bg-white rounded-2 border mb-3">
             <Card.Body>
               <Card.Title className="fs-6">
                 Inviti ricevuti {received.length > 0 && `(${received.length})`}
@@ -158,7 +166,7 @@ function NetworkPage() {
 
           {/* Richieste inviate, in attesa di risposta */}
           {sent.length > 0 && (
-            <Card className="border-0 mb-3">
+            <Card className="bg-white rounded-2 border mb-3">
               <Card.Body>
                 <Card.Title className="fs-6">Richieste inviate</Card.Title>
                 {sent.map((connection) => (
@@ -182,7 +190,7 @@ function NetworkPage() {
           )}
 
           {/* I collegamenti veri e propri */}
-          <Card className="border-0 mb-3">
+          <Card className="bg-white rounded-2 border mb-3">
             <Card.Body>
               <Card.Title className="fs-6">
                 I tuoi collegamenti {accepted.length > 0 && `(${accepted.length})`}
@@ -214,13 +222,13 @@ function NetworkPage() {
 
           {/* Persone che potresti conoscere */}
           {suggestions.length > 0 && (
-            <Card className="border-0 mb-3">
+            <Card className="bg-white rounded-2 border mb-3">
               <Card.Body>
                 <Card.Title className="fs-6">Persone che potresti conoscere</Card.Title>
                 <Row className="g-3 mt-0">
                   {suggestions.map((user) => (
                     <Col key={user.id} xs={12} sm={6} lg={4}>
-                      <Card className="h-100 text-center">
+                      <Card className="bg-body-secondary h-100 text-center">
                         <Card.Body className="d-flex flex-column align-items-center">
                           <Link
                             to={`/profile/${user.id}`}
@@ -232,6 +240,7 @@ function NetworkPage() {
                               name={user.name}
                               surname={user.surname}
                               size={64}
+                              className="border border-dark"
                             />
                             <OverlayTrigger
                               overlay={
