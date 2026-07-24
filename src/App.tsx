@@ -15,7 +15,9 @@ import PostPage from "./pages/PostPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDummyNetwork } from "./features/network/useDummyNetwork";
 import { useCopy } from "./features/theme/copy";
-import { themeConfigs } from "./features/theme/themeConfig";
+import { brandThemes, themeConfigs } from "./features/theme/themeConfig";
+import type { BrandTheme } from "./features/theme/themeConfig";
+import { setBrandTheme } from "./features/theme/themeSlice";
 import { auth, db } from "./firebase";
 import { authStateResolved } from "./features/auth/authSlice";
 import { useAppDispatch } from "./app/hooks";
@@ -56,6 +58,9 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!firebaseUser) {
         dispatch(authStateResolved(null));
+        // Nessun utente loggato (logout o prima visita): niente tema brand,
+        // login/registrazione restano sempre con lo stile LinkedIn di base.
+        dispatch(setBrandTheme("default"));
         return;
       }
 
@@ -65,8 +70,20 @@ function App() {
           ? ({ id: firebaseUser.uid, ...snap.data() } as User)
           : null;
         dispatch(authStateResolved(profile));
+
+        // Ripristina l'ultimo tema brand scelto da questo utente (salvato su
+        // Firestore in ThemePicker), validandolo contro i temi conosciuti.
+        const savedTheme = profile?.brandTheme;
+        dispatch(
+          setBrandTheme(
+            brandThemes.includes(savedTheme as BrandTheme)
+              ? (savedTheme as BrandTheme)
+              : "default",
+          ),
+        );
       } catch {
         dispatch(authStateResolved(null));
+        dispatch(setBrandTheme("default"));
       }
     });
 

@@ -188,6 +188,10 @@ const cyberpunkCopy: Copy = {
     ...villainCopy.news,
     title: "News from the Net",
   },
+  profile: {
+    connections: "Fixers",
+    growNetwork: "Netrunners alleati",
+  },
 };
 
 export function useCopy(): Copy {
