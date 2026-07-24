@@ -15,7 +15,7 @@ function NotFoundPage() {
       <div className="display-1 fw-bold text-secondary">404</div>
       <h1 className="h4 mt-2">{copy.notFound.title}</h1>
       <p className="text-secondary">{copy.notFound.message}</p>
-      <Link to="/" className="btn btn-primary rounded-pill mt-2">
+      <Link to="/" className="btn btn-primary rounded-pill mt-2 cursor-target">
         {copy.notFound.backHome}
       </Link>
     </Container>

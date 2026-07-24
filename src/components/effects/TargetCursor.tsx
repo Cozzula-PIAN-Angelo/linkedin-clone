@@ -109,6 +109,22 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
     let currentLeaveHandler: (() => void) | null = null;
     let resumeTimeout: ReturnType<typeof setTimeout> | null = null;
 
+    // Le 4 posizioni delle staffe attorno a un target, calcolate dal suo
+    // rect corrente. Va richiamata ad ogni frame (non solo al mouseenter):
+    // se il target si sposta o cambia dimensione per un cambio di stato
+    // dell'app (senza che il mouse si muova), le staffe devono seguirlo
+    // invece di restare bloccate sulla posizione ormai vecchia.
+    const computeCornerPositions = (target: Element, offsetX: number, offsetY: number) => {
+      const rect = target.getBoundingClientRect();
+      const { borderWidth, cornerSize } = constants;
+      return [
+        { x: rect.left - borderWidth - offsetX, y: rect.top - borderWidth - offsetY },
+        { x: rect.right + borderWidth - cornerSize - offsetX, y: rect.top - borderWidth - offsetY },
+        { x: rect.right + borderWidth - cornerSize - offsetX, y: rect.bottom + borderWidth - cornerSize - offsetY },
+        { x: rect.left - borderWidth - offsetX, y: rect.bottom + borderWidth - cornerSize - offsetY }
+      ];
+    };
+
     const cleanupTarget = (target: Element) => {
       if (currentLeaveHandler) {
         target.removeEventListener('mouseleave', currentLeaveHandler);
@@ -142,6 +158,17 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
 
       const strength = activeStrengthRef.current.current;
       if (strength === 0) return;
+
+      // Il target è stato tolto dal DOM (navigazione, cambio di stato) senza
+      // un vero mouseleave: sgancia subito invece di restare bloccati sulla
+      // sua ultima posizione nota.
+      if (!activeTarget || !document.body.contains(activeTarget)) {
+        currentLeaveHandler?.();
+        return;
+      }
+
+      const { x: offsetX, y: offsetY } = getOffset();
+      targetCornerPositionsRef.current = computeCornerPositions(activeTarget, offsetX, offsetY);
 
       const cursorX = gsap.getProperty(cursorRef.current, 'x') as number;
       const cursorY = gsap.getProperty(cursorRef.current, 'y') as number;
@@ -248,18 +275,11 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         }
       }
 
-      const rect = target.getBoundingClientRect();
-      const { borderWidth, cornerSize } = constants;
       const { x: offsetX, y: offsetY } = getOffset();
       const cursorX = gsap.getProperty(cursorRef.current, 'x') as number;
       const cursorY = gsap.getProperty(cursorRef.current, 'y') as number;
 
-      targetCornerPositionsRef.current = [
-        { x: rect.left - borderWidth - offsetX, y: rect.top - borderWidth - offsetY },
-        { x: rect.right + borderWidth - cornerSize - offsetX, y: rect.top - borderWidth - offsetY },
-        { x: rect.right + borderWidth - cornerSize - offsetX, y: rect.bottom + borderWidth - cornerSize - offsetY },
-        { x: rect.left - borderWidth - offsetX, y: rect.bottom + borderWidth - cornerSize - offsetY }
-      ];
+      targetCornerPositionsRef.current = computeCornerPositions(target, offsetX, offsetY);
 
       isActiveRef.current = true;
       gsap.ticker.add(tickerFnRef.current!);
