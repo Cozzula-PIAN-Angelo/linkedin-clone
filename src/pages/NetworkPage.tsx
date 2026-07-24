@@ -93,7 +93,7 @@ function NetworkPage() {
     everyone.get(String(c.requesterId) === meId ? String(c.addresseeId) : String(c.requesterId));
 
   return (
-    <Container style={{ paddingTop: 68 }}>
+    <Container style={{ paddingTop: 84, maxWidth: 1160 }}>
       <Row className="justify-content-center g-3">
         <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
           {error && (

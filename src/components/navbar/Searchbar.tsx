@@ -61,13 +61,13 @@ function SearchBar() {
         onSubmit={(e) => e.preventDefault()}
       >
         <div className="input-group">
-          <span className="input-group-text bg-body-secondary border-0">
+          <span className="input-group-text bg-body-secondary border-0 rounded-start-pill ps-3">
             <Search />
           </span>
           <Form.Control
             type="search"
             placeholder={copy.searchPlaceholder}
-            className="bg-body-secondary border-0"
+            className="bg-body-secondary border-0 rounded-end-pill pe-3"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);

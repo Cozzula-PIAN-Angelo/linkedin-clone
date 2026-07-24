@@ -14,6 +14,35 @@
   --bs-body-bg: whitesmoke;
 }
 
+/* Riserva sempre lo spazio della scrollbar verticale: senza questo, le
+   pagine con contenuto più corto (senza scroll) risultano leggermente
+   più larghe di quelle con contenuto lungo (con scroll), perché il
+   contenuto centrato (Container) si ricalcola sulla larghezza disponibile. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Colonne della Home: larghezze in pixel calibrate sulle proporzioni reali
+   di LinkedIn (colonna profilo e colonna notizie ~225px/~295px su un
+   contenuto di larghezza analoga), invece delle sole frazioni intere
+   offerte dalla griglia Bootstrap a 12 colonne. */
+@media (min-width: 992px) {
+  .home-col-profile {
+    flex: 0 0 235px;
+    max-width: 235px;
+  }
+
+  .home-col-feed {
+    flex: 1 1 0%;
+    max-width: none;
+  }
+
+  .home-col-news {
+    flex: 0 0 310px;
+    max-width: 310px;
+  }
+}
+
 /* ---------- ex-Villain: rosso/nero minaccioso ---------- */
 [data-brand-theme="villain"][data-bs-theme="light"] {
   --bs-primary: #c1121f;

@@ -54,7 +54,10 @@ function ProfilePage() {
   if (!user) {
     // Feed ancora in caricamento, id inesistente o autore eliminato da db.json
     return (
-      <Container className="mt-5 text-center">
+      <Container
+        className="text-center"
+        style={{ paddingTop: 84, maxWidth: 1160 }}
+      >
         {loading ? (
           <Spinner animation="border" />
         ) : (
@@ -86,7 +89,7 @@ function ProfilePage() {
 
   return (
     <>
-      <Container className="mt-3">
+      <Container style={{ paddingTop: 84, maxWidth: 1160 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
             <Card className="profile-card border-0">
@@ -151,7 +154,7 @@ function ProfilePage() {
       </Container>
 
       {isOwnProfile && (
-        <Container className="mt-3">
+        <Container className="mt-3" style={{ maxWidth: 1160 }}>
           <Row className="justify-content-center">
             <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
               <RoleForm onAdd={(exp) => dispatch(addExperience(exp))} />
@@ -160,7 +163,7 @@ function ProfilePage() {
         </Container>
       )}
 
-      <Container className="mt-3">
+      <Container className="mt-3" style={{ maxWidth: 1160 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
             <Experencies
@@ -172,7 +175,7 @@ function ProfilePage() {
         </Row>
       </Container>
 
-      <Container className="mt-3">
+      <Container className="mt-3" style={{ maxWidth: 1160 }}>
         <Row className="justify-content-center">
           <Col xs={12} md={10} xl={8} className="px-0 px-md-3">
             <Posts posts={userPosts} user={user} />
